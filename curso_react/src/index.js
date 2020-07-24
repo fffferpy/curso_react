@@ -4,11 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Welcome from './Welcome';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Pruebagrid from './Pruebagrid/Pruebagrid';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Welcome />
+    <Pruebagrid />
   </React.StrictMode>,
   document.getElementById('root')
 );
