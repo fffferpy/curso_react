@@ -1,5 +1,6 @@
 import React, {Component} from 'react'; 
 import { Container, Row, Col, Button, Navbar, Nav, NavDropdown, Form, FormControl, Table, Image } from 'react-bootstrap';
+const logo = require('./assets/crm.gif') 
 
 class Testbootstrap extends Component {
     render(){
@@ -13,10 +14,10 @@ class Testbootstrap extends Component {
                     {/* <Col> 
                         Columna 1
                     </Col> */}
-                    <Image src="../public/achievement-3481967_1920.jpg/100px250" fluid />
+                    {/* <Image src="../public/achievement-3481967_1920.jpg/100px250" fluid /> */}
                     <Col> 
                         <Navbar bg="light" expand="lg">
-                            <Navbar.Brand href="#home"><h1>Loli Store</h1></Navbar.Brand>
+                            <Navbar.Brand href="#home"><Image src={logo} fluid />Loli Store</Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">
