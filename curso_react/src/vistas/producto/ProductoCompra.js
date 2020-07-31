@@ -20,8 +20,16 @@ class ProductoCompra extends Component {
                 <Row>
                     <Col xs={4} md={6}>
                         <Form>
+                        <Form.Group>
+                                <Form.Label>Fecha</Form.Label>
+                                <Form.Control type="date"  />
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>
+
                             <Form.Group>
-                                <Form.Label>Producto</Form.Label>
+                                {/* <Form.Label>Producto</Form.Label> */}
                                 <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
                                 {/* <Form.Control type="text" placeholder="Inserte nombre del producto" /> */}
 
@@ -31,24 +39,24 @@ class ProductoCompra extends Component {
                             </Form.Group>
                             
                             <Form.Group>
-                                <Form.Label>Código Producto</Form.Label>
-                                <Form.Control type="number"  />
+                                {/* <Form.Label>Código Producto</Form.Label> */}
+                                <Form.Control type="number" placeholder="Código Producto" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label>Precio Compra</Form.Label>
-                                <Form.Control type="number"  />
+                                {/* <Form.Label>Precio Compra</Form.Label> */}
+                                <Form.Control type="number" placeholder="Precio Compra" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label>Cantidad</Form.Label>
-                                <Form.Control type="number"  />
+                                {/* <Form.Label>Cantidad</Form.Label> */}
+                                <Form.Control type="number" placeholder="Cantidad" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}

@@ -20,6 +20,14 @@ class ProductoVenta extends Component {
                 <Row>
                     <Col xs={4} md={6}>
                         <Form>
+                        <Form.Group>
+                                <Form.Label>Fecha</Form.Label>
+                                <Form.Control type="date"  />
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>
+                            
                             <Form.Group>
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
