@@ -5,12 +5,23 @@ import { withRouter } from 'react-router-dom';
 
 class ProductoCompra extends Component {
     state={
-        nombreProducto:''
-        
+        fecha:'',
+        producto:'',
+        codigoProducto:0,
+        precioCompra:0,
+        cantidad:0
+       
     }
-    capturarTeclaProducto=(evento)=>{
-        console.log(evento.target.value)
+    capturarTecla=(evento)=>{
+    
+        this.setState({[evento.target.name]:evento.target.value})
     }
+    guardar=()=>{
+        console.log(this.state)
+
+    }
+  
+    
     render() {
         return (
             <>
@@ -22,25 +33,25 @@ class ProductoCompra extends Component {
                         <Form>
                         <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date"  />
+                                <Form.Control type="date" name="fecha" onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
                             </Form.Group>
 
-                            <Form.Group>
-                                {/* <Form.Label>Producto</Form.Label> */}
-                                <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
-                                {/* <Form.Control type="text" placeholder="Inserte nombre del producto" /> */}
-
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
+                            <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Label>Producto</Form.Label>
+                                <Form.Control as="select" name="producto" onChange={this.capturarTecla}>
+                                <option>champion</option>
+                                <option>zapatilla</option>
+                                <option>media</option>
+                               
+                                </Form.Control>
                             </Form.Group>
                             
                             <Form.Group>
                                 {/* <Form.Label>Código Producto</Form.Label> */}
-                                <Form.Control type="number" placeholder="Código Producto" />
+                                <Form.Control type="number" name = "codigoProducto" onChange={this.capturarTecla} placeholder="Código Producto" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -48,7 +59,7 @@ class ProductoCompra extends Component {
 
                             <Form.Group>
                                 {/* <Form.Label>Precio Compra</Form.Label> */}
-                                <Form.Control type="number" placeholder="Precio Compra" />
+                                <Form.Control type="number" name ="precioCompra" onChange={this.capturarTecla} placeholder="Precio Compra" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -56,7 +67,7 @@ class ProductoCompra extends Component {
 
                             <Form.Group>
                                 {/* <Form.Label>Cantidad</Form.Label> */}
-                                <Form.Control type="number" placeholder="Cantidad" />
+                                <Form.Control type="number" name = "cantidad" onChange={this.capturarTecla} placeholder="Cantidad" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -68,7 +79,7 @@ class ProductoCompra extends Component {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <Button variant="primary">Guardar</Button>{' '}
+                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                 </Row>
