@@ -19,11 +19,13 @@ class Home extends Component {
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
                                 <LinkContainer exact to="/"><Nav.Link >Inicio</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/productos"><Nav.Link >Stock</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos/compras"><Nav.Link >Compras</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos/ventas"><Nav.Link >Ventas</Nav.Link></LinkContainer>
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
-                                <Nav.Link href="#link">Compras</Nav.Link>
-                                <Nav.Link href="#link">Ventas</Nav.Link>
-                                <Nav.Link href="#link">Anulaciones</Nav.Link>
+                                {/* <Nav.Link href="#link">Compras</Nav.Link> */}
+                                {/* <Nav.Link href="#link">Ventas</Nav.Link> */}
+                                {/* <Nav.Link href="#link">Anulaciones</Nav.Link> */}
                                     <NavDropdown title="Reportes" id="basic-nav-dropdown">
                                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
