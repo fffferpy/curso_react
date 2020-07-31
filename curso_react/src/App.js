@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component }  from 'react';
+import { Container } from 'react-bootstrap';
+import Home from './vistas/Home';
+import Menu from './vistas/Menu';
+import ProductoList from './vistas/producto/ProductoList';
+import ProductoForm from './vistas/producto/ProductoForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+// import './App.css';
+
+class App extends Component {
+ render() {
+   return(
+     <Router>
+        <Container>
+        <Menu/>
+          <Switch>
+             <Route exact path="/" component={Home}/>
+             <Route exact path="/productos" component={ProductoList}/>
+             <Route  path="/productos/nuevo" component={ProductoForm} />
+          </Switch>
+        </Container>
+     </Router>
+   )
+ }
 }
 
 export default App;

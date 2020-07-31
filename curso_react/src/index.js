@@ -2,21 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Testboostrap from './Testbootstrap';
 import * as serviceWorker from './serviceWorker';
-import Welcome from './Welcome';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Pruebagrid from './Pruebagrid/Pruebagrid';
+// import Pruebagrid from './Pruebagrid/Pruebagrid';
+// import Welcome from './Welcome';
+// import Testboostrap from './Testbootstrap';
 
 
 ReactDOM.render(
   <React.StrictMode>
 
-   <Testboostrap />
-
-   {/* <Pruebagrid /> */}
-    {/* <App /> */}
-
+    <App />
 
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,27 +1,26 @@
 import React, {Component} from 'react'; 
 import { Container, Row, Col, Button, Navbar, Nav, NavDropdown, Form, FormControl, Table, Image } from 'react-bootstrap';
-const logo = require('./assets/crm.gif') 
-
-class Testbootstrap extends Component {
+import { LinkContainer } from 'react-router-bootstrap'
+// const logo = require('./assets/crm.gif') 
+// const logo = require('./assets/lolilogo2.png') 
+class Home extends Component {
     render(){
         return(
-            <Container>
+            <div>
                 {/* Menu */}
                 <Row> 
-                    {/* xs={2} md={1} lg={1}> */}
                   
-                        {/* Columna para logo */}
-                    {/* <Col> 
-                        Columna 1
-                    </Col> */}
-                    {/* <Image src="../public/achievement-3481967_1920.jpg/100px250" fluid /> */}
                     <Col> 
                         <Navbar bg="light" expand="lg">
-                            <Navbar.Brand href="#home"><Image src={logo} fluid />Loli Store</Navbar.Brand>
+                            {/* <Navbar.Brand href="#home"><Image src={require('./assets/resizeimage.jpg')} fluid /></Navbar.Brand> */}
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">
-                                <Nav.Link href="#link">Stock</Nav.Link>
+                                {/* <Nav.Link href="#link">Stock</Nav.Link> */}
+                                <LinkContainer exact to="/"><Nav.Link >Inicio</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos"><Nav.Link >Stock</Nav.Link></LinkContainer>
+
+                                {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 <Nav.Link href="#link">Compras</Nav.Link>
                                 <Nav.Link href="#link">Ventas</Nav.Link>
                                 <Nav.Link href="#link">Anulaciones</Nav.Link>
@@ -31,22 +30,23 @@ class Testbootstrap extends Component {
                                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                     </NavDropdown>
+                                     </NavDropdown> 
                                 </Nav>
-                                <Form inline>
-                                <FormControl type="text" placeholder="Escribe el texto" className="mr-sm-2" />
-                                <Button variant="light">Buscar</Button> 
-                                {/* <Button variant="dark">Dark</Button> */}
-                                {/* <Button variant="outline-success">Buscar</Button> */}
-                                </Form>
+                                {/* <Form inline>
+                                    <FormControl type="text" placeholder="Escribe el texto" className="mr-sm-2" />
+                                    <Button variant="light">Buscar</Button>
+                                    <Button variant="dark">Dark</Button> 
+                                    <Button variant="outline-success">Buscar</Button>
+                                </Form> */}
                             </Navbar.Collapse>
                         </Navbar>
                     </Col>
                 </Row>
-            </Container>
+              
+            </div>
 
          )
     }
 
 }
-export default Testbootstrap 
+export default Home; 
