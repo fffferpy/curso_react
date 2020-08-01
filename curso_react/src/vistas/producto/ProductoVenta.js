@@ -13,7 +13,7 @@ class ProductoVenta extends Component {
         
     }
     capturarTecla=(evento)=>{
-        // console.log(evento.target.value)
+        
         this.setState({[evento.target.name]:evento.target.value})
     }
     guardar=()=>{
@@ -57,6 +57,7 @@ class ProductoVenta extends Component {
                                 <option>champion</option>
                                 <option>zapatilla</option>
                                 <option>media</option>
+                                <option>Crocs adultos 40-45 Hombres</option>
                                
                                 </Form.Control>
                             </Form.Group>
