@@ -5,11 +5,20 @@ import { withRouter } from 'react-router-dom';
 
 class ProductoVenta extends Component {
     state={
-        nombreProducto:''
+        fecha:'',
+        producto:'',
+        codigo:0,
+        precioVenta:0,
+        cantidad:0
         
     }
-    capturarTeclaProducto=(evento)=>{
-        console.log(evento.target.value)
+    capturarTecla=(evento)=>{
+        // console.log(evento.target.value)
+        this.setState({[evento.target.name]:evento.target.value})
+    }
+    guardar=()=>{
+        console.log(this.state)
+
     }
     render() {
         return (
@@ -22,24 +31,15 @@ class ProductoVenta extends Component {
                     <Col md={3}>
                         <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date"  />
+                                <Form.Control type="date" name="fecha" onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
                          </Form.Group>
                     </Col>
                   
-                    <Col md={2}>
-                           <Form.Group>
-                                <Form.Label>Código Producto</Form.Label>
-                                <Form.Control type="number"  />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                            </Form.Group>
-                    </Col>
-
-                    <Col md={4}>
+                    
+                    {/* <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
@@ -47,32 +47,51 @@ class ProductoVenta extends Component {
 
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
+                                </Form.Text>
+                            </Form.Group>
+                        </Col>  */}
+
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                                <Form.Label>Producto</Form.Label>
+                                <Form.Control as="select" name="producto" onChange={this.capturarTecla}>
+                                <option>champion</option>
+                                <option>zapatilla</option>
+                                <option>media</option>
+                               
+                                </Form.Control>
+                            </Form.Group>
+                    <Col md={1}>
+                           <Form.Group>
+                                <Form.Label>Código</Form.Label>
+                                <Form.Control type="number" name="codigo" onChange={this.capturarTecla} />
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
                                 </Form.Text> */}
                             </Form.Group>
                     </Col>
-                    <Col md={3}>
+
+                    <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Venta</Form.Label>
-                                <Form.Control type="number"  />
+                                <Form.Control type="number" name="precioVenta" onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
                             </Form.Group>
                     </Col>
-                </Row>
-                <Row>
                     <Col md={2}> 
 
-                            <Form.Group>
-                                <Form.Label>Cantidad</Form.Label>
-                                <Form.Control type="number"  />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                            </Form.Group>                         
-                       
-                    </Col>  
+                        <Form.Group>
+                            <Form.Label>Cantidad</Form.Label>
+                            <Form.Control type="number" name="cantidad" onChange={this.capturarTecla} />
+                            {/* <Form.Text className="text-muted">
+                                Campo obligatorio
+                            </Form.Text> */}
+                        </Form.Group>                         
+
+                    </Col>
                 </Row>
+                            
             </Form>
             <Row>
                 <Col>
@@ -107,7 +126,7 @@ class ProductoVenta extends Component {
             </Row>
                 <Row>
                     <Col md={6}>
-                        <Button variant="primary">Guardar</Button>{' '}
+                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                 </Row>

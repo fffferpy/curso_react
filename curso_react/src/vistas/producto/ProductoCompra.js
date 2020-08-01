@@ -7,7 +7,7 @@ class ProductoCompra extends Component {
     state={
         fecha:'',
         producto:'',
-        codigoProducto:0,
+        codigo:0,
         precioCompra:0,
         cantidad:0
        
@@ -51,7 +51,7 @@ class ProductoCompra extends Component {
                             
                             <Form.Group>
                                 {/* <Form.Label>Código Producto</Form.Label> */}
-                                <Form.Control type="number" name = "codigoProducto" onChange={this.capturarTecla} placeholder="Código Producto" />
+                                <Form.Control type="number" name = "producto" onChange={this.capturarTecla} placeholder="Código Producto" />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}

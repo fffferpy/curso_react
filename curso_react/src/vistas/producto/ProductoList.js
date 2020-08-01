@@ -30,6 +30,7 @@ class ProductoList extends Component {
                                             <th>Entradas</th>
                                             <th>Salidas</th>
                                             <th>Stock</th>
+                                            <th>Status</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -42,6 +43,18 @@ class ProductoList extends Component {
                                             <td>20</td>
                                             <td>15</td>
                                             <td>5</td>
+                                            <td>Activo</td>
+                                            <td><a href='#' >Editar</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Zapato Cuero</td>
+                                            <td>45.000</td>
+                                            <td>70.000</td>
+                                            <td>20</td>
+                                            <td>15</td>
+                                            <td>5</td>
+                                            <td>Activo</td>
                                             <td><a href='#' >Editar</a></td>
                                         </tr>
                                        
