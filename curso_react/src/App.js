@@ -15,14 +15,13 @@ class App extends Component {
    return(
      <Router>
         <Container>
-        <Menu/>
+          <Menu/>
           <Switch>
-             <Route exact path="/" component={Home}/>
-             <Route exact path="/productos" component={ProductoList}/>
-             <Route  path="/productos/nuevo" component={ProductoForm} />
-             <Route  path="/productos/compras" component={ProductoCompra} />
-             <Route  path="/productos/ventas" component={ProductoVenta} />
-
+              <Route exact path="/" component={Home}/>
+              <Route exact path="/productos" component={ProductoList}/>
+              <Route  path="/productos/nuevo" component={ProductoForm} />
+              <Route  path="/productos/compras" component={ProductoCompra} />
+              <Route  path="/productos/ventas" component={ProductoVenta} />
           </Switch>
         </Container>
      </Router>

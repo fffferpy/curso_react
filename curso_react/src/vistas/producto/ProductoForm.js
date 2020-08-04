@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import {db} from '../../config/firebase';
 
 
 class ProductoForm extends Component {
@@ -16,7 +17,16 @@ class ProductoForm extends Component {
         this.setState({[evento.target.name]:evento.target.value})
     }
     guardar=()=>{
-        console.log(this.state)
+        // console.log(this.state)
+        db.collection('productos').add(this.state)
+        .then(()=>{
+            alert('Producto insertado correctamente')
+            // this.props.history.goBack()
+            this.props.history.push('/productos')
+        })
+        .catch((error)=>{
+            alert(error)
+        })
 
     }
     render() {
@@ -60,7 +70,8 @@ class ProductoForm extends Component {
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        {/* <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '} */}
+                        <Button variant="primary"onClick={this.guardar}>Guardar</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                 </Row>

@@ -9,17 +9,17 @@ class ProductoVenta extends Component {
         producto:'',
         codigo:0,
         precioVenta:0,
-        cantidad:0
-        
+        cantidad:0        
     }
+
     capturarTecla=(evento)=>{
-        
         this.setState({[evento.target.name]:evento.target.value})
     }
+
     guardar=()=>{
         console.log(this.state)
-
     }
+
     render() {
         return (
             <>
@@ -29,29 +29,15 @@ class ProductoVenta extends Component {
                 </Row>
                 <Row>
                     <Col md={3}>
-                        <Form.Group>
-                                <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date" name="fecha" onChange={this.capturarTecla} />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                         </Form.Group>
-                    </Col>
-                  
-                    
-                    {/* <Col md={4}>
                             <Form.Group>
-                                <Form.Label>Producto</Form.Label>
-                                <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
-                                {/* <Form.Control type="text" placeholder="Inserte nombre del producto" /> */}
-
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text>
+                                    <Form.Label>Fecha</Form.Label>
+                                    <Form.Control type="date" name="fecha" onChange={this.capturarTecla} />
+                                    {/* <Form.Text className="text-muted">
+                                        Campo obligatorio
+                                    </Form.Text> */}
                             </Form.Group>
-                        </Col>  */}
-
-                    <Form.Group controlId="exampleForm.ControlSelect1">
+                    </Col>
+                            <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control as="select" name="producto" onChange={this.capturarTecla}>
                                 <option>champion</option>
