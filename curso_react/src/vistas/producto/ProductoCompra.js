@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import firebase, {db} from '../../config/firebase';
+
 
 
 class ProductoCompra extends Component {
@@ -9,7 +11,8 @@ class ProductoCompra extends Component {
         producto:'',
         codigo:0,
         precioCompra:0,
-        cantidad:0
+        cantidad:0,
+        tipoMovimiento: 1,
        
     }
     capturarTecla=(evento)=>{
@@ -17,8 +20,26 @@ class ProductoCompra extends Component {
         this.setState({[evento.target.name]:evento.target.value})
     }
     guardar=()=>{
-        console.log(this.state)
-
+        // console.log(this.state)
+        let datosMovimmientos = {
+            fecha:this.state.fecha,
+            producto:this.state.producto,
+            codigo:this.state.codigo,
+            precioCompra:this.state.precioCompra,
+            cantidad:this.state.cantidad,
+            tipoMovimiento: 1,
+            creado: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        db.collection('movimientos').add(datosMovimmientos)
+        .then(()=>{
+            // se ejecuta cuando se inserto con exito
+            alert('Insertado correctamente')    
+        })
+        .catch((error)=>{
+            // se ejecuta cuando sucede un error 
+            alert(error)
+        })
+        // console.log (datosMovimmientos)
     }
     render() {
         return (

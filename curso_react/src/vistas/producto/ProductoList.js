@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
+import {db} from '../../config/firebase';
+
 
 class ProductoList extends Component {
+    state={
+        listaProductos : [
+
+        ]
+    }
     creaNuevoProducto = () => {
         // console.log('Nuevo producto');
         // console.log('Props del componente ProductoList: ', this.props)
@@ -11,9 +18,37 @@ class ProductoList extends Component {
     volver=()=>{
         this.props.history.goBack()
     }
-
+    componentDidMount(){
+        let listaTemporal = []
+        db.collection('productos').get()
+        .then((snap)=>{
+            snap.forEach((documento)=>{
+                // console.log(documento.data())
+                listaTemporal.push(documento.data())
+            })
+            this.setState({
+                listaProductos : listaTemporal
+            })
+            
+         })
+        .catch((error)=>{
+            alert(error)
+        })
+    }
+    renderItems = ()=> {
+        return this.state.listaProductos.map((documento)=>{
+            return(
+                <tr>
+                    <td>{documento.nombreProducto}</td>
+                    <td>{documento.precioCompra}</td>
+                    <td>{documento.precioVenta}</td>
+                    
+                </tr>
+            )
+        })
+    }
     render() {
-        return (
+        return (    
             <div>
                <Row style={{marginTop:"10px"}}> 
                    <Col><h2>Productos</h2></Col>
@@ -23,40 +58,19 @@ class ProductoList extends Component {
                         <Table striped bordered hover>
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
+                                            {/* <th>Código</th> */}
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
-                                            <th>Entradas</th>
+                                            {/* <th>Entradas</th>
                                             <th>Salidas</th>
-                                            <th>Stock</th>
-                                            <th>Status</th>
-                                            <th>Acciones</th>
+                                            <th>Stock</th> */}
+                                            {/* <th>Status</th>
+                                            <th>Acciones</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>champ PLAT</td>
-                                            <td>45.000</td>
-                                            <td>70.000</td>
-                                            <td>20</td>
-                                            <td>15</td>
-                                            <td>5</td>
-                                            <td>Activo</td>
-                                            <td><a href='#' >Editar</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Zapato Cuero</td>
-                                            <td>45.000</td>
-                                            <td>70.000</td>
-                                            <td>20</td>
-                                            <td>15</td>
-                                            <td>5</td>
-                                            <td>Activo</td>
-                                            <td><a href='#' >Editar</a></td>
-                                        </tr>
+                                            {this.renderItems()}
                                        
                                     </tbody>
                                 </Table>
