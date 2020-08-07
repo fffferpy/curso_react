@@ -13,7 +13,26 @@ class ProductoCompra extends Component {
         precioCompra:0,
         cantidad:0,
         tipoMovimiento: 1,
+        listaMovimientos: [],
+        metodoDesuscribirse:null
        
+    }
+
+    componentDidMount(){
+        this.obtenerMovimientos()
+    }
+    renderListaMovimientos = () => {
+        return this.state.listaMovimientos.map((documento) => {
+            return (
+                // key es un identificador unico
+                <tr key={documento.codigo}> 
+                    <td>{documento.codigo}</td>
+                    <td>{documento.producto}</td>
+                    <td>{documento.precioCompra}</td>
+                    <td>{documento.cantidad}</td>
+                </tr>
+            )
+        })
     }
     capturarTecla=(evento)=>{
     
@@ -40,6 +59,27 @@ class ProductoCompra extends Component {
             alert(error)
         })
         // console.log (datosMovimmientos)
+    }
+
+    obtenerMovimientos = ()=>{
+            let listaTemporal = []
+            let metodoDesuscribirse = db.collection('movimientos').where('tipoMovimiento','==', 1).orderBy('creado')
+            .onSnapshot((snap)=>{
+                listaTemporal = []
+                snap.forEach((documento)=>{
+                    listaTemporal.push(documento.data())
+                })
+                this.setState({
+                    listaMovimientos : listaTemporal,
+                    metodoDesuscribirse : metodoDesuscribirse
+                })
+            },(error)=>{
+                alert(error)
+                console.log(error)
+            })
+    }
+    componentWillUnmount(){
+        this.state.metodoDesuscribirse()
     }
     render() {
         return (
@@ -122,25 +162,15 @@ class ProductoCompra extends Component {
                                             <th>Código</th>
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
-                                            <th>Precio Venta</th>
-                                            <th>Entradas</th>
+                                            <th>Cantidad</th>
+                                            {/* <th>Entradas</th>
                                             <th>Salidas</th>
-                                            <th>Stock</th>
-                                            <th>Acciones</th>
+                                            <th>Stock</th> */}
+                                            {/* <th>Acciones</th> */}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>champ PLAT</td>
-                                            <td>45.000</td>
-                                            <td>70.000</td>
-                                            <td>20</td>
-                                            <td>15</td>
-                                            <td>5</td>
-                                            <td><a href='#' >Anular</a></td>
-                                        </tr>
-                                       
+                                        {this.renderListaMovimientos()}                                       
                                     </tbody>
                         </Table>
                 </Col>
