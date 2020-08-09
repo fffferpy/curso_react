@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 
 
+                    //  *************************STATES*********************
 
 class ProductoCompra extends Component {
     state={
@@ -18,9 +19,13 @@ class ProductoCompra extends Component {
        
     }
 
+                    // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
         this.obtenerMovimientos()
     }
+
+
+                    // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
         return this.state.listaMovimientos.map((documento) => {
             return (
@@ -34,10 +39,13 @@ class ProductoCompra extends Component {
             )
         })
     }
+                    // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
-    
         this.setState({[evento.target.name]:evento.target.value})
     }
+
+
+                    // GRABAR DATOS EN DB ***************************************
     guardar=()=>{
         // console.log(this.state)
         let datosMovimmientos = {
@@ -61,6 +69,8 @@ class ProductoCompra extends Component {
         // console.log (datosMovimmientos)
     }
 
+
+                    // CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
     obtenerMovimientos = ()=>{
             let listaTemporal = []
             let metodoDesuscribirse = db.collection('movimientos').where('tipoMovimiento','==', 1).orderBy('creado')
@@ -78,15 +88,20 @@ class ProductoCompra extends Component {
                 console.log(error)
             })
     }
+
+                    // ANTES DE DESMONTAR EL COMPONENTE******************************************************
     componentWillUnmount(){
         this.state.metodoDesuscribirse()
     }
+
+                    // RENDERIZADO **************************************************************************
     render() {
         return (
-            <>
-<Form>
+            // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
+            <>      
+            <Form>
                 <Row style={{marginTop:"10px"}}> 
-                    <Col><h2>Compras</h2></Col>
+                    <Col><h2>COMPRAS</h2></Col>
                 </Row>
                 <Row>
                     <Col md={3}>
@@ -98,21 +113,9 @@ class ProductoCompra extends Component {
                                 </Form.Text> */}
                          </Form.Group>
                     </Col>
-                  
-                    
-                    {/* <Col md={4}>
-                            <Form.Group>
-                                <Form.Label>Producto</Form.Label>
-                                <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" />
-                                {/* <Form.Control type="text" placeholder="Inserte nombre del producto" /> */}
-
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text>
-                            </Form.Group>
-                        </Col>  */}
-
-                    <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Col>                
+                      {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
+                        <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control as="select" name="producto" onChange={this.capturarTecla}>
                                 <option>champion</option>
@@ -120,14 +123,14 @@ class ProductoCompra extends Component {
                                 <option>media</option>
                                 <option>Crocs adultos 40-45 Hombres</option>
                                 </Form.Control>
-                            </Form.Group>
+                        </Form.Group>
+                    </Col>
+                                                            
                     <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
                                 <Form.Control type="number" name="codigo" onChange={this.capturarTecla} />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
+                               
                             </Form.Group>
                     </Col>
 
@@ -135,9 +138,7 @@ class ProductoCompra extends Component {
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
                                 <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla} />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
+                              
                             </Form.Group>
                     </Col>
                     <Col md={2}> 
@@ -145,15 +146,22 @@ class ProductoCompra extends Component {
                         <Form.Group>
                             <Form.Label>Cantidad</Form.Label>
                             <Form.Control type="number" name="cantidad" onChange={this.capturarTecla} />
-                            {/* <Form.Text className="text-muted">
-                                Campo obligatorio
-                            </Form.Text> */}
+                            
                         </Form.Group>                         
 
                     </Col>
                 </Row>
                             
             </Form>
+
+            {/* //  *******************************************BOTONES***************************************** */}
+            <Row>
+                    <Col md={6}>
+                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                    </Col>
+            </Row>
+            {/* //  ********************************************TABLA****************************************** */}
             <Row>
                 <Col>
                         <Table striped bordered hover>
@@ -176,12 +184,7 @@ class ProductoCompra extends Component {
                 </Col>
             </Row>
               
-                <Row>
-                    <Col md={6}>
-                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
-                    </Col>
-                </Row>
+               
                 
             </>
         )

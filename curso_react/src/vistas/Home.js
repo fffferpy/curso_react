@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button, Image } from 'react-bootstrap';
+import { Row, Col, Image } from 'react-bootstrap';
 
 export default class Home extends Component {
     render() {

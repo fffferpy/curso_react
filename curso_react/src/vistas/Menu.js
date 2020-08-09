@@ -1,5 +1,5 @@
 import React, {Component} from 'react'; 
-import { Container, Row, Col, Button, Navbar, Nav, NavDropdown, Form, FormControl, Table, Image } from 'react-bootstrap';
+import { Row, Col,Navbar, Nav, NavDropdown, } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 // const logo = require('./assets/crm.gif') 
 // const logo = require('./assets/lolilogo2.png') 

@@ -6,9 +6,8 @@ import ProductoList from './vistas/producto/ProductoList';
 import ProductoForm from './vistas/producto/ProductoForm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
-
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-// import './App.css';
+
 
 class App extends Component {
  render() {
