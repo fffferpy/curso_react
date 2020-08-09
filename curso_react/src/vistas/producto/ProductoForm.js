@@ -1,80 +1,164 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {db} from '../../config/firebase';
+import firebase, {db} from '../../config/firebase';
 
+
+                    //  *************************STATES*********************
 
 class ProductoForm extends Component {
     state={
-        nombreProducto:'',
+        producto:'',
+        // codigo:0,
         precioCompra:0,
-        precioVenta:0   
+        precioVenta:0,
+        listaMovimientos: [],
+        metodoDesuscribirse:null,
+        // creado:''
+       
     }
+
+                    //********************************************LUEGO DE MONTAR EL COMPONENTE *******************************
+    componentDidMount(){
+        this.obtenerMovimientos()
+    }
+
+
+                    //*********************************************RENDERIZA LISTA DE MOVIMMIENTOS *****************************
+    renderListaMovimientos = () => {
+        return this.state.listaMovimientos.map((documento) => {
+            return (
+                // key es un identificador unico
+                <tr key={documento.producto}> 
+                    <td>{documento.producto}</td>
+                    <td>{documento.precioCompra}</td>
+                    <td>{documento.precioVenta}</td>
+                    {/* <td>{documento.creado}</td> */}
+                </tr>
+            )
+        })
+    }
+                    // *****************************************CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
-        // console.log(evento.target.value)
-        // console.log(evento.target.name)
-        // this.setState({nombreProducto:evento.target.value})
         this.setState({[evento.target.name]:evento.target.value})
     }
+
+
+                    //**************************************************GRABAR DATOS EN DB ***************************************
     guardar=()=>{
         // console.log(this.state)
-        db.collection('productos').add(this.state)
+        let datosMovimmientos = {
+            producto:this.state.producto,
+            precioCompra:this.state.precioCompra,
+            precioVenta:this.state.precioVenta,
+            creado: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        db.collection('productos').add(datosMovimmientos)
         .then(()=>{
-            alert('Producto insertado correctamente')
-            // this.props.history.goBack()
-            this.props.history.push('/productos')
+            // se ejecuta cuando se inserto con exito
+            alert('Insertado correctamente')    
         })
         .catch((error)=>{
+            // se ejecuta cuando sucede un error 
             alert(error)
         })
-
+        // console.log (datosMovimmientos)
     }
+
+
+                    //******************************CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
+    obtenerMovimientos = ()=>{
+            let listaTemporal = []
+            let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+            .onSnapshot((snap)=>{
+                listaTemporal = []
+                snap.forEach((documento)=>{
+                    listaTemporal.push(documento.data())
+                })
+                this.setState({
+                    listaMovimientos : listaTemporal,
+                    metodoDesuscribirse : metodoDesuscribirse
+                })
+            },(error)=>{
+                alert(error)
+                console.log(error)
+            })
+    }
+
+                    // ************************************ANTES DE DESMONTAR EL COMPONENTE******************************************************
+    componentWillUnmount(){
+        this.state.metodoDesuscribirse()
+    }
+
+                    // ************************************RENDERIZADO **************************************************************************
     render() {
         return (
-            <>
+            // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
+            <>      
+            <Form>
                 <Row style={{marginTop:"10px"}}> 
-                    <Col><h2>Nuevo Producto</h2></Col>
+                    <Col><h2>PRODUCTOS</h2></Col>
                 </Row>
                 <Row>
-                    <Col xs={4} md={6}>
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Producto</Form.Label>
-                                {/* <Form.Control type="text" value={this.state.nombreProducto} onChange={(evento)=>{this.capturarTeclaProducto(evento)}} placeholder="Inserte nombre del producto" /> */}
-                                <Form.Control type="text" name="nombreProducto" onChange={this.capturarTecla} placeholder="Inserte nombre del producto" />
-
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                            </Form.Group>
-                            
-                            <Form.Group>
-                                <Form.Label>Precio Compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla}/>
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Precio Venta</Form.Label>
-                                <Form.Control type="number" name="precioVenta" onChange={this.capturarTecla} />
-                                {/* <Form.Text className="text-muted">
-                                    Campo obligatorio
-                                </Form.Text> */}
-                            </Form.Group>
-                            
-                        </Form>
-                    
+                   
+                    <Col md={4}>
+                                <Form.Group>
+                                    <Form.Label>Producto</Form.Label>
+                                    <Form.Control type="text" name="producto" onChange={this.capturarTecla} />
+                                
+                                </Form.Group>
+                    </Col> 
+                    <Col md={2}>
+                                <Form.Group>
+                                    <Form.Label>Precio Compra</Form.Label>
+                                    <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla} />
+                                
+                                </Form.Group>
                     </Col>
-                    
+                    <Col md={2}>
+                                <Form.Group>
+                                    <Form.Label>Precio precioVenta</Form.Label>
+                                    <Form.Control type="number" name="precioVenta" onChange={this.capturarTecla} />
+                                
+                                </Form.Group>
+                    </Col>
+                   
                 </Row>
-                <Row>
+                            
+            </Form>
+
+            {/* //  *******************************************BOTONES***************************************** */}
+            <Row>
                     <Col md={6}>
-                        {/* <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '} */}
-                        <Button variant="primary"onClick={this.guardar}>Guardar</Button>{' '}
+                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
-                </Row>
+            </Row>
+            {/* //  ********************************************TABLA****************************************** */}
+            <Row>
+                <Col>
+                        <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio Compra</th>
+                                            <th>Precio Venta</th>
+                                            <th>Creado</th>
+
+                                            {/* <th>Entradas</th>
+                                            <th>Salidas</th>
+                                            <th>Stock</th> */}
+                                            {/* <th>Acciones</th> */}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.renderListaMovimientos()}                                       
+                                    </tbody>
+                        </Table>
+                </Col>
+            </Row>
+              
+               
                 
             </>
         )

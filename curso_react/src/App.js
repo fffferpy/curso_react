@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import { Container } from 'react-bootstrap';
 import Home from './vistas/Home';
 import Menu from './vistas/Menu';
-import ProductoList from './vistas/producto/ProductoList';
+// import ProductoList from './vistas/producto/ProductoList';
 import ProductoForm from './vistas/producto/ProductoForm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
@@ -17,8 +17,7 @@ class App extends Component {
           <Menu/>
           <Switch>
               <Route exact path="/" component={Home}/>
-              <Route exact path="/productos" component={ProductoList}/>
-              <Route  path="/productos/nuevo" component={ProductoForm} />
+              <Route exact path="/productos" component={ProductoForm}/>
               <Route  path="/productos/compras" component={ProductoCompra} />
               <Route  path="/productos/ventas" component={ProductoVenta} />
           </Switch>
