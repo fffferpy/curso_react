@@ -9,7 +9,7 @@ import firebase, {db} from '../../config/firebase';
 class ProductoCompra extends Component {
     state={
         fecha:'',
-        producto:'',
+        producto:'champion',
         codigo:0,
         precioCompra:0,
         cantidad:0,
@@ -117,11 +117,11 @@ class ProductoCompra extends Component {
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select" name="producto" onChange={this.capturarTecla}>
-                                <option>champion</option>
-                                <option>zapatilla</option>
-                                <option>media</option>
-                                <option>Crocs adultos 40-45 Hombres</option>
+                                <Form.Control as="select" name="producto" value = {this.state.producto} onChange={this.capturarTecla}>
+                                <option value = 'champion'>champion</option>
+                                <option value = 'zapatilla'> zapatilla</option>
+                                <option value = 'media'>>media</option>
+                                <option value = 'Crocs adultos 40-45 Hombres'> Crocs adultos 40-45 Hombres</option>
                                 </Form.Control>
                         </Form.Group>
                     </Col>
