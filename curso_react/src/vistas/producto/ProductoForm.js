@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
+import moment from 'moment';
 
 
                     //  *************************STATES*********************
@@ -33,7 +34,7 @@ class ProductoForm extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
-                    {/* <td>{documento.creado}</td> */}
+                    <td>{documento.creado}</td>
                 </tr>
             )
         })
@@ -73,7 +74,14 @@ class ProductoForm extends Component {
             .onSnapshot((snap)=>{
                 listaTemporal = []
                 snap.forEach((documento)=>{
-                    listaTemporal.push(documento.data())
+                    let producto = {
+                        producto : documento.data().producto,
+                        precioCompra : documento.data().precioCompra,
+                        precioVenta : documento.data().precioVenta,
+                        creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY")
+                    }
+                    listaTemporal.push(producto)
+                    console.log (producto)
                 })
                 this.setState({
                     listaMovimientos : listaTemporal,
@@ -93,70 +101,71 @@ class ProductoForm extends Component {
                     // ************************************RENDERIZADO **************************************************************************
     render() {
         return (
-            // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
+            // *************************************** ESTO ES IGUAL A <div> *********************
             <>      
-            <Form>
-                <Row style={{marginTop:"10px"}}> 
-                    <Col><h2>PRODUCTOS</h2></Col>
-                </Row>
+                <Form>
+                    <Row style={{marginTop:"10px"}}> 
+                        <Col><h2>PRODUCTOS</h2></Col>
+                    </Row>
+                    <Row>
+                    
+                        <Col md={4}>
+                                    <Form.Group>
+                                        <Form.Label>Producto</Form.Label>
+                                        <Form.Control type="text" name="producto" onChange={this.capturarTecla} />
+                                    
+                                    </Form.Group>
+                        </Col> 
+                        <Col md={2}>
+                                    <Form.Group>
+                                        <Form.Label>Precio Compra</Form.Label>
+                                        <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla} />
+                                    
+                                    </Form.Group>
+                        </Col>
+                        <Col md={2}>
+                                    <Form.Group>
+                                        <Form.Label>Precio precioVenta</Form.Label>
+                                        <Form.Control type="number" name="precioVenta" onChange={this.capturarTecla} />
+                                    
+                                    </Form.Group>
+                        </Col>
+                    
+                    </Row>
+                                
+                </Form>
+
+                {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
-                   
-                    <Col md={4}>
-                                <Form.Group>
-                                    <Form.Label>Producto</Form.Label>
-                                    <Form.Control type="text" name="producto" onChange={this.capturarTecla} />
-                                
-                                </Form.Group>
-                    </Col> 
-                    <Col md={2}>
-                                <Form.Group>
-                                    <Form.Label>Precio Compra</Form.Label>
-                                    <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla} />
-                                
-                                </Form.Group>
-                    </Col>
-                    <Col md={2}>
-                                <Form.Group>
-                                    <Form.Label>Precio precioVenta</Form.Label>
-                                    <Form.Control type="number" name="precioVenta" onChange={this.capturarTecla} />
-                                
-                                </Form.Group>
-                    </Col>
-                   
+                        <Col md={6}>
+                            <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                            <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                        </Col>
                 </Row>
-                            
-            </Form>
+                <br/>
+                {/* //  ********************************************TABLA****************************************** */}
+                <Row>
+                    <Col>
+                            <Table striped bordered hover>
+                                        <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Precio Compra</th>
+                                                <th>Precio Venta</th>
+                                                <th>Creado</th>
 
-            {/* //  *******************************************BOTONES***************************************** */}
-            <Row>
-                    <Col md={6}>
-                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                                                {/* <th>Entradas</th>
+                                                <th>Salidas</th>
+                                                <th>Stock</th> */}
+                                                {/* <th>Acciones</th> */}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.renderListaMovimientos()}                                       
+                                        </tbody>
+                            </Table>
                     </Col>
-            </Row>
-            {/* //  ********************************************TABLA****************************************** */}
-            <Row>
-                <Col>
-                        <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Precio Compra</th>
-                                            <th>Precio Venta</th>
-                                            <th>Creado</th>
-
-                                            {/* <th>Entradas</th>
-                                            <th>Salidas</th>
-                                            <th>Stock</th> */}
-                                            {/* <th>Acciones</th> */}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.renderListaMovimientos()}                                       
-                                    </tbody>
-                        </Table>
-                </Col>
-            </Row>
+                </Row>
               
                
                 
