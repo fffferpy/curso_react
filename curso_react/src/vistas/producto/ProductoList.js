@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
 import {db} from '../../config/firebase';
 import {Link} from 'react-router-dom'
+import { confirmAlert } from 'react-confirm-alert';
 
 
 class ProductoList extends Component {
@@ -20,6 +21,25 @@ class ProductoList extends Component {
         this.props.history.goBack()
     }
     componentDidMount(){
+        this.obtenerDatos()
+    }
+    confirmarAccion = (productoId) => {
+        confirmAlert({
+          title: 'Accion borrar',
+          message: 'Esta seguro?.',
+          buttons: [
+            {
+              label: 'Si',
+              onClick: () => this.borrarProducto(productoId)
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
+    obtenerDatos=()=>{
         let listaTemporal = []
         db.collection('productos').get()
         .then((snap)=>{
@@ -44,6 +64,13 @@ class ProductoList extends Component {
             alert(error)
         })
     }
+    borrarProducto =(productoId)=>{
+        console.log(productoId)
+        db.collection('productos').doc(`${productoId}`).delete()
+        .then(()=>{
+            this.obtenerDatos()
+        })
+    }
     renderItems = ()=> {
         return this.state.listaProductos.map((documento)=>{
             return(
@@ -51,7 +78,7 @@ class ProductoList extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
-                    <td> <Link to={`/productos/editar/${documento.id}`}> Editar </Link> </td>
+                    <td> <Link to={`/productos/editar/${documento.id}`}> Editar </Link> | <a href='#' onClick={()=>{this.confirmarAccion(documento.id)}}>Borrar</a> </td>
                     
                 </tr>
             )

@@ -11,7 +11,10 @@ class ProductoFormbk extends Component {
         precioVenta:0   
     }
     componentDidMount (){
-        this.recuperarProducto(this.props.match.params.productoId)
+        if (this.props.match.params.productoId){
+            this.recuperarProducto(this.props.match.params.productoId)
+        }
+     
         // console.log(this.props.match.params.productoId)
     }
     recuperarProducto=(productoId)=>{
