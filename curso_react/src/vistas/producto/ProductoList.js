@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
 import {db} from '../../config/firebase';
+import {Link} from 'react-router-dom'
 
 
 class ProductoList extends Component {
@@ -24,11 +25,19 @@ class ProductoList extends Component {
         .then((snap)=>{
             snap.forEach((documento)=>{
                 // console.log(documento.data())
-                listaTemporal.push(documento.data())
+                listaTemporal.push({
+                    id : documento.id,
+                    producto : documento.data().producto,
+                    precioCompra : documento.data().precioCompra,
+                    precioVenta : documento.data().precioVenta,
+
+                })
             })
+
             this.setState({
                 listaProductos : listaTemporal
             })
+            // console.log(this.state)
             
          })
         .catch((error)=>{
@@ -38,10 +47,11 @@ class ProductoList extends Component {
     renderItems = ()=> {
         return this.state.listaProductos.map((documento)=>{
             return(
-                <tr>
-                    <td>{documento.nombreProducto}</td>
+                <tr key = {documento.id}> 
+                    <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
+                    <td> <Link to={`/productos/editar/${documento.id}`}> Editar </Link> </td>
                     
                 </tr>
             )
@@ -62,11 +72,7 @@ class ProductoList extends Component {
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Precio Venta</th>
-                                            {/* <th>Entradas</th>
-                                            <th>Salidas</th>
-                                            <th>Stock</th> */}
-                                            {/* <th>Status</th>
-                                            <th>Acciones</th> */}
+                                             <th>Acciones</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
