@@ -18,6 +18,19 @@ class ProductoCompra extends Component {
         metodoDesuscribirse:null,
         productoEditarId: null
     }
+    limpiarCampos = () => {
+        this.setState({
+            fecha:'',
+            producto:'champion',
+            codigo:0,
+            precioCompra:0,
+            cantidad:0,
+            tipoMovimiento: 1,
+            metodoDesuscribirse:null,
+            productoEditarId: null
+        })
+    
+    }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
@@ -36,6 +49,7 @@ class ProductoCompra extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.cantidad}</td>
+                    <td>{documento.fecha}</td>
                     <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> </td>
 
                 </tr>
@@ -45,22 +59,24 @@ class ProductoCompra extends Component {
                         //********************************************CARGAR PARA EDITAR *******************************
 
     cargarForm =(documentoId)=>{
-                            console.log (documentoId)
-                            db.collection('movimientos').doc(`${documentoId}`).get()
-                            .then((snap)=>{
-                              console.log(snap.data())
-                              this.setState({
-                                fecha : snap.data().fecha,
-                                codigo : snap.data().codigo,  
-                                producto: snap.data().producto,
-                                precioCompra: snap.data().precioCompra,
-                                cantidad: snap.data().cantidad,
-                                productoEditarId : snap.id
-                              })
-                             })
-                            .catch((error)=>{
-                                alert(error)
-                            })
+         console.log (documentoId)
+         db.collection('movimientos').doc(`${documentoId}`).get()
+         .then((snap)=>{
+           console.log(snap.data())
+           this.setState({
+             fecha : snap.data().fecha,
+             codigo : snap.data().codigo,  
+             producto: snap.data().producto,
+             precioCompra: snap.data().precioCompra,
+             cantidad: snap.data().cantidad,
+             // productoEditarId : snap.id   *******esto igual funciona
+             productoEditarId : documentoId
+         })
+         console.log(this.state)
+          })
+         .catch((error)=>{
+             alert(error)
+         })
     }
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
@@ -78,17 +94,36 @@ class ProductoCompra extends Component {
             precioCompra:this.state.precioCompra,
             cantidad:this.state.cantidad,
             tipoMovimiento: 1,
-            creado: firebase.firestore.FieldValue.serverTimestamp()
         }
-        db.collection('movimientos').add(datosMovimmientos)
-        .then(()=>{
-            // se ejecuta cuando se inserto con exito
-            alert('Insertado correctamente')    
-        })
-        .catch((error)=>{
-            // se ejecuta cuando sucede un error 
-            alert(error)
-        })
+        if (this.state.productoEditarId){       // PARA EDITAR 
+            console.log(this.state.productoEditarId)
+            db.collection('movimientos').doc(`${this.state.productoEditarId}`).update(datosMovimmientos)
+            //    db.collection("movimientos").doc(`${this.state.productoEditarId}`).update({
+            .then(()=>{
+                // se ejecuta cuando se inserto con exito
+                alert('Editado correctamente')  
+                this.limpiarCampos()  
+            })
+            .catch((error)=>{
+                // se ejecuta cuando sucede un error 
+                alert(error)
+                console.log(error)
+            })    
+        } else{                                 // PARA GUARDAR
+     
+            db.collection('movimientos').add({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(()=>{
+                // se ejecuta cuando se inserto con exito
+                alert('Insertado correctamente')  
+                this.limpiarCampos()  
+            })
+            .catch((error)=>{
+                // se ejecuta cuando sucede un error 
+                alert(error)
+            })
+        }
+        
         // console.log (datosMovimmientos)
     }
 
@@ -186,7 +221,8 @@ class ProductoCompra extends Component {
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={6}>
-                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                    <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                    <Button variant="warning"onClick={() => {this.limpiarCampos()}}>Limpiar Cammpos</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
             </Row>
@@ -201,6 +237,7 @@ class ProductoCompra extends Component {
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
+                                            <th>Fecha</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
