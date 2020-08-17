@@ -15,8 +15,8 @@ class ProductoCompra extends Component {
         cantidad:0,
         tipoMovimiento: 1,
         listaMovimientos: [],
-        metodoDesuscribirse:null
-       
+        metodoDesuscribirse:null,
+        productoEditarId: null
     }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
@@ -30,14 +30,37 @@ class ProductoCompra extends Component {
         return this.state.listaMovimientos.map((documento) => {
             return (
                 // key es un identificador unico
-                <tr key={documento.codigo}> 
+                // <tr key={documento.codigo}> 
+                <tr> 
                     <td>{documento.codigo}</td>
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.cantidad}</td>
+                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> </td>
+
                 </tr>
             )
         })
+    }
+                        //********************************************CARGAR PARA EDITAR *******************************
+
+    cargarForm =(documentoId)=>{
+                            console.log (documentoId)
+                            db.collection('movimientos').doc(`${documentoId}`).get()
+                            .then((snap)=>{
+                              console.log(snap.data())
+                              this.setState({
+                                fecha : snap.data().fecha,
+                                codigo : snap.data().codigo,  
+                                producto: snap.data().producto,
+                                precioCompra: snap.data().precioCompra,
+                                cantidad: snap.data().cantidad,
+                                productoEditarId : snap.id
+                              })
+                             })
+                            .catch((error)=>{
+                                alert(error)
+                            })
     }
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
@@ -77,7 +100,10 @@ class ProductoCompra extends Component {
             .onSnapshot((snap)=>{
                 listaTemporal = []
                 snap.forEach((documento)=>{
-                    listaTemporal.push(documento.data())
+                    listaTemporal.push({
+                        id : documento.id,
+                        ...documento.data()
+                    })
                 })
                 this.setState({
                     listaMovimientos : listaTemporal,
@@ -107,7 +133,7 @@ class ProductoCompra extends Component {
                     <Col md={3}>
                         <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date" name="fecha" onChange={this.capturarTecla} />
+                                <Form.Control type="date" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -129,7 +155,7 @@ class ProductoCompra extends Component {
                     <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
-                                <Form.Control type="number" name="codigo" onChange={this.capturarTecla} />
+                                <Form.Control type="number" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
                                
                             </Form.Group>
                     </Col>
@@ -137,19 +163,22 @@ class ProductoCompra extends Component {
                     <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra" onChange={this.capturarTecla} />
+                                <Form.Control type="number" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
                               
                             </Form.Group>
                     </Col>
                     <Col md={2}> 
 
-                        <Form.Group>
-                            <Form.Label>Cantidad</Form.Label>
-                            <Form.Control type="number" name="cantidad" onChange={this.capturarTecla} />
-                            
-                        </Form.Group>                         
+                            <Form.Group>
+                                <Form.Label>Cantidad</Form.Label>
+                                <Form.Control type="number" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
+                                {/* <Form.Text className="text-muted">
+                                    Campo obligatorio
+                                </Form.Text> */}
+                            </Form.Group>                         
 
                     </Col>
+                    
                 </Row>
                             
             </Form>
@@ -162,6 +191,7 @@ class ProductoCompra extends Component {
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
+            <br/>
             <Row>
                 <Col>
                         <Table striped bordered hover>
@@ -171,10 +201,7 @@ class ProductoCompra extends Component {
                                             <th>Producto</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
-                                            {/* <th>Entradas</th>
-                                            <th>Salidas</th>
-                                            <th>Stock</th> */}
-                                            {/* <th>Acciones</th> */}
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>

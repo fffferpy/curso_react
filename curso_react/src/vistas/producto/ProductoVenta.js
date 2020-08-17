@@ -162,6 +162,7 @@ class ProductoVenta extends Component {
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
+            <br/>
             <Row>
                 <Col>
                         <Table striped bordered hover>

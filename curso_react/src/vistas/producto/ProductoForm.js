@@ -202,11 +202,10 @@ class ProductoForm extends Component {
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
                                                 <th>Creado</th>
-
                                                 {/* <th>Entradas</th>
                                                 <th>Salidas</th>
                                                 <th>Stock</th> */}
-                                                {/* <th>Acciones</th> */}
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
