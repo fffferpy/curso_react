@@ -80,7 +80,7 @@ class ProductoCompra extends Component {
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.cantidad}</td>
-                    <td>{documento.fecha}</td>
+                    <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td>{documento.estado==1?<Badge pill variant="success"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
                     <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td>
 
