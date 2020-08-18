@@ -44,8 +44,7 @@ class ProductoCompra extends Component {
         return this.state.listaMovimientos.map((documento) => {
             return (
                 // key es un identificador unico
-                // <tr key={documento.codigo}> 
-                <tr> 
+                    <tr key={documento.id}> 
                     <td>{documento.codigo}</td>
                     <td>{documento.producto}</td>
                     <td>{documento.precioCompra}</td>
@@ -158,7 +157,9 @@ class ProductoCompra extends Component {
 
                     // ANTES DE DESMONTAR EL COMPONENTE******************************************************
     componentWillUnmount(){
-        this.state.metodoDesuscribirse()
+        if (this.state.metodoDesuscribirse){
+            this.state.metodoDesuscribirse()
+        }
     }
 
                     // RENDERIZADO **************************************************************************
@@ -187,7 +188,7 @@ class ProductoCompra extends Component {
                                 <Form.Control as="select" name="producto" value = {this.state.producto} onChange={this.capturarTecla}>
                                 <option value = 'champion'>champion</option>
                                 <option value = 'zapatilla'> zapatilla</option>
-                                <option value = 'media'>>media</option>
+                                <option value = 'media'>media</option>
                                 <option value = 'Crocs adultos 40-45 Hombres'> Crocs adultos 40-45 Hombres</option>
                                 </Form.Control>
                         </Form.Group>
