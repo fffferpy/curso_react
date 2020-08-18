@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button, Table } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table , Badge } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
+import {confirmAlert} from 'react-confirm-alert'; 
 
 // *********************************COMENTARIO ************************
                     //  *************************STATES*********************
@@ -15,6 +16,7 @@ class ProductoCompra extends Component {
         precioCompra:0,
         cantidad:0,
         tipoMovimiento: 1,
+        estado: 1,            // estado 1 = activo / 0 = anulado
         listaMovimientos: [],
         metodoDesuscribirse:null,
         productoEditarId: null
@@ -27,10 +29,39 @@ class ProductoCompra extends Component {
             precioCompra:0,
             cantidad:0,
             tipoMovimiento: 1,
+            estado: 1,
             metodoDesuscribirse:null,
             productoEditarId: null
         })
     
+    }
+    confirmarAccion = (movimientoId) => {
+        confirmAlert({
+          title: 'Accion anular',
+          message: 'Esta seguro?.',
+          buttons: [
+            {
+              label: 'Si',
+              onClick: () => this.anularMovimiento(movimientoId)
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
+
+    anularMovimiento =(movimientoId) => {
+        console.log(movimientoId)
+        let datosNuevos = {
+            estado : 0
+        }
+        db.collection('movimientos').doc(movimientoId).update(datosNuevos)
+        .catch((error)=>{
+            alert(error)
+        })
+
     }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
@@ -50,7 +81,8 @@ class ProductoCompra extends Component {
                     <td>{documento.precioCompra}</td>
                     <td>{documento.cantidad}</td>
                     <td>{documento.fecha}</td>
-                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> </td>
+                    <td>{documento.estado==1?<Badge pill variant="success"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
+                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td>
 
                 </tr>
             )
@@ -94,6 +126,7 @@ class ProductoCompra extends Component {
             precioCompra:this.state.precioCompra,
             cantidad:this.state.cantidad,
             tipoMovimiento: 1,
+            estado: this.state.estado
         }
         if (this.state.productoEditarId){       // PARA EDITAR 
             console.log(this.state.productoEditarId)
@@ -245,6 +278,7 @@ class ProductoCompra extends Component {
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
                                             <th>Fecha</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
