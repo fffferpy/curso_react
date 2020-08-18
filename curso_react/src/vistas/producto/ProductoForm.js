@@ -3,6 +3,7 @@ import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
+import { confirmAlert } from 'react-confirm-alert';
 
 
                     //  *************************STATES*********************
@@ -18,10 +19,26 @@ class ProductoForm extends Component {
         productoEditarId: null
        
     }
+    confirmarAccion = (productoId) => {
+        confirmAlert({
+          title: 'Accion borrar',
+          message: 'Esta seguro?.',
+          buttons: [
+            {
+              label: 'Si',
+              onClick: () => this.borrarProducto(productoId)
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        });
+      };
 
                     //********************************************LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
-        this.obtenerMovimientos()
+        this.obtenerProducto()
     }
                     //********************************************CARGAR PARA EDITAR *******************************
 
@@ -51,7 +68,7 @@ class ProductoForm extends Component {
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
                     <td>{documento.creado}</td>
-                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> </td>
+                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td>
 
                 </tr>
             )
@@ -87,7 +104,7 @@ class ProductoForm extends Component {
 
         } else{
             //   console.log({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()})                
-            db.collection('productos').add({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()})
+            db.collection('productos').add({...datosMovimmientos, creado: moment().unix()})
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
                 alert('Insertado correctamente')    
@@ -102,10 +119,25 @@ class ProductoForm extends Component {
         
         // console.log (datosMovimmientos)
     }
+                    //******************************BORRAR PRODUCTO *************************************************
+    borrarProducto = (productoId) =>{
+        console.log(productoId)
+        db.collection('productos').doc(productoId).delete()
+        .then(()=>{
+            // se ejecuta cuando se inserto con exito
+            alert('Eliminado correctamente')    
+
+        })
+        .catch((error)=>{
+            // se ejecuta cuando sucede un error 
+            alert(error)
+        })
+    }
+
 
 
                     //******************************CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
-    obtenerMovimientos = ()=>{
+    obtenerProducto = ()=>{
             let listaTemporal = []
             let metodoDesuscribirse = db.collection('productos').orderBy('creado')
             .onSnapshot((snap)=>{
@@ -117,6 +149,7 @@ class ProductoForm extends Component {
                         precioCompra : documento.data().precioCompra,
                         precioVenta : documento.data().precioVenta,
                         // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
+                        creado : moment.unix(documento.data().creado).format("DD/MM/YYYY")
                     }
                     listaTemporal.push(producto)
                     console.log (producto)
