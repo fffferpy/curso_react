@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
+import moment from 'moment';
 
-
+// *********************************COMENTARIO ************************
                     //  *************************STATES*********************
 
 class ProductoCompra extends Component {
@@ -111,7 +112,10 @@ class ProductoCompra extends Component {
             })    
         } else{                                 // PARA GUARDAR
      
-            db.collection('movimientos').add({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()
+            db.collection('movimientos').add({
+                ...datosMovimmientos, 
+                // creado: firebase.firestore.FieldValue.serverTimestamp()
+                creado : moment().unix()
             })
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
@@ -137,9 +141,11 @@ class ProductoCompra extends Component {
                 snap.forEach((documento)=>{
                     listaTemporal.push({
                         id : documento.id,
+                        creadoFormateado : moment.unix(documento.data().creado).format('DD-MM-YYYY'), 
                         ...documento.data()
                     })
                 })
+                console.log(listaTemporal)
                 this.setState({
                     listaMovimientos : listaTemporal,
                     metodoDesuscribirse : metodoDesuscribirse
