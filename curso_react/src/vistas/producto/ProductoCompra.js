@@ -11,13 +11,14 @@ import {confirmAlert} from 'react-confirm-alert';
 class ProductoCompra extends Component {
     state={
         fecha:'',
-        producto:'champion',
+        producto:'01',
         codigo:0,
         precioCompra:0,
         cantidad:0,
         tipoMovimiento: 1,
         estado: 1,            // estado 1 = activo / 0 = anulado
         listaMovimientos: [],
+        listaProductos: [],
         metodoDesuscribirse:null,
         productoEditarId: null
     }
@@ -67,6 +68,29 @@ class ProductoCompra extends Component {
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
         this.obtenerMovimientos()
+        this.obtenerProductos() 
+    }
+
+
+    obtenerProductos =()=>{
+        let listaProductosTemporal = []
+        db.collection('productos').get()
+        .then((productos)=>{
+            productos.forEach((producto)=>{
+                listaProductosTemporal.push({
+                    id : producto.id,
+                    ...producto.data()      
+                    // producto : producto.producto  // ES LO MISMO QUE LA LINEA ANTERIOR
+                })
+            })
+            this.setState({
+                listaProductos : listaProductosTemporal
+            })
+            console.log(this.state.listaProductos)
+        })
+        .catch((error)=>{
+            alert(error)
+        })
     }
 
 
@@ -88,6 +112,15 @@ class ProductoCompra extends Component {
             )
         })
     }
+
+renderItems =() => {
+    return this.state.listaProductos.map((producto)=>{
+        return (
+        <option key={producto.id} value = {producto.producto}>{producto.producto}</option>
+        )
+    }) 
+}
+
                         //********************************************CARGAR PARA EDITAR *******************************
 
     cargarForm =(documentoId)=>{
@@ -218,11 +251,9 @@ class ProductoCompra extends Component {
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select" name="producto" value = {this.state.producto} onChange={this.capturarTecla}>
-                                <option value = 'champion'>champion</option>
-                                <option value = 'zapatilla'> zapatilla</option>
-                                <option value = 'media'>media</option>
-                                <option value = 'Crocs adultos 40-45 Hombres'> Crocs adultos 40-45 Hombres</option>
+                                <Form.Control as="select" name="producto" value = {this.state.producto}  onChange={this.capturarTecla}>
+                                <option key= '01' value = '01'>Seleccione un producto</option>
+                                    {this.renderItems()}
                                 </Form.Control>
                         </Form.Group>
                     </Col>

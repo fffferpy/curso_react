@@ -175,9 +175,11 @@ class ProductoForm extends Component {
     }
 
                     // ************************************ANTES DE DESMONTAR EL COMPONENTE******************************************************
-    componentWillUnmount(){
-        this.state.metodoDesuscribirse()
-    }
+     componentWillUnmount(){
+         if (this.state.metodoDesuscribirse){
+              this.state.metodoDesuscribirse()
+         }}
+    
 
                     // ************************************RENDERIZADO **************************************************************************
     render() {
