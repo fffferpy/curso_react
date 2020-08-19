@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
+import { ToastContainer, toast } from 'react-toastify';
 
 // *********************************COMENTARIO ************************
                     //  *************************STATES*********************
@@ -167,7 +168,16 @@ renderItems =() => {
             //    db.collection("movimientos").doc(`${this.state.productoEditarId}`).update({
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
-                alert('Editado correctamente')  
+                // alert('Editado correctamente')  
+                toast.success('Editado correctamente', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
                 this.limpiarCampos()  
             })
             .catch((error)=>{
@@ -184,7 +194,16 @@ renderItems =() => {
             })
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
-                alert('Insertado correctamente')  
+                // alert('Insertado correctamente')  
+                toast.success('Insertado correctamente', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
                 this.limpiarCampos()  
             })
             .catch((error)=>{
@@ -319,6 +338,7 @@ renderItems =() => {
                         </Table>
                 </Col>
             </Row>
+            <ToastContainer />
               
                
                 
