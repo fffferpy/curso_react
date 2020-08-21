@@ -17,7 +17,7 @@ render(){
         <ExcelSheet data={this.props.listaMovimientos} name="Movimientos">
         <ExcelColumn label="Codigo" value="codigo"/>
         <ExcelColumn label="Producto" value="producto"/>
-        <ExcelColumn label="Precio Compra" value="precioCompra"/>
+        {this.props.tipoMovimiento=='1'?<ExcelColumn label="Precio Compra" value="precioCompra"/>:<ExcelColumn label="Precio Venta" value="precioVenta"/>}
         <ExcelColumn label="Cantidad" value="cantidad"/>
         <ExcelColumn label="Fecha" value="fecha"/>
 

@@ -5,6 +5,7 @@ import firebase, {db} from '../../config/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
+import Informe from '../../componentes/Informe'
 
                     //  *************************STATES*********************
 
@@ -316,7 +317,11 @@ class ProductoVenta extends Component {
             <Row>
                     <Col md={6}>
                         <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="warning"onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                    </Col>
+                    <Col >
+                         <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/>           
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
