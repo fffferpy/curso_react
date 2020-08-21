@@ -5,6 +5,7 @@ import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
 import { ToastContainer, toast } from 'react-toastify';
+import Informe from '../../componentes/Informe'
 
 // *********************************COMENTARIO ************************
                     //  *************************STATES*********************
@@ -13,8 +14,8 @@ class ProductoCompra extends Component {
     state={
         fecha:'',
         producto:'01',
-        codigo:0,
-        precioCompra:0,
+        codigo:'0',
+        precioCompra:'0',
         cantidad:0,
         tipoMovimiento: 1,
         estado: 1,            // estado 1 = activo / 0 = anulado
@@ -311,9 +312,12 @@ renderItems =() => {
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={6}>
-                    <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                    <Button variant="warning"onClick={() => {this.limpiarCampos()}}>Limpiar Cammpos</Button>{' '}
+                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="warning"onClick={() => {this.limpiarCampos()}}>Limpiar Cammpos</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                    </Col>
+                    <Col >
+                         <Informe listaMovimientos = {this.state.listaMovimientos}/>           
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
