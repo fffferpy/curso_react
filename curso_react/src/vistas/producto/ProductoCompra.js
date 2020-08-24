@@ -312,9 +312,9 @@ renderItems =() => {
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={8}>
-                        <Button variant="primary" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="warning" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
-                        <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                        <Button variant="primary" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
+                        <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/>           
@@ -324,7 +324,7 @@ renderItems =() => {
             <br/>
             <Row>
                 <Col>
-                        <Table striped bordered hover>
+                        <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
                                             <th>Código</th>

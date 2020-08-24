@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
+import Informe from '../../componentes/Informe'
 
 
                     //  *************************STATES*********************
@@ -221,16 +222,19 @@ class ProductoForm extends Component {
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
                         <Col md={6}>
-                            <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                            <Button variant="warning" onClick={() => {this.limpiarCampos()}}>Limpiar campos</Button>{' '}
-                            <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                            <Button variant="primary" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                            <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar campos</Button>{' '}
+                            <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
+                        <Col >
+                         <Informe listaMovimientos = {this.state.listaMovimientos} />           
+                    </Col>
                 </Row>
                 <br/>
                 {/* //  ********************************************TABLA****************************************** */}
                 <Row>
                     <Col>
-                            <Table striped bordered hover>
+                            <Table striped bordered hover size="sm">
                                         <thead>
                                             <tr>
                                                 <th>Producto</th>
