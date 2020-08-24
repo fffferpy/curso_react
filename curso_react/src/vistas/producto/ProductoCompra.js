@@ -107,7 +107,7 @@ class ProductoCompra extends Component {
                     <td>{documento.precioCompra}</td>
                     <td>{documento.cantidad}</td>
                     <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
-                    <td>{documento.estado==1?<Badge pill variant="success"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
+                    <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
                     <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td>
 
                 </tr>
@@ -312,8 +312,8 @@ renderItems =() => {
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={8}>
-                        <Button variant="primary" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
+                        <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
                         <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                     <Col md={4}>

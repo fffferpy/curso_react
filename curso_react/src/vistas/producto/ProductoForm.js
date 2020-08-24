@@ -222,8 +222,8 @@ class ProductoForm extends Component {
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
                         <Col md={6}>
-                            <Button variant="primary" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                            <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar campos</Button>{' '}
+                            <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                            <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
                             <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
                         <Col >
