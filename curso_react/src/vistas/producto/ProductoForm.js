@@ -12,7 +12,7 @@ import Informe from '../../componentes/Informe'
 class ProductoForm extends Component {
     state={
         producto:'',
-        // codigo:0,
+        codigo:0,
         precioCompra:0,
         precioVenta:0,
         listaMovimientos: [],
@@ -52,6 +52,7 @@ class ProductoForm extends Component {
             producto: snap.data().producto,
             precioCompra: snap.data().precioCompra,
             precioVenta: snap.data().precioVenta,
+            codigo : snap.data().codigo,
             productoEditarId : snap.id
           })
          })
@@ -69,6 +70,7 @@ class ProductoForm extends Component {
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
                     <td>{documento.creado}</td>
+                    <td>{documento.codigo}</td>
                     <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td>
 
                 </tr>
@@ -88,6 +90,8 @@ class ProductoForm extends Component {
             producto:this.state.producto,
             precioCompra:this.state.precioCompra,
             precioVenta:this.state.precioVenta,
+            codigo:this.state.codigo,
+            
         }
         if(this.state.productoEditarId) {
                         
@@ -149,6 +153,7 @@ class ProductoForm extends Component {
                         producto : documento.data().producto,
                         precioCompra : documento.data().precioCompra,
                         precioVenta : documento.data().precioVenta,
+                        codigo : documento.data().codigo,
                         // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
                         creado : moment.unix(documento.data().creado).format("DD/MM/YYYY")
                     }
@@ -171,6 +176,7 @@ class ProductoForm extends Component {
             producto:'',
             precioCompra:0,
             precioVenta:0,
+            codigo:0,
             productoEditarId: null
         })
     }
@@ -214,6 +220,13 @@ class ProductoForm extends Component {
                                     
                                     </Form.Group>
                         </Col>
+                        <Col md={1}>
+                           <Form.Group>
+                                <Form.Label>Código</Form.Label>
+                                <Form.Control type="number" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
+                               
+                            </Form.Group>
+                    </Col>
                     
                     </Row>
                                 
@@ -241,6 +254,7 @@ class ProductoForm extends Component {
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
                                                 <th>Creado</th>
+                                                <th>Codigo</th>
                                                 {/* <th>Entradas</th>
                                                 <th>Salidas</th>
                                                 <th>Stock</th> */}
