@@ -311,12 +311,12 @@ renderItems =() => {
 
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
-                    <Col md={6}>
-                        <Button variant="primary"onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="warning"onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
+                    <Col md={8}>
+                        <Button variant="primary" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button variant="warning" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
                         <Button variant="danger" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
-                    <Col >
+                    <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/>           
                     </Col>
             </Row>
