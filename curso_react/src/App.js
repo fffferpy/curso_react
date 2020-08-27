@@ -7,23 +7,65 @@ import ProductoForm from './vistas/producto/ProductoForm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
 import ProductoFormbk from './vistas/producto/ProductoFormbk';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Login from './vistas/auth/Login';
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {auth} from './config/firebase'; 
 
 
 class App extends Component {
+  state={
+    usuarioLogeado: false,
+    email: ''
+  }
+componentDidMount(){
+  this.authListener()
+}
+
+
+  authListener = () => {
+    auth.onAuthStateChanged((user) => {
+      if(user) {
+        console.log('Email usuario: ', user.email)
+        console.log('Nombre usuario: ', user.displayName)
+        console.log('Id usuario: ', user.uid)
+
+         // User is signed in.
+          this.setState({usuarioLogeado: true, email : user.email})
+  
+      } else {
+        console.log('Login incorrecto/logout: ', user)
+          // User is signed out.
+          this.setState({usuarioLogeado: false})
+      }
+  
+    })
+  }
+
+  logear = (email, password) => {
+    // console.log('metodo autenticacion')
+    auth.signInWithEmailAndPassword(email, password)
+    .catch(error => {
+      alert(error)
+    })
+  }
+  
+  salir =() => {
+    auth.signOut();
+  }
+
  render() {
    return(
      <Router>
         <Container>
-          <Menu/>
+         {this.state.usuarioLogeado== true? <Menu salir = {this.salir} email = {this.state.email}/> : null}
           <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route exact path="/productos" component={ProductoForm}/>
-              {/* <Route exact path="/productos" component={ProductoList}/> */}
-              <Route exact path="/productos/nuevo" component={ProductoFormbk}/>
-              <Route exact path="/productos/editar/:productoId" component={ProductoFormbk}/>
-              <Route  path="/productos/compras" component={ProductoCompra} />
-              <Route  path="/productos/ventas" component={ProductoVenta} />
+              <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
+              <PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>
+              <PrivateRoute exact path="/productos/nuevo" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
+              <PrivateRoute exact path="/productos/editar/:productoId" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
+              <PrivateRoute path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />
+              <PrivateRoute path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />
+              <PublicRoute  path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
           </Switch>
         </Container>
      </Router>
@@ -31,4 +73,18 @@ class App extends Component {
  }
 }
 
+const PrivateRoute = ({component:Component, usuarioLogeado,  ...rest}) => {
+  return(
+    <Route {...rest} render={(props) => usuarioLogeado === true ? <Component {...props} /> : <Redirect to={{pathname: '/'}} />}/>
+    // <Route {...rest} render={()=> {usuarioLogeado===true? <Component />: <Redirect/>}}/>
+  )
+}
+
+const PublicRoute = ({component: Component, usuarioLogeado, logear, ...rest }) => {
+  return (
+    <Route 
+      {...rest} render={(props) => usuarioLogeado === false  ? <Component { ...props}  logear= {logear}/>: <Redirect to={{pathname: '/home'}}/>}
+    />
+  )
+}
 export default App;

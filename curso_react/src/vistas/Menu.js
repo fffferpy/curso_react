@@ -34,6 +34,12 @@ class Home extends Component {
                                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                      </NavDropdown> 
                                 </Nav>
+                                <Navbar.Collapse className="justify-content-end">
+                                    <Navbar.Text>
+                                    Signed in as: {this.props.email}
+                                    <a href='#' onClick={this.props.salir}>      Salir</a>
+                                    </Navbar.Text>
+                                </Navbar.Collapse>
                                 {/* <Form inline>
                                     <FormControl type="text" placeholder="Escribe el texto" className="mr-sm-2" />
                                     <Button variant="light">Buscar</Button>
