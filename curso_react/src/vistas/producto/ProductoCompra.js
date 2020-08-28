@@ -22,8 +22,16 @@ class ProductoCompra extends Component {
         listaMovimientos: [],
         listaProductos: [],
         metodoDesuscribirse:null,
-        productoEditarId: null
+        productoEditarId: null,
+        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
+        filtroCodigo:'',
+        filtroProducto:'' 
     }
+
+    filtrar = () =>{
+         this.setState({mostrarFiltro:!this.state.mostrarFiltro})
+    }
+
     limpiarCampos = () => {
         this.setState({
             fecha:'',
@@ -98,7 +106,12 @@ class ProductoCompra extends Component {
 
                     // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
-        return this.state.listaMovimientos.map((documento) => {
+        return this.state.listaMovimientos
+        .filter((documento)=>{
+            return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
+            && (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
+        }) 
+        .map((documento) => {
             return (
                 // key es un identificador unico
                     <tr key={documento.id}> 
@@ -314,6 +327,7 @@ renderItems =() => {
                     <Col md={8}>
                         <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                         <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
+                        <Button variant="info" size="sm"  onClick={this.filtrar}>Filtrar</Button>{' '}
                         <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                     <Col md={4}>
@@ -327,8 +341,8 @@ renderItems =() => {
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
-                                            <th>Producto</th>
+                                            <th>Código  {this.state.mostrarFiltro==true?<Form.Control type="text" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
                                             <th>Fecha</th>
