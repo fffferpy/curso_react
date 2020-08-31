@@ -235,9 +235,11 @@ class ProductoForm extends Component {
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
                         <Col md={6}>
-                            <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                            <Button variant="warning" size="sm"  onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
-                            <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                            <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                            <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
+                            <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
+                            <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+
                         </Col>
                         <Col >
                          <Informe listaMovimientos = {this.state.listaMovimientos} />           

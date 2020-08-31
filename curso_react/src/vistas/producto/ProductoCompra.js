@@ -7,7 +7,6 @@ import {confirmAlert} from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import Informe from '../../componentes/Informe'
 
-// *********************************COMENTARIO ************************
                     //  *************************STATES*********************
 
 class ProductoCompra extends Component {
@@ -274,7 +273,7 @@ renderItems =() => {
                     <Col md={3}>
                         <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
+                                <Form.Control type="date"  size="sm" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -284,7 +283,7 @@ renderItems =() => {
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select" name="producto" value = {this.state.producto}  onChange={this.capturarTecla}>
+                                <Form.Control as="select"  size="sm"  name="producto" value = {this.state.producto}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
@@ -294,7 +293,7 @@ renderItems =() => {
                     <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
-                                <Form.Control type="number" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm"  name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
                                
                             </Form.Group>
                     </Col>
@@ -302,7 +301,7 @@ renderItems =() => {
                     <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
-                                <Form.Control type="number" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
                               
                             </Form.Group>
                     </Col>
@@ -310,7 +309,7 @@ renderItems =() => {
 
                             <Form.Group>
                                 <Form.Label>Cantidad</Form.Label>
-                                <Form.Control type="number" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -325,11 +324,14 @@ renderItems =() => {
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={8}>
-                        <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
-                        <Button variant="info" size="sm"  onClick={this.filtrar}>Filtrar</Button>{' '}
-                        <Button variant="danger" size="sm"  onClick={() => {this.props.history.goBack()}}>Volver</Button>
-                    </Col>
+                        <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                    {/* <Button size="sm" style={{ backgroundColor:'#7ac7bf', borderColor:'#7ac7bf', borderWidth:'5px', color:'#000'}}  onClick={() => {this.guardar()}}>Guardar</Button>{' '} */}
+                    {/* <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '} */}
+                        <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
+                        <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
+                        {/* <Button style={{ backgroundColor:'#8b9dc3', borderColor:'#8b9dc3', color:'#fff'}} size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button> */}
+                        <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                        </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/>           
                     </Col>
@@ -341,8 +343,8 @@ renderItems =() => {
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código  {this.state.mostrarFiltro==true?<Form.Control type="text" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
-                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Código  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
                                             <th>Fecha</th>
