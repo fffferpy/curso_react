@@ -1,6 +1,7 @@
 import React from  'react'
 import {Row, Col, Form, Button, Card} from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify';
+import {auth, db} from '../../config/firebase'
 
 
 
@@ -15,7 +16,13 @@ validarDatos=()=>{
     if(this.state.password!='' && this.state.repassword!='' && this.state.email != ''){
         // console.log(this.state)
         if(this.state.password==this.state.repassword){
-            
+          auth.createUserWithEmailAndPassword(this.state.email, this.state.password) 
+          .then(()=>{
+              const userId = auth.currentUser.uid;
+              console.log('ID del usuario actual: ', userId)
+              db.collection('usuarios').doc(userId).set({email:this.state.email, password:this.state.password})
+            //   auth.signOut()
+          })
         }else {alert('Datos no coinciden.')
 
         }
