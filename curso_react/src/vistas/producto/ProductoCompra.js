@@ -12,7 +12,7 @@ import Informe from '../../componentes/Informe'
 class ProductoCompra extends Component {
     state={
         fecha:'',
-        producto:'01',
+        producto:'',
         codigo:'0',
         precioCompra:'0',
         cantidad:0,
