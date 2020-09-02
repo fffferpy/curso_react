@@ -8,8 +8,10 @@ import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
 import ProductoFormbk from './vistas/producto/ProductoFormbk';
 import Login from './vistas/auth/Login';
+import Registro from './vistas/auth/Registro';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import {auth} from './config/firebase'; 
+
 
 
 class App extends Component {
@@ -64,9 +66,10 @@ componentDidMount(){
               <PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>
               <PrivateRoute exact path="/productos/nuevo" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
               <PrivateRoute exact path="/productos/editar/:productoId" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
-              <PrivateRoute path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />
-              <PrivateRoute path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />
-              <PublicRoute  path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
+              <PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />
+              <PrivateRoute exact path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />
+              <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
+              <PublicRoute  exact path="/registro" component={Registro} usuarioLogeado={this.state.usuarioLogeado}/>
           </Switch>
         </Container>
      </Router>

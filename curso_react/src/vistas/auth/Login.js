@@ -1,5 +1,6 @@
 import React from  'react'
-import {Row, Col, Form, Button, Card} from 'react-bootstrap'
+import {Row, Col, Form, Button, Card,} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 
 
@@ -14,6 +15,9 @@ capturarTecla=(evento)=>{
 login =() =>{
     // console.log(this.state)
     this.props.logear(this.state.email, this.state.password)
+}
+registro = () => {
+    this.props.history.push('/registro')
 }
 
     render() {
@@ -34,9 +38,11 @@ login =() =>{
                                     </Form.Group>
                                 </Form>
                                 
-                                <Button style={{ backgroundColor:'#bf4458', borderColor:'#000', borderWidth:'5px', color:'#000'}} type="submit" onClick={this.login}>
+                                <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} type="submit" onClick={this.login}>
                                     Entrar
                                 </Button>
+                                <br/>
+                                <Link to={'/registro'} >Registrarse</Link>
                             </Card.Body>
                         </Card>
 
