@@ -24,7 +24,8 @@ class ProductoCompra extends Component {
         productoEditarId: null,
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
-        filtroProducto:'' 
+        filtroProducto:'',
+        titulo:''
     }
 
     filtrar = () =>{
@@ -63,7 +64,7 @@ class ProductoCompra extends Component {
       };
 
     anularMovimiento =(movimientoId) => {
-        console.log(movimientoId)
+        // console.log(movimientoId)
         let datosNuevos = {
             estado : 0
         }
@@ -77,7 +78,9 @@ class ProductoCompra extends Component {
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
         this.obtenerMovimientos()
-        this.obtenerProductos() 
+        this.obtenerProductos()
+        // this.setState({titulo:'COMPRA'})
+        // console.log(titulo)
     }
 
 
@@ -95,7 +98,7 @@ class ProductoCompra extends Component {
             this.setState({
                 listaProductos : listaProductosTemporal
             })
-            console.log(this.state.listaProductos)
+            // console.log(this.state.listaProductos)
         })
         .catch((error)=>{
             alert(error)
@@ -138,10 +141,10 @@ renderItems =() => {
                         //********************************************CARGAR PARA EDITAR *******************************
 
     cargarForm =(documentoId)=>{
-         console.log (documentoId)
+        //  console.log (documentoId)
          db.collection('movimientos').doc(`${documentoId}`).get()
          .then((snap)=>{
-           console.log(snap.data())
+        //    console.log(snap.data())
            this.setState({
              fecha : snap.data().fecha,
              codigo : snap.data().codigo,  
@@ -151,7 +154,7 @@ renderItems =() => {
              // productoEditarId : snap.id   *******esto igual funciona
              productoEditarId : documentoId
          })
-         console.log(this.state)
+        //  console.log(this.state)
           })
          .catch((error)=>{
              alert(error)
@@ -176,7 +179,7 @@ renderItems =() => {
             estado: this.state.estado
         }
         if (this.state.productoEditarId){       // PARA EDITAR 
-            console.log(this.state.productoEditarId)
+            // console.log(this.state.productoEditarId)
             db.collection('movimientos').doc(`${this.state.productoEditarId}`).update(datosMovimmientos)
             //    db.collection("movimientos").doc(`${this.state.productoEditarId}`).update({
             .then(()=>{
@@ -196,7 +199,7 @@ renderItems =() => {
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
                 alert(error)
-                console.log(error)
+                // console.log(error)
             })    
         } else{                                 // PARA GUARDAR
      
@@ -242,14 +245,14 @@ renderItems =() => {
                         ...documento.data()
                     })
                 })
-                console.log(listaTemporal)
+                // console.log(listaTemporal)
                 this.setState({
                     listaMovimientos : listaTemporal,
                     metodoDesuscribirse : metodoDesuscribirse
                 })
             },(error)=>{
                 alert(error)
-                console.log(error)
+                // console.log(error)
             })
     }
 
@@ -266,9 +269,9 @@ renderItems =() => {
             // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
             <>      
             <Form>
-                <Row style={{marginTop:"10px"}}> 
+                {/* <Row style={{marginTop:"10px"}}> 
                     <Col><h2>COMPRAS</h2></Col>
-                </Row>
+                </Row> */}
                 <Row>
                     <Col md={3}>
                         <Form.Group>
@@ -325,11 +328,8 @@ renderItems =() => {
             <Row>
                     <Col md={8}>
                         <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                    {/* <Button size="sm" style={{ backgroundColor:'#7ac7bf', borderColor:'#7ac7bf', borderWidth:'5px', color:'#000'}}  onClick={() => {this.guardar()}}>Guardar</Button>{' '} */}
-                    {/* <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '} */}
                         <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                         <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
-                        {/* <Button style={{ backgroundColor:'#8b9dc3', borderColor:'#8b9dc3', color:'#fff'}} size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button> */}
                         <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
                     <Col md={4}>
@@ -343,7 +343,9 @@ renderItems =() => {
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Código  {this.state.mostrarFiltro==true?
+                                            <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />
+                                            :null}</th>
                                             <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>

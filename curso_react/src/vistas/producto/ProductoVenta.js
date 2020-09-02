@@ -21,9 +21,18 @@ class ProductoVenta extends Component {
         listaMovimientos: [],
         metodoDesuscribirse:null,
         productoEditarId: null,
-        estado : 1
+        filtroCodigo:'',
+        estado : 1,
+        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
+        filtroProducto:'' 
        
     }
+
+    //************************INVIERTE EL VALOR DEL STATE PARA MOSTRAR FILTRO */
+    filtrar = () =>{
+        this.setState({mostrarFiltro:!this.state.mostrarFiltro})
+    }
+
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
@@ -104,9 +113,16 @@ class ProductoVenta extends Component {
     }
 
                     // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
-     renderListaMovimientos = () => {
-         return this.state.listaMovimientos.map((documento) => {
-             return (
+    //  renderListaMovimientos = () => {
+    //      return this.state.listaMovimientos.map((documento) => {
+        renderListaMovimientos = () => {
+            return this.state.listaMovimientos
+            .filter((documento)=>{
+                return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
+                && (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
+            }) 
+            .map((documento) => {         
+    return (
                  // key es un identificador unico
                      <tr key={documento.id}> 
                      <td>{documento.codigo}</td>
@@ -268,7 +284,7 @@ class ProductoVenta extends Component {
                     <Col md={3}>
                         <Form.Group>
                                 <Form.Label>Fecha</Form.Label>
-                                <Form.Control type="date" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
+                                <Form.Control type="date" size="sm" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -278,7 +294,7 @@ class ProductoVenta extends Component {
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select" name="producto" value = {this.state.producto}onChange={this.capturarTecla}>
+                                <Form.Control as="select"  size="sm" name="producto" value = {this.state.producto}onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
@@ -288,7 +304,7 @@ class ProductoVenta extends Component {
                     <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
-                                <Form.Control type="number" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
                                
                             </Form.Group>
                     </Col>
@@ -296,7 +312,7 @@ class ProductoVenta extends Component {
                     <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Venta</Form.Label>
-                                <Form.Control type="number" name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
                               
                             </Form.Group>
                     </Col>
@@ -304,7 +320,7 @@ class ProductoVenta extends Component {
 
                         <Form.Group>
                             <Form.Label>Cantidad</Form.Label>
-                            <Form.Control type="number" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
+                            <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
                             
                         </Form.Group>                         
 
@@ -315,10 +331,11 @@ class ProductoVenta extends Component {
 
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
-                    <Col md={6}>
-                        <Button variant="info" size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                        <Button variant="warning" size="sm" onClick={() => {this.limpiarCampos()}}>Limpiar Campos</Button>{' '}
-                        <Button variant="danger" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                    <Col md={8}>
+                    <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
+                        <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
+                        <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                     <Col >
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/>           
@@ -331,8 +348,13 @@ class ProductoVenta extends Component {
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código</th>
-                                            <th>Producto</th>
+                                            {/* <th>Código</th> */}
+                                            <th>Código  {this.state.mostrarFiltro==true?
+                                            <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />
+                                            :null}
+                                            </th>
+                                            {/* <th>Producto</th> */}
+                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                             <th>Precio Venta</th>
                                             <th>Cantidad</th>
                                             <th>Fecha</th>

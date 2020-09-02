@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
-import Informe from '../../componentes/Informe'
+import Informe from '../../componentes/Informe';
+import { MdDeleteForever, MdCreate } from "react-icons/md";
 
 
                     //  *************************STATES*********************
@@ -17,9 +18,17 @@ class ProductoForm extends Component {
         precioVenta:0,
         listaMovimientos: [],
         metodoDesuscribirse:null,
-        productoEditarId: null
+        productoEditarId: null,
+        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
+        filtroCodigo:'',
+        filtroProducto:'' 
        
     }
+
+    filtrar = () =>{
+        this.setState({mostrarFiltro:!this.state.mostrarFiltro})
+   }
+
     confirmarAccion = (productoId) => {
         confirmAlert({
           title: 'Accion borrar',
@@ -62,7 +71,11 @@ class ProductoForm extends Component {
     }
                     //*********************************************RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
-        return this.state.listaMovimientos.map((documento) => {
+        return this.state.listaMovimientos
+        .filter((documento)=>{
+            return (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
+        }) 
+        .map((documento) => {
             return (
                 // key es un identificador unico
                 <tr key={documento.producto}> 
@@ -71,8 +84,12 @@ class ProductoForm extends Component {
                     <td>{documento.precioVenta}</td>
                     <td>{documento.creado}</td>
                     <td>{documento.codigo}</td>
-                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td>
+                    {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
+                    {/* FcEditImage */}
+                    {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
+                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
 
+                    
                 </tr>
             )
         })
@@ -192,38 +209,41 @@ class ProductoForm extends Component {
     render() {
         return (
             // *************************************** ESTO ES IGUAL A <div> *********************
-            <>      
+            // <div style={{backgroundColor:"#3b5998"}}>      
+            <div>      
+
                 <Form>
-                    <Row style={{marginTop:"10px"}}> 
-                        <Col><h2>PRODUCTOS</h2></Col>
+                    <Row style={{marginTop:"10px",backgroundColor:"#3b5998", color:"#fff",marginBottom:"0%"}}> 
+                    {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><h2>PRODUCTOS</h2></Col> */}
+                    <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><p style={{ fontFamily:"calibri"}}>PRODUCTOS</p></Col>
                     </Row>
                     <Row>
                     
                         <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>Producto</Form.Label>
-                                        <Form.Control type="text" name="producto" value = {this.state.producto}onChange={this.capturarTecla} />
+                                        <Form.Control type="text" size="sm"  name="producto" value = {this.state.producto}onChange={this.capturarTecla} />
                                     
                                     </Form.Group>
                         </Col> 
                         <Col md={2}>
                                     <Form.Group>
                                         <Form.Label>Precio Compra</Form.Label>
-                                        <Form.Control type="number" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
+                                        <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
                                     
                                     </Form.Group>
                         </Col>
                         <Col md={2}>
                                     <Form.Group>
                                         <Form.Label>Precio precioVenta</Form.Label>
-                                        <Form.Control type="number" name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
+                                        <Form.Control type="number" size="sm"  name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
                                     
                                     </Form.Group>
                         </Col>
                         <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
-                                <Form.Control type="number" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
                                
                             </Form.Group>
                     </Col>
@@ -234,7 +254,7 @@ class ProductoForm extends Component {
 
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
-                        <Col md={6}>
+                        <Col md={8}>
                             <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                             <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                             <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
@@ -252,7 +272,8 @@ class ProductoForm extends Component {
                             <Table striped bordered hover size="sm">
                                         <thead>
                                             <tr>
-                                                <th>Producto</th>
+                                                {/* <th>Producto</th> */}
+                                                <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
                                                 <th>Creado</th>
@@ -272,7 +293,7 @@ class ProductoForm extends Component {
               
                
                 
-            </>
+            </div>
         )
     }
 }

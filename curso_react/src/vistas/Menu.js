@@ -3,8 +3,15 @@ import { Row, Col,Navbar, Nav, NavDropdown, } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 // const logo = require('./assets/crm.gif') 
 // const logo = require('./assets/lolilogo2.png') 
-class Home extends Component {
-    render(){
+class Menu extends Component {
+    state = {
+        titulo : 'INICIO'
+    }
+    definirTitulo = (titulo)=>{
+        console.log(titulo)
+        this.setState({titulo:titulo})
+    }
+      render(){
         return(
             <div>
                 {/* Menu */}
@@ -17,10 +24,10 @@ class Home extends Component {
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
-                                <LinkContainer exact to="/"><Nav.Link >Inicio</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/productos"><Nav.Link >Stock</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/productos/compras"><Nav.Link >Compras</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/productos/ventas"><Nav.Link >Ventas</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >Inicio</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
@@ -34,12 +41,19 @@ class Home extends Component {
                                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                      </NavDropdown> 
                                 </Nav>
+                                {/* <Navbar.Collapse className="justify-content-center">
+                                <h2>{this.state.titulo}  </h2>                 */}
+                                    {/* <Navbar.Text>
+                                    {this.state.titulo}                  
+                                    </Navbar.Text> */}
+                                {/* </Navbar.Collapse> */}
                                 <Navbar.Collapse className="justify-content-end">
                                     <Navbar.Text>
-                                    Signed in as: {this.props.email}
-                                    <a href='#' onClick={this.props.salir}>      Salir</a>
+                                    Signed in as: {this.props.atributoEmail}
+                                    <a href='#' onClick={this.props.metodoSalir}>      Salir</a>
                                     </Navbar.Text>
                                 </Navbar.Collapse>
+                              
                                 {/* <Form inline>
                                     <FormControl type="text" placeholder="Escribe el texto" className="mr-sm-2" />
                                     <Button variant="light">Buscar</Button>
@@ -57,4 +71,4 @@ class Home extends Component {
     }
 
 }
-export default Home; 
+export default Menu; 

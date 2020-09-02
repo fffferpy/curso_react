@@ -15,7 +15,8 @@ import {auth} from './config/firebase';
 class App extends Component {
   state={
     usuarioLogeado: false,
-    email: ''
+    email: '',
+    titulo:''
   }
 componentDidMount(){
   this.authListener()
@@ -57,7 +58,7 @@ componentDidMount(){
    return(
      <Router>
         <Container>
-         {this.state.usuarioLogeado== true? <Menu salir = {this.salir} email = {this.state.email}/> : null}
+         {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email}/> : null}
           <Switch>
               <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
               <PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>
