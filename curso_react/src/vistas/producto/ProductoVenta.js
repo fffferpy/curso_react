@@ -277,8 +277,8 @@ class ProductoVenta extends Component {
             // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
             <>      
             <Form>
-                <Row style={{marginTop:"10px"}}> 
-                    <Col><h2>VENTAS</h2></Col>
+                 <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"43%"}}> 
+                    <h4>VENTAS</h4>
                 </Row>
                 <Row>
                     <Col md={3}>
