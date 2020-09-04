@@ -10,7 +10,7 @@ import ProductoFormbk from './vistas/producto/ProductoFormbk';
 import Login from './vistas/auth/Login';
 import Registro from './vistas/auth/Registro';
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import {auth} from './config/firebase'; 
+import {auth, db} from './config/firebase'; 
 
 
 
@@ -31,9 +31,17 @@ componentDidMount(){
         console.log('Email usuario: ', user.email)
         console.log('Nombre usuario: ', user.displayName)
         console.log('Id usuario: ', user.uid)
-
+        db.collection('usuarios').doc(user.uid).get()
+        .then((user)=>{
+          // console.log(user.data())
+          if(user.data().estado == 0){
+            auth.signOut()
+            alert('Usuario no habilitado')
+          }else{
+            this.setState({usuarioLogeado: true, email : user.email})
+          }
+        })
          // User is signed in.
-          this.setState({usuarioLogeado: true, email : user.email})
   
       } else {
         console.log('Login incorrecto/logout: ', user)

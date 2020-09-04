@@ -20,8 +20,11 @@ validarDatos=()=>{
           .then(()=>{
               const userId = auth.currentUser.uid;
               console.log('ID del usuario actual: ', userId)
-              db.collection('usuarios').doc(userId).set({email:this.state.email, password:this.state.password})
+              db.collection('usuarios').doc(userId).set({email:this.state.email, estado : 0})
             //   auth.signOut()
+          })
+          .catch((error)=>{
+            alert(error)
           })
         }else {alert('Datos no coinciden.')
 
@@ -71,6 +74,10 @@ registro =() =>{
                                 
                                 <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} type="submit" onClick={this.validarDatos}>
                                     Registrarse
+                                </Button>
+                                {' '}
+                                <Button variant = 'danger' type="submit" onClick={()=>this.props.history.goBack()}>
+                                    Volver
                                 </Button>
                             </Card.Body>
                         </Card>
