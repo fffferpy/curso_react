@@ -5,7 +5,9 @@ import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
 import { ToastContainer, toast } from 'react-toastify';
-import Informe from '../../componentes/Informe'
+import Informe from '../../componentes/Informe';
+import { MdDeleteForever, MdCreate } from "react-icons/md";
+
 
                     //  *************************STATES*********************
 
@@ -123,8 +125,8 @@ class ProductoCompra extends Component {
                     <td>{documento.cantidad}</td>
                     <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
-                    <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td>
-
+                    {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
+                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
                 </tr>
             )
         })
@@ -272,14 +274,11 @@ renderItems =() => {
                 {/* <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"43%"}}> 
                     <h4>COMPRAS</h4>
                 </Row> */}
-                <Row>
-                    <Col md={4}>
-                    </Col>
-                    <Col md={4}>
-                       <h4>COMPRAS</h4>
-                    </Col>
-                    <Col md={4}> 
-                    </Col>
+                <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
+                    <Col md = {4}></Col>
+                        <Col><h4>COMPRAS</h4></Col>
+                    <Col md = {4}></Col>
+
                 </Row>
                 <Row>
                     <Col md={3}>

@@ -5,7 +5,9 @@ import firebase, {db} from '../../config/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
-import Informe from '../../componentes/Informe'
+import Informe from '../../componentes/Informe';
+import { MdDeleteForever, MdCreate } from "react-icons/md";
+
 
                     //  *************************STATES*********************
 
@@ -131,7 +133,8 @@ class ProductoVenta extends Component {
                      <td>{documento.cantidad}</td>
                      <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                      <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
-                     <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td>
+                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
+                     <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
 
                  </tr>
              )
@@ -277,8 +280,11 @@ class ProductoVenta extends Component {
             // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
             <>      
             <Form>
-                 <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"43%"}}> 
-                    <h4>VENTAS</h4>
+            <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
+                    <Col md = {5}></Col>
+                        <Col><h4>VENTAS</h4></Col>
+                    <Col md = {5}></Col>
+
                 </Row>
                 <Row>
                     <Col md={3}>

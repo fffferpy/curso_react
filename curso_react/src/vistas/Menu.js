@@ -10,6 +10,8 @@ class Menu extends Component {
     definirTitulo = (titulo)=>{
         console.log(titulo)
         this.setState({titulo:titulo})
+        
+
     }
       render(){
         return(
@@ -28,6 +30,7 @@ class Menu extends Component {
                                 <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
@@ -47,12 +50,13 @@ class Menu extends Component {
                                     {this.state.titulo}                  
                                     </Navbar.Text> */}
                                 {/* </Navbar.Collapse> */}
-                                <Navbar.Collapse className="justify-content-end">
+                                <Navbar.Collapse className="justify-content-center">
                                     <Navbar.Text>
                                     Signed in as: {this.props.atributoEmail}
                                     <a href='#' onClick={this.props.metodoSalir}>      Salir</a>
                                     </Navbar.Text>
                                 </Navbar.Collapse>
+
                               
                                 {/* <Form inline>
                                     <FormControl type="text" placeholder="Escribe el texto" className="mr-sm-2" />
