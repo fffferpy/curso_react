@@ -10,6 +10,8 @@ import ProductoFormbk from './vistas/producto/ProductoFormbk';
 import Login from './vistas/auth/Login';
 import Registro from './vistas/auth/Registro';
 import UsuarioList from './vistas/auth/UsuariosList';
+import Roles from './vistas/auth/Roles';  
+import UsuarioRoles from './vistas/auth/UsuarioRoles';  
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import {auth, db} from './config/firebase'; 
 
@@ -79,6 +81,8 @@ componentDidMount(){
               <PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />
               <PrivateRoute exact path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />
               <PrivateRoute exact path="/usuarios" component={UsuarioList} usuarioLogeado={this.state.usuarioLogeado} />
+              <PrivateRoute exact path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />
+              <PrivateRoute exact path="/usuario/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
               <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
               <PublicRoute  exact path="/registro" component={Registro} usuarioLogeado={this.state.usuarioLogeado}/>
           </Switch>

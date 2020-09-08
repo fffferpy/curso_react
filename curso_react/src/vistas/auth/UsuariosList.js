@@ -3,8 +3,7 @@ import { Row, Col, Button, Table, Badge } from 'react-bootstrap';
 import {db} from '../../config/firebase';
 import {Link} from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert';
-import { MdCheckCircle, MdDeleteForever } from "react-icons/md";
-
+import { MdCheckCircle, MdCreate } from "react-icons/md";
 
 
 class UsuariosList extends Component {
@@ -114,7 +113,7 @@ class UsuariosList extends Component {
                     {/* <td>{documento.estado}</td> */}
                     {/* <td> <p onClick={()=>this.habilitarUsuario(documento.id)}>Editar</p> </td> */}
                     <td> <MdCheckCircle size="19" onClick ={()=>this.cambiarEstado(documento.id)} /> 
-                    {/* <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.inhabilitarUsuario(documento.id)} /> */}
+                    <Link to = {`/usuario/roles/${documento.id}`}> <MdCreate color="#3b5998" size="24"  /> </Link>
                     </td>
 
                 </tr>

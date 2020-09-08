@@ -34,6 +34,7 @@ class Menu extends Component {
                                 <LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >Roles</Nav.Link></LinkContainer>
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}

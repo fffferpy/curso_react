@@ -276,7 +276,7 @@ renderItems =() => {
                 </Row> */}
                 <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
                     <Col md = {4}></Col>
-                        <Col><h4>COMPRAS</h4></Col>
+                        <Col md = {4}><h4>COMPRAS</h4></Col>
                     <Col md = {4}></Col>
 
                 </Row>
