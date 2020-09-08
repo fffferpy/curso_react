@@ -7,6 +7,9 @@ class Menu extends Component {
     state = {
         titulo : 'INICIO'
     }
+    componentDidMount(){
+        console.log('menuProps : ', this.props)
+    }
     definirTitulo = (titulo)=>{
         console.log(titulo)
         this.setState({titulo:titulo})

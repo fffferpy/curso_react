@@ -29,6 +29,7 @@ componentDidMount(){
   authListener = () => {
     auth.onAuthStateChanged((user) => {
       if(user) {
+        let emailUsuario = user.email
         console.log('Email usuario: ', user.email)
         console.log('Nombre usuario: ', user.displayName)
         console.log('Id usuario: ', user.uid)
@@ -39,7 +40,7 @@ componentDidMount(){
             auth.signOut()
             alert('Usuario no habilitado')
           }else{
-            this.setState({usuarioLogeado: true, email : user.email})
+            this.setState({usuarioLogeado: true, email : emailUsuario})
           }
         })
          // User is signed in.
