@@ -10,8 +10,9 @@ export default class UsuarioRoles extends Component {
     }
     componentDidMount(){
         this.obtenerRoles()
+        this.obtenerRolesUsuarios()
     }
-    obtenerRoles=()=>{
+    obtenerRoles=()=>{   // es para crear los checkbox
         let listaTemporal = []
        db.collection('roles').get()
        .then ((snap)=>{
@@ -23,6 +24,16 @@ export default class UsuarioRoles extends Component {
         })
         this.setState({
             listaRoles : listaTemporal
+        })
+       })  
+    }
+    obtenerRolesUsuarios=()=>{   // estos son los roles que tiene el usuario seleccionado
+        let usuarioId = this.props.match.params.usuarioId
+       db.collection('usuarios').doc(usuarioId).get()
+       .then ((usuario)=>{
+           console.log(usuario.data().roles)
+        this.setState({
+            rolesUsuarios : usuario.data().roles
         })
        })  
     }
@@ -68,9 +79,10 @@ export default class UsuarioRoles extends Component {
     }
     renderRoles=()=>{
         return this.state.listaRoles.map((rol) => {
+            let marcar = this.state.rolesUsuarios.includes(`${rol.nombreRol}`);
             return (
                 <Form.Group key={rol.id} >
-                    <Form.Check type="checkbox" label={`${rol.nombreRol}`} name={`${rol.nombreRol}`}  onChange={this.manejarCheckBox}  />
+                    <Form.Check type="checkbox" label={`${rol.nombreRol}`} name={`${rol.nombreRol}`}  onChange={this.manejarCheckBox} checked = {marcar} />
                 </Form.Group> 
             )
         })
