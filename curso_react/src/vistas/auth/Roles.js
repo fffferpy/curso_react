@@ -186,9 +186,9 @@ class Roles extends Component {
                     <h4>COMPRAS</h4>
                 </Row> */}
                 <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
-                    <Col md = {4}></Col>
+                    <Col md = {5}></Col>
                         <Col><h4>ROLES</h4></Col>
-                    <Col md = {4}></Col>
+                    <Col md = {5}></Col>
 
                 </Row>
                 <Row>
