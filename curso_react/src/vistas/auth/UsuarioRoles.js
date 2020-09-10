@@ -32,9 +32,12 @@ export default class UsuarioRoles extends Component {
        db.collection('usuarios').doc(usuarioId).get()
        .then ((usuario)=>{
            console.log(usuario.data().roles)
-        this.setState({
-            rolesUsuarios : usuario.data().roles
-        })
+           if (usuario.data().roles != undefined){
+            this.setState({
+                rolesUsuarios : usuario.data().roles
+            })
+           }
+        
        })  
     }
     manejarCheckBox=(evento)=>{
