@@ -7,9 +7,9 @@ class Menu extends Component {
     state = {
         titulo : 'INICIO'
     }
-    componentDidMount(){
-        console.log('menuProps : ', this.props)
-    }
+    // componentDidMount(){
+    //     console.log('menuProps : ', this.props)
+    // }
     definirTitulo = (titulo)=>{
         console.log(titulo)
         this.setState({titulo:titulo})
@@ -17,6 +17,8 @@ class Menu extends Component {
 
     }
       render(){
+        // console.log('menuProps : ', this.props)
+
         return(
             <div>
                 {/* Menu */}
@@ -30,7 +32,7 @@ class Menu extends Component {
                                 <Nav className="mr-auto">
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
                                 <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >Inicio</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>
+                                {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>:null}
                                 <LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>
                                 <LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>

@@ -21,7 +21,8 @@ class App extends Component {
   state={
     usuarioLogeado: false,
     email: '',
-    titulo:''
+    titulo:'',
+    rolesUsuarios : []
   }
 componentDidMount(){
   this.authListener()
@@ -42,7 +43,8 @@ componentDidMount(){
             auth.signOut()
             alert('Usuario no habilitado')
           }else{
-            this.setState({usuarioLogeado: true, email : emailUsuario})
+            this.setState({usuarioLogeado: true, email : emailUsuario, rolesUsuarios : user.data().roles})
+
           }
         })
          // User is signed in.
@@ -72,10 +74,10 @@ componentDidMount(){
    return(
      <Router>
         <Container>
-         {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email}/> : null}
+         {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email} rolesUsuarios= {this.state.rolesUsuarios}/> : null}
           <Switch>
               <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
-              <PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>
+              {this.state.rolesUsuarios.includes('Stock')?<PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
               <PrivateRoute exact path="/productos/nuevo" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
               <PrivateRoute exact path="/productos/editar/:productoId" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
               <PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />

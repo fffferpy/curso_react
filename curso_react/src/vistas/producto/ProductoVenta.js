@@ -14,7 +14,7 @@ import { MdDeleteForever, MdCreate } from "react-icons/md";
 class ProductoVenta extends Component {
     state={
         fecha:'',
-        producto:'01',
+        productoId:'',
         codigo:0,
         precioVenta:0,
         cantidad:0,
@@ -109,7 +109,7 @@ class ProductoVenta extends Component {
     renderItems =() => {
         return this.state.listaProductos.map((producto)=>{
             return (
-            <option key={producto.id} value = {producto.producto}>{producto.producto}</option>
+            <option key={producto.id} value = {producto.id}>{producto.productoNombre}</option>
             )
         }) 
     }
@@ -119,16 +119,16 @@ class ProductoVenta extends Component {
     //      return this.state.listaMovimientos.map((documento) => {
         renderListaMovimientos = () => {
             return this.state.listaMovimientos
-            .filter((documento)=>{
-                return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
-                && (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
-            }) 
+            // .filter((documento)=>{
+            //     return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
+            //     && (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
+            // }) 
             .map((documento) => {         
     return (
                  // key es un identificador unico
                      <tr key={documento.id}> 
                      <td>{documento.codigo}</td>
-                     <td>{documento.producto}</td>
+                     <td>{documento.productoNombre}</td>
                      <td>{documento.precioVenta}</td>
                      <td>{documento.cantidad}</td>
                      <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
@@ -149,9 +149,17 @@ class ProductoVenta extends Component {
                     // GRABAR DATOS EN DB ***************************************
     guardar=()=>{
           // console.log(this.state)
+          let productoTemporal = this.state.listaProductos.filter(producto =>{
+            // console.log(producto.id == 'rAufx7TUgoiiPB7Ehnon')
+            // console.log(this.state.productoId)
+            console.log(producto.id == this.state.productoId)
+            return producto.id == this.state.productoId
+            
+        })
           let datosMovimmientos = {
             fecha:this.state.fecha,
-            producto:this.state.producto,
+            productoNombre:productoTemporal[0].productoNombre,
+            productoId:this.state.productoId,
             codigo:this.state.codigo,
             precioVenta:this.state.precioVenta,
             cantidad:this.state.cantidad,
@@ -189,6 +197,9 @@ class ProductoVenta extends Component {
                 creado : moment().unix()
             })
             .then(()=>{
+                db.collection('productos').doc(this.state.productoId).update({
+                    saldo : productoTemporal[0].saldo - parseInt(this.state.cantidad)
+                })
                 // se ejecuta cuando se inserto con exito
                 // alert('Insertado correctamente')  
                 toast.success('Insertado correctamente', {
@@ -298,9 +309,9 @@ class ProductoVenta extends Component {
                     </Col>
                     <Col>                
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
-                        <Form.Group controlId="exampleForm.ControlSelect1">
+                      <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select"  size="sm" name="producto" value = {this.state.producto}onChange={this.capturarTecla}>
+                                <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoId}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>

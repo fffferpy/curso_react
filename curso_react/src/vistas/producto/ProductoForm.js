@@ -12,7 +12,7 @@ import { MdDeleteForever, MdCreate } from "react-icons/md";
 
 class ProductoForm extends Component {
     state={
-        producto:'',
+        productoNombre:'',
         codigo:0,
         precioCompra:0,
         precioVenta:0,
@@ -73,16 +73,17 @@ class ProductoForm extends Component {
     renderListaMovimientos = () => {
         return this.state.listaMovimientos
         .filter((documento)=>{
-            return (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
+            return (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
         }) 
         .map((documento) => {
             return (
                 // key es un identificador unico
-                <tr key={documento.producto}> 
-                    <td>{documento.producto}</td>
+                <tr key={documento.id}> 
+                    <td>{documento.productoNombre}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
                     <td>{documento.creado}</td>
+                    <td>{documento.saldo}</td>
                     <td>{documento.codigo}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
                     {/* FcEditImage */}
@@ -104,7 +105,7 @@ class ProductoForm extends Component {
     guardar=()=>{
         // console.log(this.state)
         let datosMovimmientos = {
-            producto:this.state.producto,
+            productoNombre:this.state.productoNombre,
             precioCompra:this.state.precioCompra,
             precioVenta:this.state.precioVenta,
             codigo:this.state.codigo,
@@ -126,7 +127,7 @@ class ProductoForm extends Component {
 
         } else{
             //   console.log({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()})                
-            db.collection('productos').add({...datosMovimmientos, creado: moment().unix()})
+            db.collection('productos').add({...datosMovimmientos, saldo : 0, creado: moment().unix()})
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
                 alert('Insertado correctamente')    
@@ -167,12 +168,13 @@ class ProductoForm extends Component {
                 snap.forEach((documento)=>{
                     let producto = {
                         id : documento.id,
-                        producto : documento.data().producto,
+                        productoNombre : documento.data().productoNombre,
                         precioCompra : documento.data().precioCompra,
                         precioVenta : documento.data().precioVenta,
                         codigo : documento.data().codigo,
                         // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
-                        creado : moment.unix(documento.data().creado).format("DD/MM/YYYY")
+                        creado : moment.unix(documento.data().creado).format("DD/MM/YYYY"),
+                        saldo : documento.data().saldo
                     }
                     listaTemporal.push(producto)
                     console.log (producto)
@@ -190,7 +192,7 @@ class ProductoForm extends Component {
 
     limpiarCampos=()=>{
         this.setState({
-            producto:'',
+            productoNombre:'',
             precioCompra:0,
             precioVenta:0,
             codigo:0,
@@ -224,7 +226,7 @@ class ProductoForm extends Component {
                         <Col md={4}>
                                     <Form.Group>
                                         <Form.Label>Producto</Form.Label>
-                                        <Form.Control type="text" size="sm"  name="producto" value = {this.state.producto}onChange={this.capturarTecla} />
+                                        <Form.Control type="text" size="sm"  name="productoNombre" value = {this.state.productoNombre}onChange={this.capturarTecla} />
                                     
                                     </Form.Group>
                         </Col> 
@@ -279,6 +281,7 @@ class ProductoForm extends Component {
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
                                                 <th>Creado</th>
+                                                <th>Saldo</th>
                                                 <th>Codigo</th>
                                                 {/* <th>Entradas</th>
                                                 <th>Salidas</th>
