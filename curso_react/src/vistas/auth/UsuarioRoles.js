@@ -99,8 +99,9 @@ export default class UsuarioRoles extends Component {
                             { this.renderRoles()}
                             
                         </Form>
-                        <Button variant="primary" onClick={this.guardarRoles}>Guardar</Button> {' '}
-                        <Button variant="info" onClick={this.verRoles}>Ver Roles</Button>
+                        <Button variant="primary" size="sm" onClick={this.guardarRoles}>Guardar</Button> {' '}
+                        {/* <Button variant="info" size="sm"onClick={this.verRoles}>Ver Roles</Button> {' '} */}
+                        <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                     </Col>
                 </Row>
             </div>

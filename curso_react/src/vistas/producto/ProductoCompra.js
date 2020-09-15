@@ -48,14 +48,15 @@ class ProductoCompra extends Component {
         })
     
     }
-    confirmarAccion = (movimientoId) => {
+    confirmarAccion = (movimientoId, productoId, cantidad) => {
+        console.log(movimientoId)
         confirmAlert({
           title: 'Accion anular',
           message: 'Esta seguro?.',
           buttons: [
             {
               label: 'Si',
-              onClick: () => this.anularMovimiento(movimientoId)
+              onClick: () => this.anularMovimiento(movimientoId, productoId, cantidad)
             },
             {
               label: 'No',
@@ -65,16 +66,30 @@ class ProductoCompra extends Component {
         });
       };
 
-    anularMovimiento =(movimientoId) => {
-        // console.log(movimientoId)
+    anularMovimiento =(movimientoId, productoId, cantidad) => {
+        console.log(movimientoId)
+        console.log(productoId)
         let datosNuevos = {
             estado : 0
         }
         db.collection('movimientos').doc(movimientoId).update(datosNuevos)
+        .then(()=>{
+            this.restarSaldoStock(productoId, cantidad)
+        })
         .catch((error)=>{
             alert(error)
         })
-
+    }
+  
+    restarSaldoStock =(productoId, cantidad)=>{
+        let saldoActualProducto = this.obtenerSaldoProducto(productoId)
+        console.log(saldoActualProducto)
+        let saldoFinal = saldoActualProducto - parseInt(cantidad)
+        db.collection('productos').doc(productoId).update({saldo : saldoFinal})
+            .catch((error)=>{
+                alert(error)
+            })
+        console.log(saldoFinal)
     }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
@@ -85,13 +100,19 @@ class ProductoCompra extends Component {
         // console.log(titulo)
     }
 
+    obtenerSaldoProducto = (productoId) =>{
+        let productoTemporal = this.state.listaProductos.filter(producto =>{
+            return producto.id == productoId
+            
+        })
+        let saldo = productoTemporal[0].saldo
+        return saldo
+    }
 
     obtenerProductos =()=>{
         let listaProductosTemporal = []
         db.collection('productos').get()
-        .then((productos)=>{
-            productos.forEach((producto)=>{
-                listaProductosTemporal.push({
+        .then((productos)=>{productos.forEach((producto)=>{listaProductosTemporal.push({
                     id : producto.id,
                     ...producto.data()      
                     // producto : producto.producto  // ES LO MISMO QUE LA LINEA ANTERIOR
@@ -126,7 +147,7 @@ class ProductoCompra extends Component {
                     <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
-                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
+                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} /></td>
                 </tr>
             )
         })
@@ -171,9 +192,6 @@ renderItems =() => {
     guardar=()=>{
         // // console.log(this.state)
         let productoTemporal = this.state.listaProductos.filter(producto =>{
-            // console.log(producto.id == 'rAufx7TUgoiiPB7Ehnon')
-            // console.log(this.state.productoId)
-            console.log(producto.id == this.state.productoId)
             return producto.id == this.state.productoId
             
         })
