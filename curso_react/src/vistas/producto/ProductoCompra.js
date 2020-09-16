@@ -147,7 +147,7 @@ class ProductoCompra extends Component {
                     <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
-                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} /></td>
+                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
                 </tr>
             )
         })
@@ -240,6 +240,9 @@ renderItems =() => {
             .then(()=>{
                 db.collection('productos').doc(this.state.productoId).update({
                     saldo : productoTemporal[0].saldo + parseInt(this.state.cantidad)
+                })
+                .catch((error)=>{
+                    // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
                 })
                 // se ejecuta cuando se inserto con exito
                 // alert('Insertado correctamente')  
