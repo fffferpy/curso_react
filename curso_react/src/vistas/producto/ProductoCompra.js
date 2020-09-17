@@ -37,7 +37,7 @@ class ProductoCompra extends Component {
     limpiarCampos = () => {
         this.setState({
             fecha:'',
-            producto:'champion',
+            productoId:'',
             codigo:0,
             precioCompra:0,
             cantidad:0,
@@ -147,7 +147,7 @@ class ProductoCompra extends Component {
                     <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
-                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
+                    <td> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
                 </tr>
             )
         })
@@ -159,6 +159,14 @@ renderItems =() => {
         <option key={producto.id} value = {producto.id}>{producto.productoNombre}</option>
         )
     }) 
+}
+obtenerCodigoProducto = (productoId) =>{
+    let productoTemporal = this.state.listaProductos.filter(producto =>{
+        return producto.id == productoId
+        
+    })
+    let codigoProducto = productoTemporal[0].codigo
+    return codigoProducto
 }
 
                         //********************************************CARGAR PARA EDITAR *******************************
@@ -186,6 +194,15 @@ renderItems =() => {
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
+
+        if (evento.target.name== 'productoId'){
+            console.log('obtenerCodigoProducto')
+            let codigoObtenido = this.obtenerCodigoProducto(evento.target.value)
+            console.log(codigoObtenido)
+            this.setState({
+                codigo : codigoObtenido
+            })
+        }
     }
 
                         // GRABAR DATOS EN DB ***************************************
@@ -287,7 +304,7 @@ renderItems =() => {
                 })
             },(error)=>{
                 alert(error)
-                // console.log(error)
+                console.log(error)
             })
     }
 
@@ -337,7 +354,7 @@ renderItems =() => {
                     <Col md={1}>
                            <Form.Group>
                                 <Form.Label>Código</Form.Label>
-                                <Form.Control type="number"  size="sm"  name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm"  name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} disabled />
                                
                             </Form.Group>
                     </Col>
