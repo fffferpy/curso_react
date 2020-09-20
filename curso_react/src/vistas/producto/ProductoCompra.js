@@ -7,6 +7,7 @@ import {confirmAlert} from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import Informe from '../../componentes/Informe';
 import { MdDeleteForever, MdCreate } from "react-icons/md";
+import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 
 
                     //  *************************STATES*********************
@@ -26,7 +27,7 @@ class ProductoCompra extends Component {
         productoEditarId: null,
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
-        filtroProducto:'',
+        filtroProductoNombre:'',
         titulo:''
     }
 
@@ -94,10 +95,11 @@ class ProductoCompra extends Component {
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
     componentDidMount(){
+        imprimirAviso()
         this.obtenerMovimientos()
         this.obtenerProductos()
-        // this.setState({titulo:'COMPRA'})
-        // console.log(titulo)
+        console.log(MODULES_BECAME_STANDARD_YEAR)
+        console.log(this.state.listaMovimientos)
     }
 
     obtenerSaldoProducto = (productoId) =>{
@@ -132,10 +134,10 @@ class ProductoCompra extends Component {
                     // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
         return this.state.listaMovimientos
-        // .filter((documento)=>{
-        //     return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
-        //     && (documento.producto.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
-        // }) 
+        .filter((documento)=>{
+            return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
+            && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
+        }) 
         .map((documento) => {
             return (
                 // key es un identificador unico
@@ -232,7 +234,7 @@ obtenerCodigoProducto = (productoId) =>{
                 // alert('Editado correctamente')  
                 toast.success('Editado correctamente', {
                     position: "bottom-right",
-                    autoClose: 3000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -265,7 +267,7 @@ obtenerCodigoProducto = (productoId) =>{
                 // alert('Insertado correctamente')  
                 toast.success('Insertado correctamente', {
                     position: "bottom-right",
-                    autoClose: 3000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -344,7 +346,7 @@ obtenerCodigoProducto = (productoId) =>{
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
-                                <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoId}  onChange={this.capturarTecla}>
+                                <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoNombre}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
@@ -391,7 +393,7 @@ obtenerCodigoProducto = (productoId) =>{
                         <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
                     <Col md={4}>
-                         <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/>           
+                         <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
@@ -401,10 +403,8 @@ obtenerCodigoProducto = (productoId) =>{
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código  {this.state.mostrarFiltro==true?
-                                            <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />
-                                            :null}</th>
-                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Código  {this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
+                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProductoNombre" value = {this.state.filtroProductoNombre} onChange={this.capturarTecla} />:null}</th>
                                             <th>Precio Compra</th>
                                             <th>Cantidad</th>
                                             <th>Fecha</th>

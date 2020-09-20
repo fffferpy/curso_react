@@ -6,6 +6,8 @@ import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
 import Informe from '../../componentes/Informe';
 import { MdDeleteForever, MdCreate } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
                     //  *************************STATES*********************
@@ -58,7 +60,7 @@ class ProductoForm extends Component {
         .then((snap)=>{
           console.log(snap.data())
           this.setState({
-            producto: snap.data().producto,
+            productoNombre: snap.data().productoNombre,
             precioCompra: snap.data().precioCompra,
             precioVenta: snap.data().precioVenta,
             codigo : snap.data().codigo,
@@ -130,8 +132,17 @@ class ProductoForm extends Component {
             db.collection('productos').add({...datosMovimmientos, saldo : 0, creado: moment().unix()})
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
-                alert('Insertado correctamente')    
-                this.limpiarCampos()    
+                // alert('Insertado correctamente')    
+                toast.success('Insertado correctamente', {
+                    position: "bottom-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+               this.limpiarCampos()    
 
             })
             .catch((error)=>{
@@ -296,7 +307,8 @@ class ProductoForm extends Component {
                     </Col>
                 </Row>
               
-               
+                <ToastContainer />
+
                 
             </div>
         )

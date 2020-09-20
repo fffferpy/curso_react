@@ -6,7 +6,7 @@ import Menu from './vistas/Menu';
 import ProductoForm from './vistas/producto/ProductoForm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
-import ProductoFormbk from './vistas/producto/ProductoFormbk';
+// import ProductoFormbk from './vistas/producto/ProductoFormbk';
 import Login from './vistas/auth/Login';
 import Registro from './vistas/auth/Registro';
 import UsuarioList from './vistas/auth/UsuariosList';
@@ -72,14 +72,15 @@ componentDidMount(){
 
  render() {
    return(
+    //  <ProductoForm/>
      <Router>
         <Container>
          {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email} rolesUsuarios= {this.state.rolesUsuarios}/> : null}
           <Switch>
               <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
               {this.state.rolesUsuarios.includes('Stock')?<PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
-              <PrivateRoute exact path="/productos/nuevo" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
-              <PrivateRoute exact path="/productos/editar/:productoId" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/>
+              {/* <PrivateRoute exact path="/productos/nuevo" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/> */}
+              {/* <PrivateRoute exact path="/productos/editar/:productoId" component={ProductoFormbk} usuarioLogeado={this.state.usuarioLogeado}/> */}
               <PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />
               <PrivateRoute exact path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />
               <PrivateRoute exact path="/usuarios" component={UsuarioList} usuarioLogeado={this.state.usuarioLogeado} />
