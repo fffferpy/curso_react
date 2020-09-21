@@ -33,10 +33,10 @@ class Menu extends Component {
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
                                 <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >Inicio</Nav.Link></LinkContainer>
                                 {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>:null}
-                                <LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>
-                                <LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >Roles</Nav.Link></LinkContainer>
+                                {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Roles')?<LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >Roles</Nav.Link></LinkContainer>:null}
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
