@@ -284,11 +284,11 @@ class ProductoConsulta extends Component {
                 {/* //  ********************************************TABLA****************************************** */}
                 <Row>
                     <Col>
-                            <Table striped bordered hover size="sm">
+                            <Table striped bordered hover >
                                         <thead>
                                             <tr>
                                                 {/* <th>Producto</th> */}
-                                                <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
+                                                <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text"  name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
                                                 {/* <th>Precio Compra</th> */}
                                                 <th>Precio Venta</th>
                                                 {/* <th>Creado</th> */}
