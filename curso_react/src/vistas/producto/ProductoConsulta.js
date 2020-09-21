@@ -82,15 +82,15 @@ class ProductoConsulta extends Component {
                 // key es un identificador unico
                 <tr key={documento.id}> 
                     <td>{documento.productoNombre}</td>
-                    <td>{documento.precioCompra}</td>
+                    {/* <td>{documento.precioCompra}</td> */}
                     <td>{documento.precioVenta}</td>
-                    <td>{documento.creado}</td>
+                    {/* <td>{documento.creado}</td> */}
                     <td>{documento.saldo}</td>
-                    <td>{documento.codigo}</td>
+                    {/* <td>{documento.codigo}</td> */}
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
                     {/* FcEditImage */}
                     {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
-                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
+                    {/* <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
  
                     
                 </tr>
@@ -289,15 +289,15 @@ class ProductoConsulta extends Component {
                                             <tr>
                                                 {/* <th>Producto</th> */}
                                                 <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
-                                                <th>Precio Compra</th>
+                                                {/* <th>Precio Compra</th> */}
                                                 <th>Precio Venta</th>
-                                                <th>Creado</th>
+                                                {/* <th>Creado</th> */}
                                                 <th>Saldo</th>
-                                                <th>Codigo</th>
+                                                {/* <th>Codigo</th> */}
                                                 {/* <th>Entradas</th>
                                                 <th>Salidas</th>
                                                 <th>Stock</th> */}
-                                                <th>Acciones</th>
+                                                {/* <th>Acciones</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
