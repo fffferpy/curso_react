@@ -32,6 +32,7 @@ class Menu extends Component {
                                 <Nav className="mr-auto">
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
                                 <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >Inicio</Nav.Link></LinkContainer>
+                                {this.props.rolesUsuarios.includes('Consulta')? <LinkContainer exact to="/productos/consulta"><Nav.Link onClick={()=>{this.definirTitulo('CONSULTA')}} >Consulta</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>:null}
@@ -42,13 +43,13 @@ class Menu extends Component {
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Ventas</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Anulaciones</Nav.Link> */}
-                                    <NavDropdown title="Reportes" id="basic-nav-dropdown">
+                                    {/* <NavDropdown title="Reportes" id="basic-nav-dropdown">
                                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                     </NavDropdown> 
+                                     </NavDropdown>  */}
                                 </Nav>
                                 {/* <Navbar.Collapse className="justify-content-center">
                                 <h2>{this.state.titulo}  </h2>                 */}
