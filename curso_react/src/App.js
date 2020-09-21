@@ -38,7 +38,7 @@ componentDidMount(){
         console.log('Id usuario: ', user.uid)
         db.collection('usuarios').doc(user.uid).get()
         .then((user)=>{
-          // console.log(user.data())
+          console.log(user.data().estado)
           if(user.data().estado == 0){
             auth.signOut()
             alert('Usuario no habilitado')

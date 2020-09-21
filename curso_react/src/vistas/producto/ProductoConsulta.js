@@ -21,7 +21,7 @@ class ProductoConsulta extends Component {
         listaMovimientos: [],
         metodoDesuscribirse:null,
         productoEditarId: null,
-        mostrarFiltro: true,// variable para mostrar y ocultar filtros 
+        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProducto:'' 
        
@@ -226,42 +226,27 @@ class ProductoConsulta extends Component {
             <div>      
 
                 <Form>
-                    <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"40%"}}> 
-                    <Col><h4>PRODUCTOS</h4></Col>
-                    {/* <Row style={{color:"#000", borderStyle:"#000", textAlign:"justify"}}size="sm">  */}
-                    {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><h2>PRODUCTOS</h2></Col> */}
-                    {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><p style={{ fontSize:10, fontFamily:"calibri", paddingTop :"1%", paddingBottom:"1%"}}>PRODUCTOS</p></Col> */}
+                    {/* <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"40%"}}>  */}
+                    <Row style = {{textAlign : "center", backgroundColor:"#dbdbdb", paddingTop:5}}>
+                         <Col><div><h4>PRODUCTOS</h4></div></Col>
+                   
                     </Row>
+
                     <Row>
                     
-                        {/* <Col md={4}>
+                        <Col md={6} sm = {2} xs = {4}>
                                     <Form.Group>
                                         <Form.Label>Producto</Form.Label>
-                                        <Form.Control type="text" size="sm"  name="productoNombre" value = {this.state.productoNombre}onChange={this.capturarTecla} />
+                                        <Form.Control type="text" size="sm"  name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />
                                     
                                     </Form.Group>
+
                         </Col> 
-                        <Col md={2}>
-                                    <Form.Group>
-                                        <Form.Label>Precio Compra</Form.Label>
-                                        <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
-                                    
-                                    </Form.Group>
+                        <Col md={6} sm = {2} xs = {4}>
+                            <Button style ={{marginTop : "6%"}}variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+
                         </Col>
-                        <Col md={2}>
-                                    <Form.Group>
-                                        <Form.Label>Precio precioVenta</Form.Label>
-                                        <Form.Control type="number" size="sm"  name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
-                                    
-                                    </Form.Group>
-                        </Col>
-                        <Col md={1}>
-                           <Form.Group>
-                                <Form.Label>Código</Form.Label>
-                                <Form.Control type="number"  size="sm" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
-                               
-                            </Form.Group>
-                    </Col> */}
+                       
                     
                     </Row>
                                 
@@ -273,7 +258,7 @@ class ProductoConsulta extends Component {
                             {/* <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '} */}
                             {/* <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '} */}
                             {/* <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '} */}
-                            <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                            {/* <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button> */}
 
                         </Col>
                         <Col >

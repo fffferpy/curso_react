@@ -57,7 +57,7 @@ class Menu extends Component {
                                     {this.state.titulo}                  
                                     </Navbar.Text> */}
                                 {/* </Navbar.Collapse> */}
-                                <Navbar.Collapse className="justify-content-center">
+                                <Navbar.Collapse className="justify-content-end">
                                     <Navbar.Text>
                                     Signed in as: {this.props.atributoEmail}
                                     <a href='#' onClick={this.props.metodoSalir}>      Salir</a>

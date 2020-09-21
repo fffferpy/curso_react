@@ -6,11 +6,23 @@ import { Row, Col, Form, Button, Table , Badge } from 'react-bootstrap';
 export default class UsuarioRoles extends Component {
     state = {
         listaRoles : [],  // ESTO ES PARA CREAR LOS CHECKBOXS
-        rolesUsuarios : [] //LISTA QUE SE VA A ENVIAR A DB 
+        rolesUsuarios : [], //LISTA QUE SE VA A ENVIAR A DB 
+        emailUsuario : ''
     }
     componentDidMount(){
         this.obtenerRoles()
         this.obtenerRolesUsuarios()
+        this.obtenerNombreUsuario()
+    }
+
+    obtenerNombreUsuario =()=>{
+        db.collection("usuarios").doc(this.props.match.params.usuarioId).get()
+        .then (usuario =>{
+                // console.log(usuario.data())
+            this.setState({emailUsuario : usuario.data().email})
+        })
+
+
     }
     obtenerRoles=()=>{   // es para crear los checkbox
         let listaTemporal = []
@@ -93,6 +105,10 @@ export default class UsuarioRoles extends Component {
     render() {
         return (
             <div style={{margin: "40px"}}>
+                <Row style = {{textAlign : "center", backgroundColor:"#dbdbdb", paddingTop:5}}>
+                     <Col><div><h4>{this.state.emailUsuario}</h4></div></Col>
+                   
+                </Row>
                 <Row className="justify-content-md-center">
                     <Col md={4}>
                         <Form>
