@@ -234,7 +234,7 @@ class ProductoConsulta extends Component {
 
                     <Row>
                     
-                        <Col md={6} sm = {2} xs = {4}>
+                        <Col md={12} sm = {12} xs = {12}>
                                     <Form.Group>
                                         <Form.Label>Producto</Form.Label>
                                         <Form.Control type="text" size="sm"  name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />
