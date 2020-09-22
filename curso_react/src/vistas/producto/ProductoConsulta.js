@@ -228,7 +228,7 @@ class ProductoConsulta extends Component {
                 <Form>
                     {/* <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"40%"}}>  */}
                     <Row style = {{textAlign : "center", backgroundColor:"#dbdbdb", paddingTop:5}}>
-                         <Col><div><h4>PRODUCTOS</h4></div></Col>
+                         <Col md={12} sm = {12} xs = {12} ><h4>PRODUCTOS</h4></Col>
                    
                     </Row>
 
@@ -242,10 +242,10 @@ class ProductoConsulta extends Component {
                                     </Form.Group>
 
                         </Col> 
-                        <Col md={6} sm = {2} xs = {4}>
+                        {/* <Col md={6} sm = {2} xs = {4}>
                             <Button style ={{marginTop : "6%"}}variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
 
-                        </Col>
+                        </Col> */}
                        
                     
                     </Row>
