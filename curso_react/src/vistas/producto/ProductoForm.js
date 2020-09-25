@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button, Table } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
@@ -25,8 +25,45 @@ class ProductoForm extends Component {
         filtroCodigo:'',
         filtroProducto:'',
         ultimoProductoVisible:'',
-        primerProductoVisible:''
+        primerProductoVisible:'',
+        buscador : ''
        
+    }
+
+    buscarProducto = () =>{
+        let listaTemporal = []
+           db.collection('productos').where('productoNombre','==',this.state.buscador).orderBy('creado')
+           .limit(7)
+            .get()
+            .then (snap =>{
+                listaTemporal = []
+                snap.forEach((documento)=>{
+                    let producto = {
+                        id : documento.id,
+                        productoNombre : documento.data().productoNombre,
+                        precioCompra : documento.data().precioCompra,
+                        precioVenta : documento.data().precioVenta,
+                        codigo : documento.data().codigo,
+                        // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
+                        creado : moment.unix(documento.data().creado).format("DD/MM/YYYY"),
+                        saldo : documento.data().saldo
+                    }
+                    listaTemporal.push(producto)
+                    console.log (producto)
+                })
+                //  console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+                 console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+                this.setState({
+                    listaMovimientos : listaTemporal,
+                    ultimoProductoVisible : snap.docs[snap.docs.length-1],
+                    primerProductoVisible : snap.docs[0]
+                    // metodoDesuscribirse : metodoDesuscribirse
+                })
+            })
+            .catch(error =>{
+                alert(error)
+                console.log(error)
+            })
     }
 
     filtrar = () =>{
@@ -73,6 +110,9 @@ class ProductoForm extends Component {
             alert(error)
         })
     }
+
+
+    
                     //*********************************************RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
         return this.state.listaMovimientos
@@ -94,7 +134,15 @@ class ProductoForm extends Component {
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
                     {/* FcEditImage */}
                     {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
-                    <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td>
+                    <td> 
+                        <div>
+                            <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />  
+                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip} > 
+                                <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} />
+                            </OverlayTrigger>
+                        </div>
+                       
+                    </td>
  
                     
                 </tr>
@@ -376,11 +424,26 @@ class ProductoForm extends Component {
                             <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
                             <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
 
+
                         </Col>
                         <Col >
                          <Informe listaMovimientos = {this.state.listaMovimientos} />           
                     </Col>
                 </Row>
+                <br/>
+
+                <Row>
+                    <Col md = {4}>
+                            <Form>
+                                <Form.Group>
+                                    <Form.Control type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Nombre del producto"/>
+                                </Form.Group>
+                            </Form>
+                            <Button variant="primary" onClick={this.buscarProducto} >Buscar</Button> {' '}
+
+                    </Col>
+                </Row>
+ 
                 <br/>
                 {/* //  ********************************************TABLA****************************************** */}
                 <Row>
@@ -424,3 +487,10 @@ class ProductoForm extends Component {
 }
 
 export default withRouter(ProductoForm)
+
+const renderTooltip = (props) => (
+    // console.log(props)
+    <Tooltip id="button-tooltip" {...props}>
+        Mensaje prueba
+    </Tooltip>
+  );
