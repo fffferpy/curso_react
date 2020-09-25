@@ -23,7 +23,9 @@ class ProductoForm extends Component {
         productoEditarId: null,
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
-        filtroProducto:'' 
+        filtroProducto:'',
+        ultimoProductoVisible:'',
+        primerProductoVisible:''
        
     }
 
@@ -77,10 +79,12 @@ class ProductoForm extends Component {
         .filter((documento)=>{
             return (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProducto.toLowerCase())>=0)
         }) 
-        .map((documento) => {
+        .map((documento, index) => {
+            let indice = index + 1
             return (
                 // key es un identificador unico
                 <tr key={documento.id}> 
+                    {/* <td>{indice}</td> */}
                     <td>{documento.productoNombre}</td>
                     <td>{documento.precioCompra}</td>
                     <td>{documento.precioVenta}</td>
@@ -119,7 +123,8 @@ class ProductoForm extends Component {
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
                 alert('Editado correctamente')
-                this.limpiarCampos()    
+                this.limpiarCampos()  
+                this.obtenerProducto()  
             })
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
@@ -142,7 +147,8 @@ class ProductoForm extends Component {
                     draggable: true,
                     progress: undefined,
                     });
-               this.limpiarCampos()    
+               this.limpiarCampos() 
+               this.obtenerProducto()   
 
             })
             .catch((error)=>{
@@ -159,7 +165,8 @@ class ProductoForm extends Component {
         db.collection('productos').doc(productoId).delete()
         .then(()=>{
             // se ejecuta cuando se inserto con exito
-            alert('Eliminado correctamente')    
+            alert('Eliminado correctamente')   
+            this.obtenerProducto() 
 
         })
         .catch((error)=>{
@@ -173,8 +180,52 @@ class ProductoForm extends Component {
                     //******************************CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
     obtenerProducto = ()=>{
             let listaTemporal = []
-            let metodoDesuscribirse = db.collection('productos').orderBy('creado')
-            .onSnapshot((snap)=>{
+            // let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+            // .onSnapshot((snap)=>{
+            //    db.collection('productos').where('productoNombre','==','celular').orderBy('creado')
+               db.collection('productos').orderBy('creado')
+               .limit(7)
+                .get()
+                .then (snap =>{
+                    listaTemporal = []
+                    snap.forEach((documento)=>{
+                        let producto = {
+                            id : documento.id,
+                            productoNombre : documento.data().productoNombre,
+                            precioCompra : documento.data().precioCompra,
+                            precioVenta : documento.data().precioVenta,
+                            codigo : documento.data().codigo,
+                            // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
+                            creado : moment.unix(documento.data().creado).format("DD/MM/YYYY"),
+                            saldo : documento.data().saldo
+                        }
+                        listaTemporal.push(producto)
+                        console.log (producto)
+                    })
+                    //  console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+                     console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+                    this.setState({
+                        listaMovimientos : listaTemporal,
+                        ultimoProductoVisible : snap.docs[snap.docs.length-1],
+                        primerProductoVisible : snap.docs[0]
+                        // metodoDesuscribirse : metodoDesuscribirse
+                    })
+                })
+                .catch(error =>{
+                    alert(error)
+                    console.log(error)
+                })
+    }
+    paginaAnterior=()=>{
+        let listaTemporal = []
+        // let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+        // .onSnapshot((snap)=>{
+           db.collection('productos').orderBy('creado')
+           .endBefore(this.state.primerProductoVisible)
+           .limitToLast(7)
+           .get()
+           .then (snap =>{
+               if (snap.docs[0]){
                 listaTemporal = []
                 snap.forEach((documento)=>{
                     let producto = {
@@ -190,14 +241,64 @@ class ProductoForm extends Component {
                     listaTemporal.push(producto)
                     console.log (producto)
                 })
+                //  console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+                 console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
                 this.setState({
                     listaMovimientos : listaTemporal,
-                    metodoDesuscribirse : metodoDesuscribirse
+                    ultimoProductoVisible : snap.docs[snap.docs.length-1],
+                    primerProductoVisible : snap.docs[0]
+
+                    // metodoDesuscribirse : metodoDesuscribirse
                 })
-            },(error)=>{
+               }
+
+            })
+            .catch(error =>{
                 alert(error)
                 console.log(error)
+            })     
+    }
+    siguientePagina=()=>{
+        let listaTemporal = []
+        // let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+        // .onSnapshot((snap)=>{
+           db.collection('productos').orderBy('creado')
+           .startAfter(this.state.ultimoProductoVisible)
+           .limit(7)
+           .get()
+           .then (snap =>{
+            if (snap.docs[0]){
+                listaTemporal = []
+                snap.forEach((documento)=>{
+                    let producto = {
+                        id : documento.id,
+                        productoNombre : documento.data().productoNombre,
+                        precioCompra : documento.data().precioCompra,
+                        precioVenta : documento.data().precioVenta,
+                        codigo : documento.data().codigo,
+                        // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
+                        creado : moment.unix(documento.data().creado).format("DD/MM/YYYY"),
+                        saldo : documento.data().saldo
+                    }
+                    listaTemporal.push(producto)
+                    console.log (producto)
+                })
+                //  console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
+                 console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
+                this.setState({
+                    listaMovimientos : listaTemporal,
+                    ultimoProductoVisible : snap.docs[snap.docs.length-1],
+                    primerProductoVisible : snap.docs[0]
+
+                    // metodoDesuscribirse : metodoDesuscribirse
+                })
+            }
+
             })
+            .catch(error =>{
+                alert(error)
+                console.log(error)
+            }) 
     }
                         // ************************************LIMPIAR CAMPOS******************************************************
 
@@ -212,10 +313,10 @@ class ProductoForm extends Component {
     }
 
                     // ************************************ANTES DE DESMONTAR EL COMPONENTE******************************************************
-     componentWillUnmount(){
-         if (this.state.metodoDesuscribirse){
-              this.state.metodoDesuscribirse()
-         }}
+    //  componentWillUnmount(){
+    //      if (this.state.metodoDesuscribirse){
+    //           this.state.metodoDesuscribirse()
+    //      }}
     
 
                     // ************************************RENDERIZADO **************************************************************************
@@ -304,6 +405,13 @@ class ProductoForm extends Component {
                                             {this.renderListaMovimientos()}                                       
                                         </tbody>
                             </Table>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm"  onClick={this.paginaAnterior}>Anterior</Button>{' '}
+                        <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={this.siguientePagina}>Siguiente</Button>{' '}
+
                     </Col>
                 </Row>
               
