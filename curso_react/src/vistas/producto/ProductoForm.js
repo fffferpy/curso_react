@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button, Table, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table, OverlayTrigger, Tooltip, InputGroup, FormControl} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
 import Informe from '../../componentes/Informe';
-import { MdDeleteForever, MdCreate } from "react-icons/md";
+import { MdDeleteForever, MdCreate, MdFindInPage } from "react-icons/md";
+import { IconName  } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 
 
@@ -33,7 +34,7 @@ class ProductoForm extends Component {
     buscarProducto = () =>{
         let listaTemporal = []
            db.collection('productos').where('productoNombre','==',this.state.buscador).orderBy('creado')
-           .limit(7)
+           .limit(6)
             .get()
             .then (snap =>{
                 listaTemporal = []
@@ -232,7 +233,7 @@ class ProductoForm extends Component {
             // .onSnapshot((snap)=>{
             //    db.collection('productos').where('productoNombre','==','celular').orderBy('creado')
                db.collection('productos').orderBy('creado')
-               .limit(7)
+               .limit(6)
                 .get()
                 .then (snap =>{
                     listaTemporal = []
@@ -270,7 +271,7 @@ class ProductoForm extends Component {
         // .onSnapshot((snap)=>{
            db.collection('productos').orderBy('creado')
            .endBefore(this.state.primerProductoVisible)
-           .limitToLast(7)
+           .limitToLast(6)
            .get()
            .then (snap =>{
                if (snap.docs[0]){
@@ -312,7 +313,7 @@ class ProductoForm extends Component {
         // .onSnapshot((snap)=>{
            db.collection('productos').orderBy('creado')
            .startAfter(this.state.ultimoProductoVisible)
-           .limit(7)
+           .limit(6)
            .get()
            .then (snap =>{
             if (snap.docs[0]){
@@ -356,7 +357,8 @@ class ProductoForm extends Component {
             precioCompra:0,
             precioVenta:0,
             codigo:0,
-            productoEditarId: null
+            productoEditarId: null,
+            buscador:''
         })
     }
 
@@ -376,10 +378,10 @@ class ProductoForm extends Component {
 
                 <Form>
                     <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"40%"}}> 
-                    <Col><h4>PRODUCTOS</h4></Col>
-                    {/* <Row style={{color:"#000", borderStyle:"#000", textAlign:"justify"}}size="sm">  */}
-                    {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><h2>PRODUCTOS</h2></Col> */}
-                    {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><p style={{ fontSize:10, fontFamily:"calibri", paddingTop :"1%", paddingBottom:"1%"}}>PRODUCTOS</p></Col> */}
+                      <Col><h4>PRODUCTOS</h4></Col>
+                        {/* <Row style={{color:"#000", borderStyle:"#000", textAlign:"justify"}}size="sm">  */}
+                        {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><h2>PRODUCTOS</h2></Col> */}
+                        {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><p style={{ fontSize:10, fontFamily:"calibri", paddingTop :"1%", paddingBottom:"1%"}}>PRODUCTOS</p></Col> */}
                     </Row>
                     <Row>
                     
@@ -410,7 +412,7 @@ class ProductoForm extends Component {
                                 <Form.Control type="number"  size="sm" name="codigo" value = {this.state.codigo} onChange={this.capturarTecla} />
                                
                             </Form.Group>
-                    </Col>
+                        </Col>
                     
                     </Row>
                                 
@@ -418,22 +420,41 @@ class ProductoForm extends Component {
 
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>
-                        <Col md={8}>
-                            <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
-                            <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
-                            <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
-                            <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
-
-
+                        <Col md={4}>
+                            {/* <Form inline> */}
+                                <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                                <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
+                                <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>{'    '}
                         </Col>
-                        <Col >
-                         <Informe listaMovimientos = {this.state.listaMovimientos} />           
-                    </Col>
+                        <Col>
+                            <Form inline>
+                                    <InputGroup className="mb-2 mr-sm-2">
+                                        <InputGroup.Prepend>
+                                            <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
+                                        </InputGroup.Prepend>
+                                        <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  
+                                    </InputGroup>
+                            </Form>
+                        </Col>
+                        {/* <Row> */}
                 </Row>
                 <br/>
+   
+                {/* <Row>
 
-                <Row>
                     <Col md = {4}>
+                        <Form inline>
+                            <Form.Label htmlFor="inlineFormInputGroupUsername2" srOnly>
+                                Username
+                            </Form.Label>
+                            <InputGroup className="mb-2 mr-sm-2">
+                                <InputGroup.Prepend>
+                                <InputGroup.Text>@</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl id="inlineFormInputGroupUsername2" placeholder="Username" />
+                            </InputGroup>
+                        </Form>
+
                             <Form>
                                 <Form.Group>
                                     <Form.Control type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Nombre del producto"/>
@@ -442,9 +463,9 @@ class ProductoForm extends Component {
                             <Button variant="primary" onClick={this.buscarProducto} >Buscar</Button> {' '}
 
                     </Col>
-                </Row>
+                </Row> */}
  
-                <br/>
+                {/* <br/> */}
                 {/* //  ********************************************TABLA****************************************** */}
                 <Row>
                     <Col>
@@ -452,7 +473,19 @@ class ProductoForm extends Component {
                                         <thead>
                                             <tr>
                                                 {/* <th>Producto</th> */}
-                                                <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
+                                                {/* <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th> */}
+                                                {/* <th><Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/> */}
+                                                {/* <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  </th> */}
+                                                <th>
+                                                <Form inline>
+                                                    <InputGroup className="mb-2 mr-sm-2">
+                                                        <InputGroup.Prepend>
+                                                            <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
+                                                        </InputGroup.Prepend>
+                                                        {/* <MdFindInPage color="#3b5998" size="30" onClick ={()=>this.buscarProducto()} />   */}
+                                                    </InputGroup>
+                                                </Form>
+                                                </th>
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
                                                 <th>Creado</th>
@@ -471,11 +504,13 @@ class ProductoForm extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col md = {9}>
                         <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm"  onClick={this.paginaAnterior}>Anterior</Button>{' '}
                         <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={this.siguientePagina}>Siguiente</Button>{' '}
 
                     </Col>
+                    <Informe listaMovimientos = {this.state.listaMovimientos} />    
+
                 </Row>
               
                 <ToastContainer />

@@ -15,7 +15,7 @@ render(){
         // ************************************************************************************************************
         <Row>
         <Col md={12}>
-        <ExcelFile element={<Button className="float-right" variant="info"  size="sm" >Exportar a Excel</Button>} >
+        <ExcelFile element={<Button className="float-left" variant="info"  size="sm" >Exportar a Excel</Button>} >
         <ExcelSheet data={this.props.listaMovimientos} name="Movimientos">
         <ExcelColumn label="Codigo" value="codigo"/>
         <ExcelColumn label="Producto" value="productoNombre"/>
