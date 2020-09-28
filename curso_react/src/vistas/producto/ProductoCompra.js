@@ -45,7 +45,9 @@ class ProductoCompra extends Component {
             tipoMovimiento: 1,
             estado: 1,
             metodoDesuscribirse:null,
-            productoEditarId: null
+            productoEditarId: null,
+            filtroCodigo:'',
+            filtroProductoNombre:''
         })
     
     }

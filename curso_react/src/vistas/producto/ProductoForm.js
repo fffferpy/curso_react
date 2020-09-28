@@ -138,7 +138,7 @@ class ProductoForm extends Component {
                     <td> 
                         <div>
                             <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />  
-                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip} > 
+                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip } > 
                                 <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} />
                             </OverlayTrigger>
                         </div>
@@ -424,7 +424,7 @@ class ProductoForm extends Component {
                             {/* <Form inline> */}
                                 <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                                 <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
-                                <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>{'    '}
+                                <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
                         <Col>
                             <Form inline>
@@ -432,13 +432,13 @@ class ProductoForm extends Component {
                                         <InputGroup.Prepend>
                                             <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
                                         </InputGroup.Prepend>
-                                        <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  
+                                        <MdFindInPage color="#3b5998" size="30" onClick ={()=>this.buscarProducto()} />  
                                     </InputGroup>
                             </Form>
                         </Col>
                         {/* <Row> */}
                 </Row>
-                <br/>
+                <br size = "sm"/>
    
                 {/* <Row>
 
@@ -476,15 +476,15 @@ class ProductoForm extends Component {
                                                 {/* <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th> */}
                                                 {/* <th><Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/> */}
                                                 {/* <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  </th> */}
-                                                <th>
-                                                <Form inline>
+                                                <th>Producto
+                                                {/* <Form inline>
                                                     <InputGroup className="mb-2 mr-sm-2">
                                                         <InputGroup.Prepend>
                                                             <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
                                                         </InputGroup.Prepend>
-                                                        {/* <MdFindInPage color="#3b5998" size="30" onClick ={()=>this.buscarProducto()} />   */}
+                                                        <MdFindInPage color="#3b5998" size="25" onClick ={()=>this.buscarProducto()} />  
                                                     </InputGroup>
-                                                </Form>
+                                                </Form> */}
                                                 </th>
                                                 <th>Precio Compra</th>
                                                 <th>Precio Venta</th>
