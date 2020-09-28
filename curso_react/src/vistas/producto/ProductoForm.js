@@ -138,7 +138,7 @@ class ProductoForm extends Component {
                     <td> 
                         <div>
                             <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />  
-                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip } > 
+                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Borrar</Tooltip>} > 
                                 <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} />
                             </OverlayTrigger>
                         </div>
@@ -469,7 +469,7 @@ class ProductoForm extends Component {
                 {/* //  ********************************************TABLA****************************************** */}
                 <Row>
                     <Col>
-                            <Table striped bordered hover size="sm">
+                            <Table responsive striped bordered hover size="sm">
                                         <thead>
                                             <tr>
                                                 {/* <th>Producto</th> */}
@@ -523,9 +523,3 @@ class ProductoForm extends Component {
 
 export default withRouter(ProductoForm)
 
-const renderTooltip = (props) => (
-    // console.log(props)
-    <Tooltip id="button-tooltip" {...props}>
-        Mensaje prueba
-    </Tooltip>
-  );
