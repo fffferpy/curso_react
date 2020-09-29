@@ -445,8 +445,8 @@ class ProductoForm extends Component {
                         </Col>
                         <Col md={4}>
                         {/* FcDataSheet */}
-                        <Informe listaMovimientos = {this.state.listaMovimientos} />     
-                        {/* <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '3'/>      */}
+                        {/* <Informe listaMovimientos = {this.state.listaMovimientos} />      */}
+                        <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '3'/>     
 
                         </Col>
                         {/* <Row> */}
