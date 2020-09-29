@@ -5,9 +5,10 @@ import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
 import Informe from '../../componentes/Informe';
-import { MdDeleteForever, MdCreate, MdFindInPage, MdSkipPrevious, MdSkipNext } from "react-icons/md";
+import { MdDeleteForever, MdCreate, MdFindInPage, MdSkipPrevious, MdSkipNext, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { IconName  } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
+// import { IconName, FcDataSheet } from "react-icons/fc";
 
 
 
@@ -137,7 +138,10 @@ class ProductoForm extends Component {
                     {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
                     <td> 
                         <div>
-                            <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />  
+                            <OverlayTrigger placement="left" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Editar</Tooltip>} > 
+                                <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />
+                            </OverlayTrigger>
+                            {' '}  
                             <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Borrar</Tooltip>} > 
                                 <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} />
                             </OverlayTrigger>
@@ -432,12 +436,17 @@ class ProductoForm extends Component {
                                         <InputGroup.Prepend>
                                             <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
                                         </InputGroup.Prepend>
-                                        <MdFindInPage color="#3b5998" size="30" onClick ={()=>this.buscarProducto()} />  
+                                        <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
+                                            <MdFindInPage color="#3b5998" size="30" onClick ={()=>this.buscarProducto()} />  
+                                        </OverlayTrigger>
+
                                     </InputGroup>
                             </Form>
                         </Col>
                         <Col md={4}>
-                             <Informe listaMovimientos = {this.state.listaMovimientos} />    
+                        {/* FcDataSheet */}
+                        <Informe listaMovimientos = {this.state.listaMovimientos} />     
+                        {/* <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '3'/>      */}
 
                         </Col>
                         {/* <Row> */}
@@ -510,13 +519,15 @@ class ProductoForm extends Component {
                 <Row>
                     <Col md = {6} >
                         <OverlayTrigger placement="left" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Pagina anterior</Tooltip>} > 
-                            <MdSkipPrevious className="float-right" color="#3b5998" size="30" onClick ={()=>this.paginaAnterior()} />  
+                        {/* <MdSkipPrevious className="float-right" color="#3b5998" size="30" onClick ={()=>this.paginaAnterior()} />   */}
+                        <MdNavigateBefore className="float-right" color="#3b5998" size="30" onClick ={()=>this.paginaAnterior()} />  
                         </OverlayTrigger>
 
                     </Col>
                     <Col md = {6} >
                         <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Pagina siguiente</Tooltip>} > 
-                            <MdSkipNext className="float-left" color="#3b5998" size="30" onClick ={()=>this.siguientePagina()} />  
+                            {/* <MdSkipNext className="float-left" color="#3b5998" size="30" onClick ={()=>this.siguientePagina()} />   */}
+                            <MdNavigateNext className="float-left" color="#3b5998" size="30" onClick ={()=>this.siguientePagina()} />  
                         </OverlayTrigger>
 
                     </Col>
