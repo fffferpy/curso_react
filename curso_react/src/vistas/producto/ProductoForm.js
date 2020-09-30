@@ -5,9 +5,11 @@ import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import { confirmAlert } from 'react-confirm-alert';
 import Informe from '../../componentes/Informe';
+import InformeV2 from '../../componentes/InformeV2';
 import { MdDeleteForever, MdCreate, MdFindInPage, MdSkipPrevious, MdSkipNext, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { IconName  } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
+
 // import { IconName, FcDataSheet } from "react-icons/fc";
 
 
@@ -446,7 +448,15 @@ class ProductoForm extends Component {
                         <Col md={4}>
                         {/* FcDataSheet */}
                         {/* <Informe listaMovimientos = {this.state.listaMovimientos} />      */}
-                        <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '3'/>     
+                        <InformeV2 labels = {
+                            [
+                                {label:'Producto', value:'productoNombre' },
+                                {label:'Precio Compra', value:'precioCompra' },
+                                {label:'Precio Venta', value:'precioVenta' },
+                                {label:'Creado', value:'creado' },
+                                {label:'Saldo', value:'saldo' }
+                                ]
+                        } datos = {this.state.listaMovimientos} nombreHoja = 'Productos' />     
 
                         </Col>
                         {/* <Row> */}

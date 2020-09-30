@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button, Table , Badge } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table , Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
 import { ToastContainer, toast } from 'react-toastify';
 import Informe from '../../componentes/Informe';
-import { MdDeleteForever, MdCreate } from "react-icons/md";
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
+import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
+
 
 
                     //  *************************STATES*********************
@@ -398,6 +399,10 @@ obtenerCodigoProducto = (productoId) =>{
                         </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/> 
+                         <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
+                            <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
+                        </OverlayTrigger>
+
                     </Col>
             </Row>
             {/* //  ********************************************TABLA****************************************** */}
