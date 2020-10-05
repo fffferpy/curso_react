@@ -146,15 +146,15 @@ class ProductoVenta extends Component {
             return (
                 // key es un identificador unico
                     <tr key={documento.id}> 
-                    <td>{documento.codigo}</td>
+                    <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
-                    <td>{documento.precioVenta}</td>
-                    <td>{documento.cantidad}</td>
-                    <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}>{documento.cantidad}</td>
+                    <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     {/* <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td> */}
-                    <td>{documento.estado!=1?<Badge pill variant="danger"> Anulado </Badge>:null}</td>
+                    <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> Anulado </Badge>:null}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
-                    <td> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
+                    <td style={{textAlign:"center"}}> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
                 </tr>
             )
         })
@@ -167,6 +167,13 @@ renderItems =() => {
         )
     }) 
 }
+obtenerDatosProducto = (productoId) =>{
+    let productoTemporal = this.state.listaProductos.filter(producto =>{
+        return producto.id == productoId
+    })
+    return productoTemporal[0]
+}
+
 obtenerCodigoProducto = (productoId) =>{
     let productoTemporal = this.state.listaProductos.filter(producto =>{
         return producto.id == productoId
@@ -209,12 +216,13 @@ obtenerPrecioProducto = (productoId) =>{
         this.setState({[evento.target.name]:evento.target.value})
         if (evento.target.name== 'productoId'){
             console.log('obtenerCodigoProducto')
-            let codigoObtenido = this.obtenerCodigoProducto(evento.target.value)
-            let precioObtenido = this.obtenerPrecioProducto(evento.target.value)
-            console.log(codigoObtenido)
+            // let codigoObtenido = this.obtenerCodigoProducto(evento.target.value)
+            // let precioObtenido = this.obtenerPrecioProducto(evento.target.value)
+            let datosObtenidosProducto = this.obtenerDatosProducto(evento.target.value)
+            console.log(datosObtenidosProducto)
             this.setState({
-                codigo : codigoObtenido,
-                precioVenta : precioObtenido
+                codigo : datosObtenidosProducto.codigo,
+                precioVenta : datosObtenidosProducto.precioVenta
             })
         }
 
@@ -420,13 +428,13 @@ obtenerPrecioProducto = (productoId) =>{
                         <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>Código  {this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
-                                            <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProductoNombre" value = {this.state.filtroProductoNombre} onChange={this.capturarTecla} />:null}</th>
-                                            <th>Precio Venta</th>
-                                            <th>Cantidad</th>
-                                            <th>Fecha</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
+                                            <th style={{textAlign:"center"}}>Código  {this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
+                                            <th style={{textAlign:"center"}}>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProductoNombre" value = {this.state.filtroProductoNombre} onChange={this.capturarTecla} />:null}</th>
+                                            <th style={{textAlign:"center"}}>recio Venta</th>
+                                            <th style={{textAlign:"center"}}>Cantidad</th>
+                                            <th style={{textAlign:"center"}}>Fecha</th>
+                                            <th style={{textAlign:"center"}}>Estado</th>
+                                            <th style={{textAlign:"center"}}>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>

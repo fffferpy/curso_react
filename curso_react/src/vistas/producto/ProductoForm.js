@@ -129,7 +129,7 @@ class ProductoForm extends Component {
                 // key es un identificador unico
                 <tr key={documento.id}> 
                     {/* <td>{indice}</td> */}
-                    <td style={{textAlign:"center"}}>{documento.productoNombre}</td>
+                    <td>{documento.productoNombre}</td>
                     <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
                     <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
                     <td style={{textAlign:"center"}}>{documento.creado}</td>
@@ -509,15 +509,15 @@ class ProductoForm extends Component {
                                                     </InputGroup>
                                                 </Form> */}
                                                 </th>
-                                                <th>Precio Compra</th>
-                                                <th>Precio Venta</th>
-                                                <th>Creado</th>
-                                                <th>Saldo</th>
-                                                <th>Codigo</th>
+                                                <th style={{textAlign:"center"}}>Precio Compra</th>
+                                                <th style={{textAlign:"center"}}>Precio Venta</th>
+                                                <th style={{textAlign:"center"}}>Creado</th>
+                                                <th style={{textAlign:"center"}}>Saldo</th>
+                                                <th style={{textAlign:"center"}}>Codigo</th>
                                                 {/* <th>Entradas</th>
                                                 <th>Salidas</th>
                                                 <th>Stock</th> */}
-                                                <th>Acciones</th>
+                                                <th style={{textAlign:"center"}}>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
