@@ -316,7 +316,7 @@ obtenerPrecioProducto = (productoId) =>{
                 snap.forEach((documento)=>{
                     listaTemporal.push({
                         id : documento.id,
-                        creadoFormateado : moment.unix(documento.data().creado).format('DD-MM-YYYY'), 
+                        creadoFormateado : moment.unix(documento.data().creado).format('DD/MM/YYYY'), 
                         ...documento.data()
                     })
                 })

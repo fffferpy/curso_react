@@ -11,7 +11,7 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 class Informe extends React.Component {
 
 render(){
-    console.log('tipo de Movimiento =', this.props.tipoMovimiento)
+    console.log('tipo de Movimiento =', this.props)
 
     return(
         // console.log(this.props.listaMovimientos)  como imprimir listaMovimientos???? *******************************
@@ -33,7 +33,7 @@ render(){
         <ExcelColumn label="Producto" value="productoNombre"/>
         {this.props.tipoMovimiento=='1'?<ExcelColumn label="Precio Compra" value="precioCompra"/>:<ExcelColumn label="Precio Venta" value="precioVenta"/>}
         <ExcelColumn label="Cantidad" value="cantidad"/>
-        <ExcelColumn label="Creado" value="creado"/>
+        <ExcelColumn label="Creado" value="creadoFormateado"/>
         <ExcelColumn label="Estado" value="estado"/>
         
           
