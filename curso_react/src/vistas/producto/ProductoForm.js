@@ -129,16 +129,16 @@ class ProductoForm extends Component {
                 // key es un identificador unico
                 <tr key={documento.id}> 
                     {/* <td>{indice}</td> */}
-                    <td>{documento.productoNombre}</td>
-                    <td>{documento.precioCompra}</td>
-                    <td>{documento.precioVenta}</td>
-                    <td>{documento.creado}</td>
-                    <td>{documento.saldo}</td>
-                    <td>{documento.codigo}</td>
+                    <td style={{textAlign:"center"}}>{documento.productoNombre}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}>{documento.creado}</td>
+                    <td style={{textAlign:"center"}}>{documento.saldo}</td>
+                    <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
                     {/* FcEditImage */}
                     {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
-                    <td> 
+                    <td style={{textAlign:"center"}}> 
                         <div>
                             <OverlayTrigger placement="left" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Editar</Tooltip>} > 
                                 <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />
@@ -499,7 +499,7 @@ class ProductoForm extends Component {
                                                 {/* <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th> */}
                                                 {/* <th><Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/> */}
                                                 {/* <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  </th> */}
-                                                <th>Producto
+                                                <th style={{textAlign:"center"}}>Producto
                                                 {/* <Form inline>
                                                     <InputGroup className="mb-2 mr-sm-2">
                                                         <InputGroup.Prepend>

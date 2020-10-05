@@ -31,18 +31,18 @@ render(){
 
         <ExcelColumn label="Codigo" value="codigo"/>
         <ExcelColumn label="Producto" value="productoNombre"/>
-
-        {this.props.tipoMovimiento=='1'?<ExcelColumn label="Precio Compra" value="precioCompra"/>:
-        this.props.tipoMovimiento=='2'?<ExcelColumn label="Precio Venta" value="precioVenta"/>:
-        this.props.tipoMovimiento=='3'?<ExcelColumn label="Creado" value="creado"/>:null}
-   
+        {this.props.tipoMovimiento=='1'?<ExcelColumn label="Precio Compra" value="precioCompra"/>:<ExcelColumn label="Precio Venta" value="precioVenta"/>}
+        <ExcelColumn label="Cantidad" value="cantidad"/>
+        <ExcelColumn label="Creado" value="creado"/>
+        <ExcelColumn label="Estado" value="estado"/>
+        
           
-        {this.props.tipoMovimiento=='1'?<ExcelColumn label="Cantidad" value="cantidad"/>:
+        {/* {this.props.tipoMovimiento=='1'?<ExcelColumn label="Cantidad" value="cantidad"/>:
         this.props.tipoMovimiento=='2'?<ExcelColumn label="Cantidad" value="cantidad"/>:
         this.props.tipoMovimiento=='3'?<ExcelColumn label="Saldo" value="saldo"/>:null}
 
         {this.props.tipoMovimiento=='1'?<ExcelColumn label="Estado" value="estado"/>:
-        this.props.tipoMovimiento=='2'?<ExcelColumn label="Estado" value="estado"/>:null}   
+        this.props.tipoMovimiento=='2'?<ExcelColumn label="Estado" value="estado"/>:null}    */}
 
         {/* this.props.tipoMovimiento=='3'?<ExcelColumn label="Saldo" value="saldo"/>:null}          */}
 

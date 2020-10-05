@@ -1,6 +1,8 @@
 import React from "react";
-import { Row, Col , Jumbotron, Button} from 'react-bootstrap';
+import { Row, Col , Jumbotron, Buttonm, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import ReactExport from "react-export-excel";
+import { IconName, SiGooglesheets } from "react-icons/si";
+
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -24,7 +26,12 @@ class InformeV2 extends React.Component {
         return(
             <Row>
             <Col md={12}>
-                <ExcelFile element={<Button variant="primary" onClick={()=> this.verProps()}>Exportar a Excel</Button>} >
+                <ExcelFile element={
+                     <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Exportar a Excel</Tooltip>} > 
+                        <SiGooglesheets className="float-right" size="25" color="#3b5998"/>
+                     </OverlayTrigger>
+                    }> 
+                    {/* <ExcelFile element={<Button variant="primary" onClick={()=> this.verProps()}>Exportar a Excel</Button>} > */}
                     <ExcelSheet data={this.props.datos} name={this.props.nombreHoja}>
                         {
                             this.props.labels.map((elemento) => {

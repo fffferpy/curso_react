@@ -29,7 +29,7 @@ class ProductoVenta extends Component {
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProductoNombre:'',
-        titulo:''
+        titulo:'',
     }
 
     filtrar = () =>{
@@ -170,10 +170,16 @@ renderItems =() => {
 obtenerCodigoProducto = (productoId) =>{
     let productoTemporal = this.state.listaProductos.filter(producto =>{
         return producto.id == productoId
-        
     })
     let codigoProducto = productoTemporal[0].codigo
     return codigoProducto
+}
+obtenerPrecioProducto = (productoId) =>{
+    let productoTemporal = this.state.listaProductos.filter(producto =>{
+        return producto.id == productoId
+    })
+    let precioProducto = productoTemporal[0].precioVenta
+    return precioProducto
 }
 
                         //********************************************CARGAR PARA EDITAR *******************************
@@ -201,15 +207,17 @@ obtenerCodigoProducto = (productoId) =>{
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
-
         if (evento.target.name== 'productoId'){
             console.log('obtenerCodigoProducto')
             let codigoObtenido = this.obtenerCodigoProducto(evento.target.value)
+            let precioObtenido = this.obtenerPrecioProducto(evento.target.value)
             console.log(codigoObtenido)
             this.setState({
-                codigo : codigoObtenido
+                codigo : codigoObtenido,
+                precioVenta : precioObtenido
             })
         }
+
     }
 
                         // GRABAR DATOS EN DB ***************************************
