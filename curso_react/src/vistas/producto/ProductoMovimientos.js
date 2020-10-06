@@ -19,6 +19,7 @@ class ProductoCompra extends Component {
         productoId:'',
         codigo:'0',
         precioCompra:'0',
+        precioVenta:'0',
         cantidad:0,
         tipoMovimiento: 1,
         estado: 1,            // estado 1 = activo / 0 = anulado
@@ -29,6 +30,8 @@ class ProductoCompra extends Component {
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProductoNombre:'',
+        filtroFecha:'',
+        filtroTipoMovimiento:'',
         titulo:''
     }
 
@@ -140,6 +143,8 @@ class ProductoCompra extends Component {
         .filter((documento)=>{
             return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
             && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
+            && (documento.fecha.indexOf(this.state.filtroFecha)>=0)
+            && (documento.tipoMovimiento.toString().indexOf(this.state.filtroTipoMovimiento)>=0)
         }) 
         .map((documento) => {
             return (
@@ -148,6 +153,7 @@ class ProductoCompra extends Component {
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
                     <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> Anulado </Badge>:null}</td>
@@ -334,6 +340,10 @@ obtenerCodigoProducto = (productoId) =>{
                     <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
                         <Col md = {5}></Col>
                             <Col md = {4}><h4>MOVIMIENTOS</h4></Col>
+                            <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
+                            <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
+                                <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
+                            </OverlayTrigger>
                         <Col md = {5}></Col>
 
                     </Row>
@@ -383,20 +393,20 @@ obtenerCodigoProducto = (productoId) =>{
                 </Form>
 
                 {/* //  *******************************************BOTONES***************************************** */}
-                {/* <Row>
-                        <Col md={8}>
+                <Row>
+                        {/* <Col md={8}>
                             <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                             <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                             <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
-                            </Col>
-                        <Col md={4}>
+                        </Col> */}
+                        {/* <Col md={4}>
                             <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
                             <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
                                 <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
                             </OverlayTrigger>
 
-                        </Col>
-                </Row> */}
+                        </Col> */}
+                </Row>
                 {/* //  ********************************************TABLA****************************************** */}
                 {/* <br/> */}
                 <Row>
@@ -407,10 +417,11 @@ obtenerCodigoProducto = (productoId) =>{
                                                 <th style={{textAlign:"center"}}>Código  {this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
                                                 <th style={{textAlign:"center"}}>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProductoNombre" value = {this.state.filtroProductoNombre} onChange={this.capturarTecla} />:null}</th>
                                                 <th style={{textAlign:"center"}}>Precio Compra</th>
+                                                <th style={{textAlign:"center"}}>Precio Venta</th>
                                                 <th style={{textAlign:"center"}}>Cantidad</th>
-                                                <th style={{textAlign:"center"}}>Fecha</th>
+                                                <th style={{textAlign:"center"}}>Fecha{this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroFecha" value = {this.state.filtroFecha} onChange={this.capturarTecla} />:null}</th>
                                                 <th style={{textAlign:"center"}}>Estado</th>
-                                                <th style={{textAlign:"center"}}>Tipo</th>
+                                                <th style={{textAlign:"center"}}>Tipo{this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroTipoMovimiento" value = {this.state.filtroTipoMovimiento} onChange={this.capturarTecla} />:null}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
