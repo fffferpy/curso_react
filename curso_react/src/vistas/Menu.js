@@ -43,13 +43,13 @@ class Menu extends Component {
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Ventas</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Anulaciones</Nav.Link> */}
-                                    {/* <NavDropdown title="Reportes" id="basic-nav-dropdown">
-                                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                     </NavDropdown>  */}
+                                {this.props.rolesUsuarios.includes('Stock')?
+                                    <NavDropdown title="Reportes" id="basic-nav-dropdown">
+                                         <LinkContainer exact to="/productos/movimientos"><Nav.Link>Movimientos</Nav.Link></LinkContainer>
+                                                {/* <NavDropdown.Item href="/productos">Movimientos</NavDropdown.Item> */}
+                                                {/* <NavDropdown.Divider />
+                                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
+                                    </NavDropdown>:null}
                                 </Nav>
                                 {/* <Navbar.Collapse className="justify-content-center">
                                 <h2>{this.state.titulo}  </h2>                 */}

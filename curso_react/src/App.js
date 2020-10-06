@@ -6,6 +6,7 @@ import Menu from './vistas/Menu';
 import ProductoForm from './vistas/producto/ProductoForm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
+import ProductoMovimientos from './vistas/producto/ProductoMovimientos';
 import Login from './vistas/auth/Login';
 import Registro from './vistas/auth/Registro';
 import UsuarioList from './vistas/auth/UsuariosList';
@@ -82,6 +83,7 @@ componentDidMount(){
               {this.state.rolesUsuarios.includes('Consulta')?<PrivateRoute exact path="/productos/consulta" component={ProductoConsulta} usuarioLogeado={this.state.usuarioLogeado}/>:null}
               {this.state.rolesUsuarios.includes('Compras')?<PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Ventas')?<PrivateRoute exact path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />:null}
+              {this.state.rolesUsuarios.includes('Movimientos')?<PrivateRoute exact path="/productos/movimientos" component={ProductoMovimientos} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Usuarios')?<PrivateRoute exact path="/usuarios" component={UsuarioList} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Roles')?<PrivateRoute exact path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />:null}
               <PrivateRoute exact path="/usuario/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
