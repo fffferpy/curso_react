@@ -340,11 +340,13 @@ obtenerCodigoProducto = (productoId) =>{
                     <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
                         <Col md = {5}></Col>
                             <Col md = {4}><h4>MOVIMIENTOS</h4></Col>
+                        <Col md = {3}>
                             <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
                             <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
                                 <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
                             </OverlayTrigger>
-                        <Col md = {5}></Col>
+
+                        </Col>
 
                     </Row>
                     {/* <Row>
