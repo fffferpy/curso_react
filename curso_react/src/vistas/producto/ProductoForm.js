@@ -385,9 +385,6 @@ class ProductoForm extends Component {
                 <Form>
                     <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"40%"}}> 
                       <Col ><h4>PRODUCTOS</h4></Col>
-                        {/* <Row style={{color:"#000", borderStyle:"#000", textAlign:"justify"}}size="sm">  */}
-                        {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><h2>PRODUCTOS</h2></Col> */}
-                        {/* <Col md={{ span: 3, offset: 5 }} xs={{ span: 3, offset: 3 }}><p style={{ fontSize:10, fontFamily:"calibri", paddingTop :"1%", paddingBottom:"1%"}}>PRODUCTOS</p></Col> */}
                     </Row>
                     <Row>
                     

@@ -152,7 +152,7 @@ class ProductoVenta extends Component {
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     {/* <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td> */}
-                    <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> Anulado </Badge>:null}</td>
+                    <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> X </Badge>:null}</td>
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
                     <td style={{textAlign:"center"}}> {documento.estado != 0? <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id, documento.productoId, documento.cantidad)} />:null}</td>
                 </tr>

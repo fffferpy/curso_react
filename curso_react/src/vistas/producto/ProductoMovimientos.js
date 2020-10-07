@@ -5,7 +5,7 @@ import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
 import { ToastContainer, toast } from 'react-toastify';
-import Informe from '../../componentes/Informe';
+import InformeV3 from '../../componentes/InformeV3';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
 
@@ -156,7 +156,7 @@ class ProductoCompra extends Component {
                     <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
-                    <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> Anulado </Badge>:null}</td>
+                    <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> X </Badge>:null}</td>
                     <td style={{textAlign:"center"}}>{documento.tipoMovimiento}</td>
 
                     {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> {documento.estado==0?null:<a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}>| Anular </a>} </td> */}
@@ -339,12 +339,25 @@ obtenerCodigoProducto = (productoId) =>{
                     </Row> */}
                     <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
                         <Col md = {5}></Col>
-                            <Col md = {4}><h4>MOVIMIENTOS</h4></Col>
-                        <Col md = {3}>
-                            <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
+                            <Col md = {3} ><h4>MOVIMIENTOS</h4></Col>
+                        <Col md = {4} >
+                            {/* <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/>  */}
                             <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
-                                <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
+                                <MdFindInPage className="float-right" color="#3b5998" size="27" onClick ={()=>this.filtrar()} />  
                             </OverlayTrigger>
+
+                            <InformeV3 className="float-right" labels = {
+                            [
+                                {label:'Codigo', value:'codigo' },
+                                {label:'Producto', value:'productoNombre' },
+                                {label:'Precio Compra', value:'precioCompra' },
+                                {label:'Precio Venta', value:'precioVenta' },
+                                {label:'Cantidad', value:'cantidad' },
+                                {label:'Creado', value:'creadoFormateado' },
+                                {label:'Tipo', value:'tipoMovimiento' },
+                                {label:'Estado', value:'estado' },
+                            ]} datos = {this.state.listaMovimientos} nombreHoja = 'Movimientos' />     
+
 
                         </Col>
 
