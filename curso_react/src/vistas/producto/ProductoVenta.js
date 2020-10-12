@@ -19,6 +19,7 @@ class ProductoVenta extends Component {
         productoId:'',
         codigo:'0',
         precioVenta:'0',
+        precioCompra:'0',
         cantidad:0,
         tipoMovimiento: 2,
         estado: 1,            // estado 1 = activo / 0 = anulado
@@ -30,6 +31,7 @@ class ProductoVenta extends Component {
         filtroCodigo:'',
         filtroProductoNombre:'',
         titulo:'',
+        totalPrecioVenta:0,
     }
 
     filtrar = () =>{
@@ -98,10 +100,11 @@ class ProductoVenta extends Component {
     }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
-    componentDidMount(){
+    async componentDidMount(){ 
         imprimirAviso()
-        this.obtenerMovimientos()
+       await this.obtenerMovimientos()
         this.obtenerProductos()
+        this.obtenerSumatoria()
         console.log(MODULES_BECAME_STANDARD_YEAR)
         console.log(this.state.listaMovimientos)
     }
@@ -133,7 +136,14 @@ class ProductoVenta extends Component {
             alert(error)
         })
     }
-
+obtenerSumatoria=()=>{
+    let precioVentaTemporal = 0
+    this.state.listaMovimientos.forEach((documento)=>{
+        console.log(documento)
+        precioVentaTemporal=precioVentaTemporal+documento.precioVenta
+    })
+    this.setState({totalPrecioVenta:precioVentaTemporal})
+}
 
                     // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
@@ -143,11 +153,13 @@ class ProductoVenta extends Component {
             && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
         }) 
         .map((documento) => {
+   
             return (
                 // key es un identificador unico
-                    <tr key={documento.id}> 
+                <tr key={documento.id}> 
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
+                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
                     <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
@@ -216,13 +228,13 @@ obtenerPrecioProducto = (productoId) =>{
         this.setState({[evento.target.name]:evento.target.value})
         if (evento.target.name== 'productoId'){
             console.log('obtenerCodigoProducto')
-            // let codigoObtenido = this.obtenerCodigoProducto(evento.target.value)
-            // let precioObtenido = this.obtenerPrecioProducto(evento.target.value)
             let datosObtenidosProducto = this.obtenerDatosProducto(evento.target.value)
             console.log(datosObtenidosProducto)
             this.setState({
                 codigo : datosObtenidosProducto.codigo,
-                precioVenta : datosObtenidosProducto.precioVenta
+                precioVenta : datosObtenidosProducto.precioVenta,
+                precioCompra : datosObtenidosProducto.precioCompra,
+
             })
         }
 
@@ -241,6 +253,7 @@ obtenerPrecioProducto = (productoId) =>{
             productoNombre:productoTemporal[0].productoNombre,
             productoId : this.state.productoId,
             codigo:this.state.codigo,
+            precioCompra:this.state.precioCompra,
             precioVenta:this.state.precioVenta,
             cantidad:this.state.cantidad,
             tipoMovimiento: 2,
@@ -412,6 +425,7 @@ obtenerPrecioProducto = (productoId) =>{
                         <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                         <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
                         <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
+                        <Button variant = "info" size="sm" onClick={() => {console.log('state', this.state)}}>Ver state</Button>
                         </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/> 
@@ -430,7 +444,8 @@ obtenerPrecioProducto = (productoId) =>{
                                         <tr>
                                             <th style={{textAlign:"center"}}>Código  {this.state.mostrarFiltro==true? <Form.Control type="text" size="sm" name="filtroCodigo" value = {this.state.filtroCodigo} onChange={this.capturarTecla} />:null}</th>
                                             <th style={{textAlign:"center"}}>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProductoNombre" value = {this.state.filtroProductoNombre} onChange={this.capturarTecla} />:null}</th>
-                                            <th style={{textAlign:"center"}}>recio Venta</th>
+                                            <th style={{textAlign:"center"}}>Precio Compra</th>
+                                            <th style={{textAlign:"center"}}>Precio Venta</th>
                                             <th style={{textAlign:"center"}}>Cantidad</th>
                                             <th style={{textAlign:"center"}}>Fecha</th>
                                             <th style={{textAlign:"center"}}>Estado</th>
@@ -438,7 +453,13 @@ obtenerPrecioProducto = (productoId) =>{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.renderListaMovimientos()}                                       
+                                        {this.renderListaMovimientos()}
+                                        <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{this.state.totalPrecioVenta}</td>
+                                        </tr>                                       
                                     </tbody>
                         </Table>
                 </Col>

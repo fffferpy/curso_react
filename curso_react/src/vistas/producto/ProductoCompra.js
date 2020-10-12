@@ -377,7 +377,7 @@ obtenerCodigoProducto = (productoId) =>{
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
                                 {/* <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} /> */}
-                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#FFEBCD', width:'150px'}} 
+                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#FFEBCD', width:'150px', borderRadius:"4px"}} 
                                 value={this.state.precioCompra} onValueChange ={(event)=>{this.capturarPrecio(event, "precioCompra" )}} thousandSeparator ={true} prefix={'$'} />
                               
                             </Form.Group>
