@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Informe from '../../componentes/Informe';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
+import NumberFormat from 'react-number-format';
 
 
 
@@ -144,10 +145,11 @@ class ProductoCompra extends Component {
         .map((documento) => {
             return (
                 // key es un identificador unico
-                    <tr key={documento.id}> 
+                <tr key={documento.id}> 
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
+                    {/* <td style={{textAlign:"center"}}>{documento.precioCompra}</td> */}
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} prefix={'$'}/></td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> X </Badge>:null}</td>
@@ -198,6 +200,7 @@ obtenerCodigoProducto = (productoId) =>{
     }
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
+        // console.log('evento', evento)
         this.setState({[evento.target.name]:evento.target.value})
 
         if (evento.target.name== 'productoId'){
@@ -208,6 +211,12 @@ obtenerCodigoProducto = (productoId) =>{
                 codigo : codigoObtenido
             })
         }
+    }
+    capturarPrecio=(evento, name)=>{
+        console.log('evento', evento)
+        console.log('name', name)
+        this.setState({[name]:evento.floatValue})
+
     }
 
                         // GRABAR DATOS EN DB ***************************************
@@ -367,7 +376,9 @@ obtenerCodigoProducto = (productoId) =>{
                     <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
-                                <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
+                                {/* <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} /> */}
+                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#FFEBCD', width:'150px'}} 
+                                value={this.state.precioCompra} onValueChange ={(event)=>{this.capturarPrecio(event, "precioCompra" )}} thousandSeparator ={true} prefix={'$'} />
                               
                             </Form.Group>
                     </Col>
