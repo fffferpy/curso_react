@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import InformeV3 from '../../componentes/InformeV3';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
+import NumberFormat from 'react-number-format';
+
 
 
 
@@ -152,8 +154,8 @@ class ProductoCompra extends Component {
                     <tr key={documento.id}> 
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> X </Badge>:null}</td>

@@ -7,6 +7,8 @@ import { confirmAlert } from 'react-confirm-alert';
 import Informe from '../../componentes/Informe';
 import { MdDeleteForever, MdCreate } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
+import NumberFormat from 'react-number-format';
+
 
 
 
@@ -83,7 +85,8 @@ class ProductoConsulta extends Component {
                 <tr key={documento.id}> 
                     <td>{documento.productoNombre}</td>
                     {/* <td>{documento.precioCompra}</td> */}
-                    <td>{documento.precioVenta}</td>
+                    {/* <td>{documento.precioVenta}</td> */}
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
                     {/* <td>{documento.creado}</td> */}
                     <td>{documento.saldo}</td>
                     {/* <td>{documento.codigo}</td> */}

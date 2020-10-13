@@ -149,7 +149,7 @@ class ProductoCompra extends Component {
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
                     {/* <td style={{textAlign:"center"}}>{documento.precioCompra}</td> */}
-                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} prefix={'$'}/></td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     <td style={{textAlign:"center"}}>{documento.estado!=1?<Badge pill variant="danger"> X </Badge>:null}</td>
@@ -377,8 +377,8 @@ obtenerCodigoProducto = (productoId) =>{
                              <Form.Group>
                                 <Form.Label>Precio Compra</Form.Label>
                                 {/* <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} /> */}
-                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#FFEBCD', width:'150px', borderRadius:"4px"}} 
-                                value={this.state.precioCompra} onValueChange ={(event)=>{this.capturarPrecio(event, "precioCompra" )}} thousandSeparator ={true} prefix={'$'} />
+                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#fff', width:'150px', borderRadius:"4px"}} 
+                                value={this.state.precioCompra} onValueChange ={(event)=>{this.capturarPrecio(event, "precioCompra" )}} thousandSeparator ={true} prefix={'G$'} />
                               
                             </Form.Group>
                     </Col>

@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import Informe from '../../componentes/Informe';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
+import NumberFormat from 'react-number-format';
+
 
 
 
@@ -159,8 +161,8 @@ obtenerSumatoria=()=>{
                 <tr key={documento.id}> 
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
+                    <td style={{textAlign:"center"}}><NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     {/* <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td> */}
@@ -237,9 +239,13 @@ obtenerPrecioProducto = (productoId) =>{
 
             })
         }
+    }
+    capturarPrecio=(evento, name)=>{
+        console.log('evento', evento)
+        console.log('name', name)
+        this.setState({[name]:evento.floatValue})
 
     }
-
                         // GRABAR DATOS EN DB ***************************************
     guardar=()=>{
         // // console.log(this.state)
@@ -398,8 +404,10 @@ obtenerPrecioProducto = (productoId) =>{
                     <Col md={2}>
                              <Form.Group>
                                 <Form.Label>Precio Venta</Form.Label>
-                                <Form.Control type="number"  size="sm" name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
-                              
+                                {/* <Form.Control type="number"  size="sm" name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} /> */}
+                                <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#fff', width:'150px', borderRadius:"4px"}} 
+                                value={this.state.precioVenta} onValueChange ={(event)=>{this.capturarPrecio(event, "precioVenta" )}} thousandSeparator ={true} prefix={'G$'} />
+
                             </Form.Group>
                     </Col>
                     <Col md={2}> 
@@ -425,7 +433,7 @@ obtenerPrecioProducto = (productoId) =>{
                         <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                         <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
                         <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
-                        <Button variant = "info" size="sm" onClick={() => {console.log('state', this.state)}}>Ver state</Button>
+                        {/* <Button variant = "info" size="sm" onClick={() => {console.log('state', this.state)}}>Ver state</Button> */}
                         </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/> 

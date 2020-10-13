@@ -9,6 +9,8 @@ import InformeV2 from '../../componentes/InformeV2';
 import { MdDeleteForever, MdCreate, MdFindInPage, MdSkipPrevious, MdSkipNext, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { IconName  } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
+import NumberFormat from 'react-number-format';
+
 
 // import { IconName, FcDataSheet } from "react-icons/fc";
 
@@ -130,8 +132,8 @@ class ProductoForm extends Component {
                 <tr key={documento.id}> 
                     {/* <td>{indice}</td> */}
                     <td>{documento.productoNombre}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioCompra}</td>
-                    <td style={{textAlign:"center"}}>{documento.precioVenta}</td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
+                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
                     <td style={{textAlign:"center"}}>{documento.creado}</td>
                     <td style={{textAlign:"center"}}>{documento.saldo}</td>
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
@@ -160,7 +162,12 @@ class ProductoForm extends Component {
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
     }
+    capturarPrecio=(evento, name)=>{
+        console.log('evento', evento)
+        console.log('name', name)
+        this.setState({[name]:evento.floatValue})
 
+    }
 
                     //**************************************************GRABAR DATOS EN DB ***************************************
     guardar=()=>{
@@ -398,15 +405,19 @@ class ProductoForm extends Component {
                         <Col md={2}>
                                     <Form.Group>
                                         <Form.Label>Precio Compra</Form.Label>
-                                        <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} />
-                                    
+                                        {/* <Form.Control type="number"  size="sm" name="precioCompra" value = {this.state.precioCompra} onChange={this.capturarTecla} /> */}
+                                        <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#fff', width:'150px', borderRadius:"4px"}} 
+                                        value={this.state.precioCompra} onValueChange ={(event)=>{this.capturarPrecio(event, "precioCompra" )}} thousandSeparator ={true} prefix={'G$'} />
+
                                     </Form.Group>
                         </Col>
                         <Col md={2}>
                                     <Form.Group>
                                         <Form.Label>Precio precioVenta</Form.Label>
-                                        <Form.Control type="number" size="sm"  name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} />
-                                    
+                                        {/* <Form.Control type="number" size="sm"  name="precioVenta" value = {this.state.precioVenta} onChange={this.capturarTecla} /> */}
+                                        <NumberFormat style = {{borderColor:'#f3f3f3', backgroundColor:'#fff', width:'150px', borderRadius:"4px"}} 
+                                        value={this.state.precioVenta} onValueChange ={(event)=>{this.capturarPrecio(event, "precioVenta" )}} thousandSeparator ={true} prefix={'G$'} />
+
                                     </Form.Group>
                         </Col>
                         <Col md={1}>
