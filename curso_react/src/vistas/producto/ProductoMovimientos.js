@@ -145,7 +145,7 @@ class ProductoCompra extends Component {
         .filter((documento)=>{
             return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
             && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
-            && (documento.fecha.indexOf(this.state.filtroFecha)>=0)
+            && (documento.fechaFormateado.indexOf(this.state.filtroFecha)>=0)
             && (documento.tipoMovimiento.toString().indexOf(this.state.filtroTipoMovimiento)>=0)
         }) 
         .map((documento) => {
@@ -309,10 +309,11 @@ obtenerCodigoProducto = (productoId) =>{
                     listaTemporal.push({
                         id : documento.id,
                         creadoFormateado : moment.unix(documento.data().creado).format('DD/MM/YYYY'), 
+                        fechaFormateado : moment(documento.data().fecha).format('DD/MM/YYYY'),
                         ...documento.data()
                     })
                 })
-                // console.log(listaTemporal)
+                console.log('lista temporal: ', listaTemporal)
                 this.setState({
                     listaMovimientos : listaTemporal,
                     metodoDesuscribirse : metodoDesuscribirse
