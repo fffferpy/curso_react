@@ -34,6 +34,7 @@ class ProductoVenta extends Component {
         filtroProductoNombre:'',
         titulo:'',
         totalPrecioVenta:0,
+        totalPrecioCompra:0
     }
 
     filtrar = () =>{
@@ -102,11 +103,10 @@ class ProductoVenta extends Component {
     }
 
                     // LUEGO DE MONTAR EL COMPONENTE *******************************
-    async componentDidMount(){ 
+    componentDidMount(){ 
         imprimirAviso()
-       await this.obtenerMovimientos()
+        this.obtenerMovimientos()
         this.obtenerProductos()
-        this.obtenerSumatoria()
         console.log(MODULES_BECAME_STANDARD_YEAR)
         console.log(this.state.listaMovimientos)
     }
@@ -138,14 +138,7 @@ class ProductoVenta extends Component {
             alert(error)
         })
     }
-obtenerSumatoria=()=>{
-    let precioVentaTemporal = 0
-    this.state.listaMovimientos.forEach((documento)=>{
-        console.log(documento)
-        precioVentaTemporal=precioVentaTemporal+documento.precioVenta
-    })
-    this.setState({totalPrecioVenta:precioVentaTemporal})
-}
+
 
                     // RENDERIZA LISTA DE MOVIMMIENTOS *****************************
     renderListaMovimientos = () => {
@@ -329,10 +322,16 @@ obtenerPrecioProducto = (productoId) =>{
                     // CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
     obtenerMovimientos = ()=>{
             let listaTemporal = []
+            let sumatoriaTemporalPrecioCompra = 0
+            let sumatoriaTemporalPrecioVenta = 0
             let metodoDesuscribirse = db.collection('movimientos').where('tipoMovimiento','==', 2).orderBy('creado')
             .onSnapshot((snap)=>{
                 listaTemporal = []
                 snap.forEach((documento)=>{
+                    if (documento.data().estado==1){
+                        sumatoriaTemporalPrecioCompra = sumatoriaTemporalPrecioCompra + parseInt( documento.data().precioCompra)
+                        sumatoriaTemporalPrecioVenta = sumatoriaTemporalPrecioVenta + parseInt( documento.data().precioVenta)
+                    }
                     listaTemporal.push({
                         id : documento.id,
                         creadoFormateado : moment.unix(documento.data().creado).format('DD/MM/YYYY'), 
@@ -342,8 +341,9 @@ obtenerPrecioProducto = (productoId) =>{
                 // console.log(listaTemporal)
                 this.setState({
                     listaMovimientos : listaTemporal,
-                    metodoDesuscribirse : metodoDesuscribirse
-                })
+                    metodoDesuscribirse : metodoDesuscribirse,
+                    totalPrecioCompra : sumatoriaTemporalPrecioCompra,
+                    totalPrecioVenta : sumatoriaTemporalPrecioVenta                })
             },(error)=>{
                 alert(error)
                 console.log(error)
@@ -464,9 +464,13 @@ obtenerPrecioProducto = (productoId) =>{
                                         {this.renderListaMovimientos()}
                                         <tr>
                                         <td></td>
+                                        <td>TOTALES</td>
+                                        <td style={{textAlign:"center"}}><NumberFormat value={this.state.totalPrecioCompra} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
+                                        <td style={{textAlign:"center"}}><NumberFormat value={this.state.totalPrecioVenta} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{this.state.totalPrecioVenta}</td>
+                                        <td></td>
+                                        <td></td>
                                         </tr>                                       
                                     </tbody>
                         </Table>
