@@ -154,8 +154,8 @@ class ProductoVenta extends Component {
                 <tr key={documento.id}> 
                     <td style={{textAlign:"center"}}>{documento.codigo}</td>
                     <td>{documento.productoNombre}</td>
-                    <td style={{textAlign:"center"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
-                    <td style={{textAlign:"center"}}><NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
+                    <td style={{textAlign:"right"}}> <NumberFormat value={documento.precioCompra} displayType={'text'} thousandSeparator={true} /></td>
+                    <td style={{textAlign:"right"}}><NumberFormat value={documento.precioVenta} displayType={'text'} thousandSeparator={true} /></td>
                     <td style={{textAlign:"center"}}>{documento.cantidad}</td>
                     <td style={{textAlign:"center"}}>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
                     {/* <td>{documento.estado==1?<Badge pill variant="info"> Activo </Badge>:<Badge pill variant="danger"> Anulado </Badge>}</td> */}
@@ -465,8 +465,8 @@ obtenerPrecioProducto = (productoId) =>{
                                         <tr>
                                         <td></td>
                                         <td>TOTALES</td>
-                                        <td style={{textAlign:"center"}}><NumberFormat value={this.state.totalPrecioCompra} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
-                                        <td style={{textAlign:"center"}}><NumberFormat value={this.state.totalPrecioVenta} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
+                                        <td style={{textAlign:"right"}}><NumberFormat value={this.state.totalPrecioCompra} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
+                                        <td style={{textAlign:"right"}}><NumberFormat value={this.state.totalPrecioVenta} displayType={'text'} thousandSeparator ={true} prefix={'G$'} /></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
