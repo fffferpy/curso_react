@@ -9,6 +9,8 @@ import Informe from '../../componentes/Informe';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
 import NumberFormat from 'react-number-format';
+import PopupCompras from '../producto/PopupCompras';
+
 
 
 
@@ -30,8 +32,20 @@ class ProductoCompra extends Component {
         mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProductoNombre:'',
-        titulo:''
+        titulo:'',
+        showModal: false
     }
+    openModal=()=>{
+        this.setState({
+          showModal: true
+        })
+        }
+
+    closeModal=()=>{
+          this.setState({
+            showModal: false
+          }) 
+        }
 
     filtrar = () =>{
          this.setState({mostrarFiltro:!this.state.mostrarFiltro})
@@ -332,18 +346,19 @@ obtenerCodigoProducto = (productoId) =>{
                     // RENDERIZADO **************************************************************************
     render() {
         return (
+            
             // *************************************** ESTO NO ME ACUERDO QUE MIERDA ERA *********************
             <>      
             <Form>
                 {/* <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000",marginLeft:"0.1%", paddingTop:5, paddingLeft:"43%"}}> 
                     <h4>COMPRAS</h4>
                 </Row> */}
-                <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
+                {/* <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
                     <Col md = {5}></Col>
                         <Col md = {4}><h4>COMPRAS</h4></Col>
                     <Col md = {5}></Col>
 
-                </Row>
+                </Row> */}
                 <Row>
                     <Col md={3}>
                         <Form.Group>
@@ -401,11 +416,13 @@ obtenerCodigoProducto = (productoId) =>{
             {/* //  *******************************************BOTONES***************************************** */}
             <Row>
                     <Col md={8}>
-                        <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
+                        {/* <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.guardar()}}>Guardar</Button>{' '}
                         <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
-                        {/* <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '} */}
-                        <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
-                        </Col>
+                        <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button> */}
+                        <Button className="btn btn-primary" size="sm" onClick={this.openModal} >CARGAR</Button>
+                        <PopupCompras propsShowModal={this.state.showModal} funcionCloseModal={this.closeModal} funcionGuardar={this.guardar}/>
+
+                    </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
                          <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
