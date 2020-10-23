@@ -1,8 +1,39 @@
 import React, {Component} from 'react'; 
 import { Row, Col,Navbar, Nav, NavDropdown, } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
+import LocalizedStrings from "react-localization";
 // const logo = require('./assets/crm.gif') 
 // const logo = require('./assets/lolilogo2.png') 
+
+const traduccion = {
+        es: {
+        inicio: "Inicio",
+        consulta: "Consulta",
+        stock:"Stock",
+        compras:"Compras",
+        ventas:"Ventas",
+        usuarios:"Usuarios",
+        roles:"Roles",
+        reportes:"Reportes",
+        movimientos:"Movimientos"
+        },
+        en: {
+            inicio: "Home",
+            consulta: "Query",
+            stock:"Stock",
+            compras:"Buying",
+            ventas:"Selling",
+            usuarios:"Users",
+            roles:"Rol",
+            reportes:"Reports",
+            movimientos:"Movements"
+
+        },
+      
+    }
+    let strings = new LocalizedStrings(traduccion)
+    strings.setLanguage('es');
+
 class Menu extends Component {
     state = {
         titulo : 'INICIO'
@@ -31,21 +62,21 @@ class Menu extends Component {
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
-                                <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >Inicio</Nav.Link></LinkContainer>
-                                {this.props.rolesUsuarios.includes('Consulta')? <LinkContainer exact to="/productos/consulta"><Nav.Link onClick={()=>{this.definirTitulo('CONSULTA')}} >Consulta</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >Stock</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>Compras</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >Ventas</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >Usuarios</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Roles')?<LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >Roles</Nav.Link></LinkContainer>:null}
+                                <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >{strings.inicio}</Nav.Link></LinkContainer>
+                                {this.props.rolesUsuarios.includes('Consulta')? <LinkContainer exact to="/productos/consulta"><Nav.Link onClick={()=>{this.definirTitulo('CONSULTA')}} >{strings.consulta}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >{strings.stock}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>{strings.compras}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >{strings.ventas}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >{strings.usuarios}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Roles')?<LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >{strings.roles}</Nav.Link></LinkContainer>:null}
 
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Ventas</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Anulaciones</Nav.Link> */}
                                 {this.props.rolesUsuarios.includes('Stock')?
-                                    <NavDropdown title="Reportes" id="basic-nav-dropdown">
-                                         <LinkContainer exact to="/productos/movimientos"><Nav.Link>Movimientos</Nav.Link></LinkContainer>
+                                    <NavDropdown title={strings.reportes} id="basic-nav-dropdown">
+                                         <LinkContainer exact to="/productos/movimientos"><Nav.Link>{strings.movimientos}</Nav.Link></LinkContainer>
                                                 {/* <NavDropdown.Item href="/productos">Movimientos</NavDropdown.Item> */}
                                                 {/* <NavDropdown.Divider />
                                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
