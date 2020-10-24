@@ -340,7 +340,7 @@ obtenerPrecioProducto = (productoId) =>{
                 })
                 // console.log(listaTemporal)
                 this.setState({
-                    listaMovimientos : listaTemporal,
+                    listaMovimientos : listaTemporal.reverse(),
                     metodoDesuscribirse : metodoDesuscribirse,
                     totalPrecioCompra : sumatoriaTemporalPrecioCompra,
                     totalPrecioVenta : sumatoriaTemporalPrecioVenta                })

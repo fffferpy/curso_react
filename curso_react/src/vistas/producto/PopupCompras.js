@@ -86,14 +86,14 @@ class PopupCompra extends Component {
                                             
                             </Form>
                             <Row>
-                            <Col md={3}></Col>
-                            <Col md={3}></Col>
+                                <Col md={3}></Col>
+                                <Col md={3}></Col>
                                 <Col md={6}>
                                     <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.props.funcionGuardar()}}>Guardar</Button>{' '}
                                     <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.props.funcionLimpiarCampos}>Limpiar Campos</Button>{' '}
                                 </Col>
                             </Row>
-                            <br/>
+                            {/* <br/> */}
                             <Row>
                                 <Col>
                                     <Table responsive striped bordered hover size="sm">

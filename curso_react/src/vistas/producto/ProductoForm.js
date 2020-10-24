@@ -267,7 +267,7 @@ class ProductoForm extends Component {
                     //  console.log('Siguiente - Primer registro mostrado: ', snap.docs[0].data())
                      console.log('Siguiente - Ultimo registro mostrado: ', snap.docs[snap.docs.length-1].data());
                     this.setState({
-                        listaMovimientos : listaTemporal,
+                        listaMovimientos : listaTemporal.reverse(),
                         ultimoProductoVisible : snap.docs[snap.docs.length-1],
                         primerProductoVisible : snap.docs[0]
                         // metodoDesuscribirse : metodoDesuscribirse
