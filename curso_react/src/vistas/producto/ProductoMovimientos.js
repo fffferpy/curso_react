@@ -315,7 +315,7 @@ obtenerCodigoProducto = (productoId) =>{
                 })
                 console.log('lista temporal: ', listaTemporal)
                 this.setState({
-                    listaMovimientos : listaTemporal,
+                    listaMovimientos : listaTemporal.reverse(),
                     metodoDesuscribirse : metodoDesuscribirse
                 })
             },(error)=>{
