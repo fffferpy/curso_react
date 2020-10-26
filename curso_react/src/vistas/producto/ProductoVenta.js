@@ -249,7 +249,7 @@ obtenerPrecioProducto = (productoId) =>{
         // console.log(productoTemporal)
         let datosMovimmientos = {
             fecha:this.state.fecha,
-            productoNombre:productoTemporal[0].productoNombre,
+            // productoNombre:productoTemporal[0].productoNombre,
             productoId : this.state.productoId,
             codigo:this.state.codigo,
             precioCompra:this.state.precioCompra,
@@ -383,14 +383,18 @@ obtenerPrecioProducto = (productoId) =>{
                          </Form.Group>
                     </Col>
                     <Col>                
-                      {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
-                        <Form.Group controlId="exampleForm.ControlSelect1">
+                        {/* <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoNombre}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
+                        </Form.Group> */}
+                        <Form.Group>
+                            <Form.Label>Producto</Form.Label>
+                            <Form.Control type="text" size="sm"  name="productoId" value = {this.state.productoNombre}onChange={this.capturarTecla} />
                         </Form.Group>
+
                     </Col>
                                                             
                     <Col md={1}>

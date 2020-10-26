@@ -40,12 +40,12 @@ class PopupCompra extends Component {
                         <Modal.Body>
                             <Form>
                                 <Row>
-                                    <Col md={6}>
+                                    {/* <Col md={6}>
                                         <Form.Group>
                                                 <Form.Label>Fecha</Form.Label>
                                                 <Form.Control type="date"  size="sm" name="fecha" value = {this.props.atributos.fecha} onChange={this.props.funcionCapturarTecla} />
                                         </Form.Group>
-                                    </Col>
+                                    </Col> */}
                                     <Col md={6}>  
                                         <Form.Group>
                                                 <Form.Label>Producto</Form.Label>
@@ -54,7 +54,7 @@ class PopupCompra extends Component {
               
                                     </Col>
                                 </Row>
-                                <Row>                                            
+                                {/* <Row>                                            
                                     <Col md={6}>
                                         <Form.Group>
                                                 <Form.Label>Código</Form.Label>
@@ -83,14 +83,14 @@ class PopupCompra extends Component {
                                     </Col>
                                     
                                 </Row>
-                                            
+                                             */}
                             </Form>
                             <Row>
                                 <Col md={3}></Col>
                                 <Col md={3}></Col>
                                 <Col md={6}>
-                                    <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.props.funcionGuardar()}}>Guardar</Button>{' '}
-                                    <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.props.funcionLimpiarCampos}>Limpiar Campos</Button>{' '}
+                                    {/* <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.props.funcionGuardar()}}>Guardar</Button>{' '}
+                                    <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}} size="sm"  onClick={this.props.funcionLimpiarCampos}>Limpiar Campos</Button>{' '} */}
                                 </Col>
                             </Row>
                             {/* <br/> */}
