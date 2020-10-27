@@ -267,7 +267,7 @@ obtenerCodigoProducto = (productoId) =>{
             estado: this.state.estado
         }
                                // PARA GUARDAR
-        if(this.state.codigo!=0){    
+        if(this.state.codigo!=0 && this.state.fecha != '' && this.state.cantidad !=0){    
             db.collection('movimientos').add({
                 ...datosMovimmientos, 
                 creado : moment().unix(),
@@ -297,7 +297,7 @@ obtenerCodigoProducto = (productoId) =>{
                 alert(error)
             })
         }else {
-                alert('Seleccione un producto')  
+                alert('Los campos con * son obligatorios')  
 
         }
         
@@ -345,7 +345,7 @@ obtenerCodigoProducto = (productoId) =>{
                 <Row>
                     <Col md={3}>
                         <Form.Group>
-                                <Form.Label>Fecha</Form.Label>
+                                <Form.Label>Fecha * </Form.Label>
                                 <Form.Control type="date"  size="sm" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
                          </Form.Group>
                     </Col>
@@ -358,7 +358,7 @@ obtenerCodigoProducto = (productoId) =>{
                                 </Form.Control>
                         </Form.Group> */}
                         <Form.Group>
-                            <Form.Label>Producto</Form.Label>
+                            <Form.Label>Producto * </Form.Label>
                             <Form.Control type="text" size="sm" name="productoNombre" value = {this.state.productoNombre} onChange={this.capturarTecla} onClick={this.openModal} />
                         </Form.Group>
 
@@ -384,7 +384,7 @@ obtenerCodigoProducto = (productoId) =>{
                     <Col md={2}> 
 
                             <Form.Group>
-                                <Form.Label>Cantidad</Form.Label>
+                                <Form.Label>Cantidad * </Form.Label>
                                 <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio

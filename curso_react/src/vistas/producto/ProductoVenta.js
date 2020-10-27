@@ -145,7 +145,7 @@ class ProductoVenta extends Component {
         return this.state.listaMovimientos
         .filter((documento)=>{
             return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
-            && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
+            && (documento.productoId.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
         }) 
         .map((documento) => {
    
@@ -249,7 +249,7 @@ obtenerPrecioProducto = (productoId) =>{
         // console.log(productoTemporal)
         let datosMovimmientos = {
             fecha:this.state.fecha,
-            // productoNombre:productoTemporal[0].productoNombre,
+            productoNombre:productoTemporal[0].productoNombre,
             productoId : this.state.productoId,
             codigo:this.state.codigo,
             precioCompra:this.state.precioCompra,
@@ -383,18 +383,14 @@ obtenerPrecioProducto = (productoId) =>{
                          </Form.Group>
                     </Col>
                     <Col>                
-                        {/* <Form.Group controlId="exampleForm.ControlSelect1">
+                      {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
+                        <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoNombre}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
-                        </Form.Group> */}
-                        <Form.Group>
-                            <Form.Label>Producto</Form.Label>
-                            <Form.Control type="text" size="sm"  name="productoId" value = {this.state.productoNombre}onChange={this.capturarTecla} />
                         </Form.Group>
-
                     </Col>
                                                             
                     <Col md={1}>
@@ -418,7 +414,7 @@ obtenerPrecioProducto = (productoId) =>{
 
                             <Form.Group>
                                 <Form.Label>Cantidad</Form.Label>
-                                <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
+                                <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad}  onClick={this.limpiarCampos} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
