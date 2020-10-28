@@ -9,7 +9,7 @@ import Informe from '../../componentes/Informe';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
 import NumberFormat from 'react-number-format';
-import PopupCompras from '../producto/PopupCompras';
+import PopupProductos from '../producto/PopupProductos';
 
 
 
@@ -405,7 +405,7 @@ obtenerCodigoProducto = (productoId) =>{
                             <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}}  onClick={() => {this.guardar()}}>Guardar</Button>{' '} 
                             <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}}  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                             {/* <Button className="btn btn-primary" size="sm" onClick={this.openModal} >CARGAR COMPRAS</Button> */}
-                            <PopupCompras 
+                            <PopupProductos 
                             propsShowModal={this.state.showModal} 
                             funcionCloseModal={this.closeModal} 
                             funcionCapturarTecla={this.capturarTecla} 

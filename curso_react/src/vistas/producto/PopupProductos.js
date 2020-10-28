@@ -14,7 +14,7 @@ import NumberFormat from 'react-number-format';
 
                     //  *************************STATES*********************
 
-class PopupCompra extends Component {
+class PopupProductos extends Component {
    componentDidMount (){
        console.log(this.props.listaProductos)
    }
@@ -118,4 +118,4 @@ class PopupCompra extends Component {
     }
 }
 
-export default withRouter(PopupCompra)
+export default withRouter(PopupProductos)

@@ -9,6 +9,8 @@ import Informe from '../../componentes/Informe';
 import {MODULES_BECAME_STANDARD_YEAR, imprimirAviso } from './productos';  
 import { MdDeleteForever, MdCreate, MdFindInPage} from "react-icons/md";
 import NumberFormat from 'react-number-format';
+import PopupProductos from '../producto/PopupProductos';
+
 
 
 
@@ -18,7 +20,7 @@ import NumberFormat from 'react-number-format';
 class ProductoVenta extends Component {
     state={
         fecha:'',
-        productoId:'',
+        productoNombre:'',
         codigo:'0',
         precioVenta:'0',
         precioCompra:'0',
@@ -34,8 +36,23 @@ class ProductoVenta extends Component {
         filtroProductoNombre:'',
         titulo:'',
         totalPrecioVenta:0,
-        totalPrecioCompra:0
+        totalPrecioCompra:0,
+        showModal: false,
+        productoSeleccionado:{}
     }
+
+    openModal=()=>{
+        this.setState({
+          showModal: true
+        })
+        }
+
+    closeModal=()=>{
+          this.setState({
+            showModal: false
+          }) 
+        }
+
 
     filtrar = () =>{
          this.setState({mostrarFiltro:!this.state.mostrarFiltro})
@@ -221,17 +238,17 @@ obtenerPrecioProducto = (productoId) =>{
                     // CAPTURA CARGA DE CAMPOS EN PANTALLA *************************
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
-        if (evento.target.name== 'productoId'){
-            console.log('obtenerCodigoProducto')
-            let datosObtenidosProducto = this.obtenerDatosProducto(evento.target.value)
-            console.log(datosObtenidosProducto)
-            this.setState({
-                codigo : datosObtenidosProducto.codigo,
-                precioVenta : datosObtenidosProducto.precioVenta,
-                precioCompra : datosObtenidosProducto.precioCompra,
+        // if (evento.target.name== 'productoId'){
+        //     console.log('obtenerCodigoProducto')
+        //     let datosObtenidosProducto = this.obtenerDatosProducto(evento.target.value)
+        //     console.log(datosObtenidosProducto)
+        //     this.setState({
+        //         codigo : datosObtenidosProducto.codigo,
+        //         precioVenta : datosObtenidosProducto.precioVenta,
+        //         precioCompra : datosObtenidosProducto.precioCompra,
 
-            })
-        }
+        //     })
+        // }
     }
     capturarPrecio=(evento, name)=>{
         console.log('evento', evento)
@@ -242,47 +259,22 @@ obtenerPrecioProducto = (productoId) =>{
                         // GRABAR DATOS EN DB ***************************************
     guardar=()=>{
         // // console.log(this.state)
-        let productoTemporal = this.state.listaProductos.filter(producto =>{
-            return producto.id == this.state.productoId
-            
-        })
         // console.log(productoTemporal)
         let datosMovimmientos = {
             fecha:this.state.fecha,
-            productoNombre:productoTemporal[0].productoNombre,
-            productoId : this.state.productoId,
+            productoNombre:this.state.productoSeleccionado.productoNombre,
+            productoId : this.state.productoSeleccionado.id,
             codigo:this.state.codigo,
-            precioCompra:this.state.precioCompra,
+            precioCompra:this.state.productoSeleccionado.precioCompra,
             precioVenta:this.state.precioVenta,
             cantidad:this.state.cantidad,
             tipoMovimiento: 2,
             estado: this.state.estado
         }
-        if (this.state.productoEditarId){       // PARA EDITAR 
-            // console.log(this.state.productoEditarId)
-            db.collection('movimientos').doc(`${this.state.productoEditarId}`).update(datosMovimmientos)
-            //    db.collection("movimientos").doc(`${this.state.productoEditarId}`).update({
-            .then(()=>{
-                // se ejecuta cuando se inserto con exito
-                // alert('Editado correctamente')  
-                toast.success('Editado correctamente', {
-                    position: "bottom-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    });
-                this.limpiarCampos()  
-            })
-            .catch((error)=>{
-                // se ejecuta cuando sucede un error 
-                alert(error)
-                // console.log(error)
-            })    
-        } else{                                 // PARA GUARDAR
-            
+
+                                      // PARA GUARDAR
+        if(this.state.codigo!=0 && this.state.fecha != '' && this.state.cantidad !=0){    
+    
             db.collection('movimientos').add({
                 ...datosMovimmientos, 
                 // creado: firebase.firestore.FieldValue.serverTimestamp()
@@ -290,12 +282,12 @@ obtenerPrecioProducto = (productoId) =>{
                 // saldo : 
             })
             .then(()=>{
-                db.collection('productos').doc(this.state.productoId).update({
-                    saldo : productoTemporal[0].saldo - parseInt(this.state.cantidad)
-                })
-                .catch((error)=>{
-                    // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
-                })
+                // db.collection('productos').doc(this.state.productoId).update({
+                //     saldo : productoTemporal[0].saldo - parseInt(this.state.cantidad)
+                // })
+                // .catch((error)=>{
+                //     // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
+                // })
                 // se ejecuta cuando se inserto con exito
                 // alert('Insertado correctamente')  
                 toast.success('Insertado correctamente', {
@@ -308,12 +300,16 @@ obtenerPrecioProducto = (productoId) =>{
                     progress: undefined,
                     });
                 this.limpiarCampos()  
+                this.closeModal()
             })
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
                 alert(error)
             })
-        }
+        }else {
+            alert('Los campos con * son obligatorios')  
+
+    }
         
         // console.log (datosMovimmientos)
     }
@@ -349,6 +345,25 @@ obtenerPrecioProducto = (productoId) =>{
                 console.log(error)
             })
     }
+    renderListaProductos = () => {
+        return this.state.listaProductos
+        .filter((documento)=>{
+            return (documento.productoNombre.toLowerCase().indexOf(this.state.productoNombre.toLowerCase())>=0)
+        }) 
+
+        .map((documento) => {
+            return (
+                // key es un identificador unico
+                <tr key={documento.id}> 
+                    <td>{documento.productoNombre}</td>
+                    <td><a href="#" onClick={()=>{this.setState({productoSeleccionado:documento, codigo:documento.codigo, productoNombre:documento.productoNombre, precioVenta:documento.precioVenta, showModal: false })}}>
+                        SELECCIONAR
+                        </a></td>
+                </tr>
+            )
+        })
+    }
+
 
                     // ANTES DE DESMONTAR EL COMPONENTE******************************************************
     componentWillUnmount(){
@@ -375,7 +390,7 @@ obtenerPrecioProducto = (productoId) =>{
                 <Row>
                     <Col md={3}>
                         <Form.Group>
-                                <Form.Label>Fecha</Form.Label>
+                                <Form.Label>Fecha *</Form.Label>
                                 <Form.Control type="date"  size="sm" name="fecha" value = {this.state.fecha} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
@@ -384,12 +399,16 @@ obtenerPrecioProducto = (productoId) =>{
                     </Col>
                     <Col>                
                       {/* // *********AQUI DEBERIA TRAER DE LA COLLECTION PRODUCTOS ************************/}
-                        <Form.Group controlId="exampleForm.ControlSelect1">
+                        {/* <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>Producto</Form.Label>
                                 <Form.Control as="select"  size="sm"  name="productoId" value = {this.state.productoNombre}  onChange={this.capturarTecla}>
                                 <option key= '01' value = '01'>Seleccione un producto</option>
                                     {this.renderItems()}
                                 </Form.Control>
+                        </Form.Group> */}
+                        <Form.Group>
+                            <Form.Label>Producto * </Form.Label>
+                            <Form.Control type="text" size="sm" name="productoNombre" value = {this.state.productoNombre} onChange={this.capturarTecla} onClick={this.openModal} />
                         </Form.Group>
                     </Col>
                                                             
@@ -413,8 +432,8 @@ obtenerPrecioProducto = (productoId) =>{
                     <Col md={2}> 
 
                             <Form.Group>
-                                <Form.Label>Cantidad</Form.Label>
-                                <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad}  onClick={this.limpiarCampos} onChange={this.capturarTecla} />
+                                <Form.Label>Cantidad *</Form.Label>
+                                <Form.Control type="number"  size="sm" name="cantidad" value = {this.state.cantidad} onChange={this.capturarTecla} />
                                 {/* <Form.Text className="text-muted">
                                     Campo obligatorio
                                 </Form.Text> */}
@@ -434,7 +453,18 @@ obtenerPrecioProducto = (productoId) =>{
                         <Button className="float-right" style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}} size="sm" onClick={() => {this.filtrar()}}>Filtrar</Button>{' '}
                         <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         {/* <Button variant = "info" size="sm" onClick={() => {console.log('state', this.state)}}>Ver state</Button> */}
-                        </Col>
+                        <PopupProductos 
+                            propsShowModal={this.state.showModal} 
+                            funcionCloseModal={this.closeModal} 
+                            funcionCapturarTecla={this.capturarTecla} 
+                            funcionGuardar={this.guardar}
+                            funcionCapturarPrecio={this.capturarPrecio}
+                            // listaProductos={this.state.listaProductos}
+                            funcionRenderListaProductos={this.renderListaProductos}
+                            funcionLimpiarCampos={this.limpiarCampos}
+                            atributos = {this.state}/>
+
+                    </Col>
                     <Col md={4}>
                          <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '2'/> 
                          <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
