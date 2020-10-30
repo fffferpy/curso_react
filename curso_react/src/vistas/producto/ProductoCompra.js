@@ -341,7 +341,12 @@ obtenerCodigoProducto = (productoId) =>{
         return (
             <>  
             <Form>
+            <Row style={{marginRight:"0.1%",backgroundColor:"#dbdbdb", color:"#000", paddingTop:5}}> 
+                    <Col md = {5}></Col>
+                        <Col md = {4}><h4>COMPRAS</h4></Col>
+                    <Col md = {5}></Col>
 
+                </Row>
                 <Row>
                     <Col md={3}>
                         <Form.Group>

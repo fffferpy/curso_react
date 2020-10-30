@@ -22,7 +22,7 @@ class ProductoVenta extends Component {
         fecha:'',
         productoNombre:'',
         codigo:'0',
-        precioVenta:'0',
+        precioVenta:'',
         precioCompra:'0',
         cantidad:0,
         tipoMovimiento: 2,
@@ -61,9 +61,9 @@ class ProductoVenta extends Component {
     limpiarCampos = () => {
         this.setState({
             fecha:'',
-            productoId:'',
+            productoNombre:'',
             codigo:0,
-            precioVenta:0,
+            precioVenta:'',
             cantidad:0,
             tipoMovimiento: 2,
             estado: 1,
@@ -162,7 +162,7 @@ class ProductoVenta extends Component {
         return this.state.listaMovimientos
         .filter((documento)=>{
             return (documento.codigo.toString().indexOf(this.state.filtroCodigo)>=0) 
-            && (documento.productoId.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
+            && (documento.productoNombre.toLowerCase().indexOf(this.state.filtroProductoNombre.toLowerCase())>=0)
         }) 
         .map((documento) => {
    
@@ -274,20 +274,18 @@ obtenerPrecioProducto = (productoId) =>{
 
                                       // PARA GUARDAR
         if(this.state.codigo!=0 && this.state.fecha != '' && this.state.cantidad !=0){    
-    
             db.collection('movimientos').add({
                 ...datosMovimmientos, 
-                // creado: firebase.firestore.FieldValue.serverTimestamp()
                 creado : moment().unix(),
-                // saldo : 
             })
             .then(()=>{
-                // db.collection('productos').doc(this.state.productoId).update({
-                //     saldo : productoTemporal[0].saldo - parseInt(this.state.cantidad)
-                // })
-                // .catch((error)=>{
-                //     // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
-                // })
+                // console.log(this.state.productoSeleccionado.Id)
+                db.collection('productos').doc(this.state.productoSeleccionado.id).update({
+                    saldo : this.state.productoSeleccionado.saldo - parseInt(this.state.cantidad)
+                })
+                .catch((error)=>{
+                    // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
+                })
                 // se ejecuta cuando se inserto con exito
                 // alert('Insertado correctamente')  
                 toast.success('Insertado correctamente', {
@@ -304,12 +302,12 @@ obtenerPrecioProducto = (productoId) =>{
             })
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
-                alert(error)
+                // alert(error)
+                console.log(error)
             })
         }else {
             alert('Los campos con * son obligatorios')  
-
-    }
+        }
         
         // console.log (datosMovimmientos)
     }
