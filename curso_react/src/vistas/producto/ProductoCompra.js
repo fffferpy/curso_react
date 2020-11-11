@@ -30,7 +30,7 @@ class ProductoCompra extends Component {
         listaProductos: [],
         metodoDesuscribirse:null,
         productoEditarId: null,
-        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
+        mostrarFiltro: true,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProductoNombre:'',
         titulo:'',
@@ -406,7 +406,7 @@ obtenerCodigoProducto = (productoId) =>{
                 {/* <br></br> */}
                 {/* //  *******************************************BOTONES***************************************** */}
                 <Row>   
-                        <Col md={6}>
+                        <Col md={8}>
                             <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}}  onClick={() => {this.guardar()}}>Guardar</Button>{' '} 
                             <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}}  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
                             {/* <Button className="btn btn-primary" size="sm" onClick={this.openModal} >CARGAR COMPRAS</Button> */}
@@ -424,9 +424,9 @@ obtenerCodigoProducto = (productoId) =>{
                         </Col>
                         <Col md={4}>
                             <Informe listaMovimientos = {this.state.listaMovimientos} tipoMovimiento = '1'/> 
-                            <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
+                            {/* <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
                                 <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
-                            </OverlayTrigger>
+                            </OverlayTrigger> */}
 
                         </Col>
                 </Row>

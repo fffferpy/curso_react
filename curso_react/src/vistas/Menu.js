@@ -57,6 +57,7 @@ class Menu extends Component {
                   
                     <Col> 
                         <Navbar bg="light" expand="lg">
+                            <Navbar.Brand href="/home">MiniPDV</Navbar.Brand>
                             {/* <Navbar.Brand href="#home"><Image src={require('./assets/resizeimage.jpg')} fluid /></Navbar.Brand> */}
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
@@ -77,6 +78,7 @@ class Menu extends Component {
                                 {this.props.rolesUsuarios.includes('Stock')?
                                     <NavDropdown title={strings.reportes} id="basic-nav-dropdown">
                                          <LinkContainer exact to="/productos/movimientos"><Nav.Link>{strings.movimientos}</Nav.Link></LinkContainer>
+                                         <LinkContainer exact to="/uploadfile"><Nav.Link>UPLOAD FILE</Nav.Link></LinkContainer>
                                                 {/* <NavDropdown.Item href="/productos">Movimientos</NavDropdown.Item> */}
                                                 {/* <NavDropdown.Divider />
                                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}

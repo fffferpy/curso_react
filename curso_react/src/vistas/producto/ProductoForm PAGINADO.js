@@ -27,7 +27,7 @@ class ProductoForm extends Component {
         listaMovimientos: [],
         metodoDesuscribirse:null,
         productoEditarId: null,
-        mostrarFiltro: true,// variable para mostrar y ocultar filtros 
+        mostrarFiltro: false,// variable para mostrar y ocultar filtros 
         filtroCodigo:'',
         filtroProducto:'',
         ultimoProductoVisible:'',
@@ -246,7 +246,7 @@ class ProductoForm extends Component {
             // .onSnapshot((snap)=>{
             //    db.collection('productos').where('productoNombre','==','celular').orderBy('creado')
                db.collection('productos').orderBy('creado')
-            //    .limit(7)
+               .limit(7)
                 .get()
                 .then (snap =>{
                     listaTemporal = []
@@ -441,7 +441,7 @@ class ProductoForm extends Component {
                                 <Button variant = "info" size="sm" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                         </Col>
                         <Col  md={4}>
-                            {/* <Form inline>
+                            <Form inline>
                                     <InputGroup className="mb-2 mr-sm-2">
                                         <InputGroup.Prepend>
                                             <Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/>
@@ -451,16 +451,11 @@ class ProductoForm extends Component {
                                         </OverlayTrigger>
 
                                     </InputGroup>
-                            </Form> */}
-                            
+                            </Form>
                         </Col>
                         <Col md={4}>
                         {/* FcDataSheet */}
                         {/* <Informe listaMovimientos = {this.state.listaMovimientos} />      */}
-                        {/* <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >filtrar</Tooltip>} > 
-                                <MdFindInPage className="float-right" color="#3b5998" size="26" onClick ={()=>this.filtrar()} />  
-                        </OverlayTrigger> */}
-
                         <InformeV2 labels = {
                             [
                                 {label:'Producto', value:'productoNombre' },
@@ -509,10 +504,10 @@ class ProductoForm extends Component {
                                         <thead>
                                             <tr>
                                                 {/* <th>Producto</th> */}
-                                                <th style={{textAlign:"center"}}>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th>
+                                                {/* <th>Producto  {this.state.mostrarFiltro==true?<Form.Control type="text" size="sm" name="filtroProducto" value = {this.state.filtroProducto} onChange={this.capturarTecla} />:null}</th> */}
                                                 {/* <th><Form.Control size="sm" type="text" name="buscador" value={this.state.buscador} onChange={this.capturarTecla} placeholder="Filtrar producto"/> */}
                                                 {/* <MdFindInPage color="#3b5998" size="34" onClick ={()=>this.buscarProducto()} />  </th> */}
-                                                {/* <th style={{textAlign:"center"}}>Producto */}
+                                                <th style={{textAlign:"center"}}>Producto
                                                 {/* <Form inline>
                                                     <InputGroup className="mb-2 mr-sm-2">
                                                         <InputGroup.Prepend>
@@ -521,7 +516,7 @@ class ProductoForm extends Component {
                                                         <MdFindInPage color="#3b5998" size="25" onClick ={()=>this.buscarProducto()} />  
                                                     </InputGroup>
                                                 </Form> */}
-                                                {/* </th> */}
+                                                </th>
                                                 <th style={{textAlign:"center"}}>Precio Compra</th>
                                                 <th style={{textAlign:"center"}}>Precio Venta</th>
                                                 <th style={{textAlign:"center"}}>Creado</th>
@@ -539,20 +534,22 @@ class ProductoForm extends Component {
                             </Table>
                     </Col>
                 </Row>
-                {/* <Row>
+                <Row>
                     <Col md = {6} >
                         <OverlayTrigger placement="left" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Pagina anterior</Tooltip>} > 
+                        {/* <MdSkipPrevious className="float-right" color="#3b5998" size="30" onClick ={()=>this.paginaAnterior()} />   */}
                         <MdNavigateBefore className="float-right" color="#3b5998" size="30" onClick ={()=>this.paginaAnterior()} />  
                         </OverlayTrigger>
 
                     </Col>
                     <Col md = {6} >
                         <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Pagina siguiente</Tooltip>} > 
+                            {/* <MdSkipNext className="float-left" color="#3b5998" size="30" onClick ={()=>this.siguientePagina()} />   */}
                             <MdNavigateNext className="float-left" color="#3b5998" size="30" onClick ={()=>this.siguientePagina()} />  
                         </OverlayTrigger>
 
                     </Col>
-                </Row> */}
+                </Row>
               
                 <ToastContainer />
 

@@ -176,7 +176,8 @@ class ProductoConsulta extends Component {
                     //******************************CARGA MOVIMIENTOS EN LISTA TEMPORAL *************************************************
     obtenerProducto = ()=>{
             let listaTemporal = []
-            let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+            // let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+            db.collection('productos').orderBy('creado')
             .onSnapshot((snap)=>{
                 listaTemporal = []
                 snap.forEach((documento)=>{
@@ -195,7 +196,7 @@ class ProductoConsulta extends Component {
                 })
                 this.setState({
                     listaMovimientos : listaTemporal,
-                    metodoDesuscribirse : metodoDesuscribirse
+                    // metodoDesuscribirse : metodoDesuscribirse
                 })
             },(error)=>{
                 alert(error)
@@ -215,10 +216,10 @@ class ProductoConsulta extends Component {
     }
 
                     // ************************************ANTES DE DESMONTAR EL COMPONENTE******************************************************
-     componentWillUnmount(){
-         if (this.state.metodoDesuscribirse){
-              this.state.metodoDesuscribirse()
-         }}
+    //  componentWillUnmount(){
+    //      if (this.state.metodoDesuscribirse){
+    //           this.state.metodoDesuscribirse()
+    //      }}
     
 
                     // ************************************RENDERIZADO **************************************************************************
