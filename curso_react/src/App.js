@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import Home from './vistas/Home';
 import Menu from './vistas/Menu';
 // import ProductoList from './vistas/producto/ProductoList';
-import ProductoForm from './vistas/producto/ProductoForm';
+import ProductoAbm from './vistas/producto/ProductoAbm';
 import ProductoCompra from './vistas/producto/ProductoCompra';
 import ProductoVenta from './vistas/producto/ProductoVenta';
 import ProductoMovimientos from './vistas/producto/ProductoMovimientos';
@@ -80,8 +80,8 @@ componentDidMount(){
          {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email} rolesUsuarios= {this.state.rolesUsuarios}/> : null}
           <Switch>
               <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
-              {this.state.rolesUsuarios.includes('Stock')?<PrivateRoute exact path="/productos" component={ProductoForm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
-              {this.state.rolesUsuarios.includes('Consulta')?<PrivateRoute exact path="/productos/consulta" component={ProductoConsulta} usuarioLogeado={this.state.usuarioLogeado}/>:null}
+              {this.state.rolesUsuarios.includes('Productos')?<PrivateRoute exact path="/productos" component={ProductoAbm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
+              {this.state.rolesUsuarios.includes('Stock')?<PrivateRoute exact path="/productos/stock" component={ProductoConsulta} usuarioLogeado={this.state.usuarioLogeado}/>:null}
               {this.state.rolesUsuarios.includes('Compras')?<PrivateRoute exact path="/productos/compras" component={ProductoCompra} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Ventas')?<PrivateRoute exact path="/productos/ventas" component={ProductoVenta} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Movimientos')?<PrivateRoute exact path="/productos/movimientos" component={ProductoMovimientos} usuarioLogeado={this.state.usuarioLogeado} />:null}

@@ -8,8 +8,8 @@ import LocalizedStrings from "react-localization";
 const traduccion = {
         es: {
         inicio: "Inicio",
-        consulta: "Consulta",
-        stock:"Stock",
+        stock: "Stock",
+        productos:"Productos",
         compras:"Compras",
         ventas:"Ventas",
         usuarios:"Usuarios",
@@ -63,9 +63,9 @@ class Menu extends Component {
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">
                                 {/* <Nav.Link href="#link">Stock</Nav.Link> */}
-                                <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >{strings.inicio}</Nav.Link></LinkContainer>
-                                {this.props.rolesUsuarios.includes('Consulta')? <LinkContainer exact to="/productos/consulta"><Nav.Link onClick={()=>{this.definirTitulo('CONSULTA')}} >{strings.consulta}</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >{strings.stock}</Nav.Link></LinkContainer>:null}
+                                {/* <LinkContainer exact to="/"><Nav.Link onClick={()=>{this.definirTitulo('INICIO')}} >{strings.inicio}</Nav.Link></LinkContainer> */}
+                                {this.props.rolesUsuarios.includes('Stock')? <LinkContainer exact to="/productos/stock"><Nav.Link onClick={()=>{this.definirTitulo('STOCK')}} >{strings.stock}</Nav.Link></LinkContainer>:null}
+                                {this.props.rolesUsuarios.includes('Productos')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('PRODUCTOS')}} >{strings.productos}</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>{strings.compras}</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >{strings.ventas}</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >{strings.usuarios}</Nav.Link></LinkContainer>:null}
