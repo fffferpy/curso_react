@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
+import ClienteAbm from './vistas/clientes/ClienteAbm';
 
 // import Pruebagrid from './Pruebagrid/Pruebagrid';
 // import Welcome from './Welcome';

@@ -16,6 +16,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-do
 import {auth, db} from './config/firebase'; 
 import ProductoConsulta from './vistas/producto/ProductoConsulta';
 import UploadFile from './vistas/producto/UploadFile';
+import ClienteAbm from './vistas/clientes/ClienteAbm';
 
 
 
@@ -88,7 +89,8 @@ componentDidMount(){
               {this.state.rolesUsuarios.includes('Usuarios')?<PrivateRoute exact path="/usuarios" component={UsuarioList} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Roles')?<PrivateRoute exact path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />:null}
               <PrivateRoute exact path="/usuario/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
-              <PrivateRoute exact path="/uploadfile" component={UploadFile} usuarioLogeado={this.state.usuarioLogeado}/>
+              <PrivateRoute exact path="/uploadfile" component={ClienteAbm} usuarioLogeado={this.state.usuarioLogeado}/>
+              {/* <PrivateRoute exact path="/uploadfile" component={UploadFile} usuarioLogeado={this.state.usuarioLogeado}/> */}
               <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
               <PublicRoute  exact path="/registro" component={Registro} usuarioLogeado={this.state.usuarioLogeado}/>
           </Switch>

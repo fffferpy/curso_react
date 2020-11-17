@@ -14,7 +14,7 @@ const traduccion = {
         ventas:"Ventas",
         usuarios:"Usuarios",
         roles:"Roles",
-        reportes:"Reportes",
+        Utilidades:"Utilidades",
         movimientos:"Movimientos"
         },
         en: {
@@ -25,7 +25,7 @@ const traduccion = {
             ventas:"Selling",
             usuarios:"Users",
             roles:"Rol",
-            reportes:"Reports",
+            utilidades:"Tools",
             movimientos:"Movements"
 
         },
@@ -68,20 +68,19 @@ class Menu extends Component {
                                 {this.props.rolesUsuarios.includes('Productos')? <LinkContainer exact to="/productos"><Nav.Link onClick={()=>{this.definirTitulo('PRODUCTOS')}} >{strings.productos}</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Compras')?<LinkContainer exact to="/productos/compras"><Nav.Link  onClick={()=>{this.definirTitulo('COMPRAS')}}>{strings.compras}</Nav.Link></LinkContainer>:null}
                                 {this.props.rolesUsuarios.includes('Ventas')?<LinkContainer exact to="/productos/ventas"><Nav.Link onClick={()=>{this.definirTitulo('VENTAS')}} >{strings.ventas}</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >{strings.usuarios}</Nav.Link></LinkContainer>:null}
-                                {this.props.rolesUsuarios.includes('Roles')?<LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >{strings.roles}</Nav.Link></LinkContainer>:null}
-
                                 {/* {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Compras</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Ventas</Nav.Link> */}
                                 {/* <Nav.Link href="#link">Anulaciones</Nav.Link> */}
                                 {this.props.rolesUsuarios.includes('Stock')?
-                                    <NavDropdown title={strings.reportes} id="basic-nav-dropdown">
+                                    <NavDropdown title={strings.Utilidades} id="basic-nav-dropdown">
                                          <LinkContainer exact to="/productos/movimientos"><Nav.Link>{strings.movimientos}</Nav.Link></LinkContainer>
                                          <LinkContainer exact to="/uploadfile"><Nav.Link>UPLOAD FILE</Nav.Link></LinkContainer>
+                                                <NavDropdown.Divider />
+                                                {this.props.rolesUsuarios.includes('Usuarios')?<LinkContainer exact to="/usuarios"><Nav.Link onClick={()=>{this.definirTitulo('USUARIOS')}} >{strings.usuarios}</Nav.Link></LinkContainer>:null}
+                                                {this.props.rolesUsuarios.includes('Roles')?<LinkContainer exact to="/roles"><Nav.Link onClick={()=>{this.definirTitulo('ROLES')}} >{strings.roles}</Nav.Link></LinkContainer>:null}
                                                 {/* <NavDropdown.Item href="/productos">Movimientos</NavDropdown.Item> */}
-                                                {/* <NavDropdown.Divider />
-                                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
+                                                {/* <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
                                     </NavDropdown>:null}
                                 </Nav>
                                 {/* <Navbar.Collapse className="justify-content-center">
