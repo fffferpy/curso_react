@@ -14,8 +14,66 @@ class ClienteAbm extends Component {
         clienteTelefono:0,
         mostrarFiltro:true,
         filtroClienteNombre:'',
-        
+        listaMovimientos: [],
     }
+
+
+    componentDidMount(){
+        this.obtenerClientes()
+    }
+
+    obtenerClientes = ()=>{
+        let listaTemporal = []
+        // let metodoDesuscribirse = db.collection('productos').orderBy('creado')
+        db.collection('clientes').orderBy('creado')
+        .onSnapshot((snap)=>{
+            listaTemporal = []
+            snap.forEach((documento)=>{
+                let cliente = {
+                    id : documento.id,
+                    clienteNombre : documento.data().clienteNombre,
+                    clienteCodigo : documento.data().clienteCodigo,
+                    clienteRuc : documento.data().clienteRuc,
+                    // creado: moment.unix(documento.data().creado.seconds).format("DD/MM/YYYY") || ''
+                    creado : moment.unix(documento.data().creado).format("DD/MM/YYYY"),
+                    clienteTelefono : documento.data().clienteTelefono
+                }
+                listaTemporal.push(cliente)
+                console.log ('MOVIMIENTOS:', cliente)
+            })
+            this.setState({
+                listaMovimientos : listaTemporal.reverse(),
+                // metodoDesuscribirse : metodoDesuscribirse
+            })
+        },(error)=>{
+            alert(error)
+            console.log(error)
+        })
+}
+
+
+renderListaMovimientos = () => {
+    return this.state.listaMovimientos
+    .filter((documento)=>{
+        return (documento.clienteNombre.toLowerCase().indexOf(this.state.filtroClienteNombre.toLowerCase())>=0)
+    }) 
+    .map((documento) => {
+        return (
+            // key es un identificador unico
+            <tr key={documento.id}> 
+                <td>{documento.clienteNombre}</td>
+                <td>{documento.clienteCodigo}</td>
+                <td>{documento.clienteRuc}</td>
+                {/* <td>{documento.creado}</td> */}
+                <td>{documento.clienteTelefono}</td>
+                {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
+                {/* FcEditImage */}
+                {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
+                {/* <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
+            </tr>
+        )
+    })
+}
 
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
@@ -32,7 +90,6 @@ class ClienteAbm extends Component {
         })
     }
 
-
     guardar=()=>{
         // // console.log(this.state)
         // console.log(productoTemporal)
@@ -44,45 +101,45 @@ class ClienteAbm extends Component {
         }
 
                                       // PARA GUARDAR
-        if(this.state.clienteRuc!=0 && this.state.clienteNombre!= ''){    
+        if(this.state.clienteNombre!='' && this.state.clienteRuc!= '' && this.state.clienteCodigo!=0){    
             db.collection('clientes').add({
                 ...datosMovimmientos, 
                 creado : moment().unix(),
             })
             .then(()=>{
+                // console.log (datosMovimmientos)
                 // console.log(this.state.productoSeleccionado.Id)
-                    // db.collection('productos').doc(this.state.productoSeleccionado.id).update({
-                    // saldo : this.state.productoSeleccionado.saldo - parseInt(this.state.cantidad)
-           //     })
-           //     .catch((error)=>{
+               //     db.collection('productos').doc(this.state.productoSeleccionado.id).update({
+               //     saldo : this.state.productoSeleccionado.saldo - parseInt(this.state.cantidad)
+               //     })
+               // .catch((error)=>{
                     // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
-           //     })
+               // })
                 // se ejecuta cuando se inserto con exito
-                // alert('Insertado correctamente')  
-                toast.success('Insertado correctamente', {
-                    position: "bottom-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    });
+                alert('Insertado correctamente')  
+                // toast.success('Insertado correctamente', {
+                //     position: "bottom-right",
+                //     autoClose: 1000,
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                //     });
                 this.limpiarCampos()  
-        //        this.closeModal()
+                // this.closeModal()
             })
-        //    .catch((error)=>{
+            .catch((error)=>{
                 // se ejecuta cuando sucede un error 
                 // alert(error)
-        //        console.log(error)
-        //    })
+                console.log(error)
+            })
         }else {
             alert('Los campos con * son obligatorios')  
         }
         
         // console.log (datosMovimmientos)
     }
-
 
     render() {
         return (
@@ -141,11 +198,11 @@ class ClienteAbm extends Component {
                                                     {/* <th>Entradas</th>
                                                     <th>Salidas</th>
                                                     <th>Stock</th> */}
-                                                    {/* <th>Acciones</th> */}
+                                                    <th>Acciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {/* {this.renderListaMovimientos()}                                        */}
+                                                {this.renderListaMovimientos()}                                       
                                             </tbody>
                                 </Table>
                         </Col>
