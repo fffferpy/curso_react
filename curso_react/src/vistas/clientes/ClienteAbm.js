@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Button, Table } from 'react-bootstrap';
+import { Row, Col, Form, Button, Table, OverlayTrigger, Tooltip, InputGroup, FormControl} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import firebase, {db} from '../../config/firebase';
 import moment from 'moment';
+import { MdDeleteForever, MdCreate, MdFindInPage, MdSkipPrevious, MdSkipNext, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 
 
@@ -66,10 +68,19 @@ renderListaMovimientos = () => {
                 <td>{documento.clienteRuc}</td>
                 {/* <td>{documento.creado}</td> */}
                 <td>{documento.clienteTelefono}</td>
-                {/* <td> <a href = '#' onClick ={()=>this.cargarForm(documento.id)}> Editar </a> | <a href = '#' onClick ={()=>this.confirmarAccion(documento.id)}> Borrar </a> </td> */}
-                {/* FcEditImage */}
-                {/* <td> <FcEditImage size="24" onClick ={()=>this.cargarForm(documento.id)} /> <FcEmptyTrash size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
-                {/* <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
+                <td style={{textAlign:"center"}}> 
+                        <div>
+                            <OverlayTrigger placement="left" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Editar</Tooltip>} > 
+                                <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />
+                            </OverlayTrigger>
+                            {' '}  
+                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Borrar</Tooltip>} > 
+                                <MdDeleteForever color="#3b5998" size="24"  />
+                                {/* onClick ={()=>this.confirmarAccion(documento.id)} */}
+                            </OverlayTrigger>
+                        </div>
+                       
+                </td>
             </tr>
         )
     })
@@ -77,6 +88,56 @@ renderListaMovimientos = () => {
 
     capturarTecla=(evento)=>{
         this.setState({[evento.target.name]:evento.target.value})
+    }
+
+    cargarForm =(clienteId)=>{
+        console.log (clienteId)
+        db.collection('clientes').doc(`${clienteId}`).get()
+        .then((snap)=>{
+          console.log(snap.data())
+          this.setState({
+            clienteNombre: snap.data().clienteNombre,
+            clienteRuc: snap.data().clienteRuc,
+            clienteTelefono: snap.data().clienteTelefono,
+            clienteCodigo : snap.data().clienteCodigo,
+            clienteEditarId : snap.id
+          })
+         })
+        .catch((error)=>{
+            alert(error)
+        })
+    }
+
+    confirmarAccion = (clienteId) => {
+        confirmAlert({
+          title: 'Accion borrar',
+          message: 'Esta seguro?.',
+          buttons: [
+            {
+              label: 'Si',
+              onClick: () => this.borrarCliente(clienteId)
+            },
+            {
+              label: 'No',
+            //   onClick: () => alert('Click No')
+            }
+          ]
+        });
+      }
+
+      borrarCliente = (clienteId) =>{
+        console.log(clienteId)
+        db.collection('clientes').doc(clienteId).delete()
+        .then(()=>{
+            // se ejecuta cuando se inserto con exito
+            alert('Eliminado correctamente')   
+            this.obtenerProducto() 
+
+        })
+        .catch((error)=>{
+            // se ejecuta cuando sucede un error 
+            alert(error)
+        })
     }
 
     limpiarCampos = () => {
