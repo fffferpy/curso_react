@@ -25,7 +25,9 @@ class App extends Component {
     usuarioLogeado: false,
     email: '',
     titulo:'',
-    rolesUsuarios : []
+    rolesUsuarios : [],
+    empresa:'',
+    ruc:'',
   }
 componentDidMount(){
   this.authListener()
@@ -46,7 +48,13 @@ componentDidMount(){
             auth.signOut()
             alert('Usuario no habilitado')
           }else{
-            this.setState({usuarioLogeado: true, email : emailUsuario, rolesUsuarios : user.data().roles})
+            this.setState({
+              usuarioLogeado: true, 
+              email : emailUsuario, 
+              rolesUsuarios : user.data().roles,
+              ruc:user.data().ruc,
+              empresa:user.data().empresa,
+            })
 
           }
         })
@@ -78,7 +86,12 @@ componentDidMount(){
     //  <ProductoForm/>
      <Router>
         <Container>
-         {this.state.usuarioLogeado== true? <Menu metodoSalir = {this.salir} atributoEmail = {this.state.email} rolesUsuarios= {this.state.rolesUsuarios}/> : null}
+         {this.state.usuarioLogeado== true? <Menu 
+                                            metodoSalir = {this.salir} 
+                                            atributoEmail = {this.state.email} 
+                                            rolesUsuarios= {this.state.rolesUsuarios}
+                                            ruc= {this.state.ruc}
+                                            empresa={this.state.empresa}/> : null}
           <Switch>
               <PrivateRoute exact path="/home" component={Home} usuarioLogeado={this.state.usuarioLogeado}/>
               {this.state.rolesUsuarios.includes('Productos')?<PrivateRoute exact path="/productos" component={ProductoAbm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
@@ -89,7 +102,7 @@ componentDidMount(){
               {this.state.rolesUsuarios.includes('Usuarios')?<PrivateRoute exact path="/usuarios" component={UsuarioList} usuarioLogeado={this.state.usuarioLogeado} />:null}
               {this.state.rolesUsuarios.includes('Roles')?<PrivateRoute exact path="/roles" component={Roles} usuarioLogeado={this.state.usuarioLogeado} />:null}
               <PrivateRoute exact path="/usuario/roles/:usuarioId" component={UsuarioRoles} usuarioLogeado={this.state.usuarioLogeado} />
-              <PrivateRoute exact path="/uploadfile" component={ClienteAbm} usuarioLogeado={this.state.usuarioLogeado}/>
+              {this.state.rolesUsuarios.includes('Clientes')?<PrivateRoute exact path="/clientes" component={ClienteAbm} usuarioLogeado={this.state.usuarioLogeado}/>:null}
               {/* <PrivateRoute exact path="/uploadfile" component={UploadFile} usuarioLogeado={this.state.usuarioLogeado}/> */}
               <PublicRoute  exact path="/" component={Login} usuarioLogeado={this.state.usuarioLogeado} logear= {this.logear}/>
               <PublicRoute  exact path="/registro" component={Registro} usuarioLogeado={this.state.usuarioLogeado}/>
