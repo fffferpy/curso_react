@@ -17,6 +17,7 @@ class ClienteAbm extends Component {
         mostrarFiltro:true,
         filtroClienteNombre:'',
         listaMovimientos: [],
+        clienteEditarId:null,
     }
 
 
@@ -41,7 +42,7 @@ class ClienteAbm extends Component {
                     clienteTelefono : documento.data().clienteTelefono
                 }
                 listaTemporal.push(cliente)
-                console.log ('MOVIMIENTOS:', cliente)
+                // console.log ('MOVIMIENTOS:', cliente)
             })
             this.setState({
                 listaMovimientos : listaTemporal.reverse(),
@@ -102,6 +103,8 @@ renderListaMovimientos = () => {
             clienteCodigo : snap.data().clienteCodigo,
             clienteEditarId : snap.id
           })
+        //   console.log('EDITAR', this.state.clienteEditarId)
+        console.log('ESTADO',this.state)
          })
         .catch((error)=>{
             alert(error)
@@ -148,6 +151,7 @@ renderListaMovimientos = () => {
             clienteTelefono:0,
             mostrarFiltro:true,
             filtroClienteNombre:'',
+            clienteEditarId:null,
         })
     }
 
@@ -160,46 +164,60 @@ renderListaMovimientos = () => {
             clienteRuc:this.state.clienteRuc,
             clienteTelefono:this.state.clienteTelefono,
         }
-
-                                      // PARA GUARDAR
-        if(this.state.clienteNombre!='' && this.state.clienteRuc!= '' && this.state.clienteCodigo!=0){    
-            db.collection('clientes').add({
-                ...datosMovimmientos, 
-                creado : moment().unix(),
-            })
+        if(this.state.clienteEditarId && this.state.clienteNombre!='' && this.state.clienteRuc!= '' && this.state.clienteCodigo!=0) {
+            db.collection('clientes').doc(`${this.state.clienteEditarId}`).update(datosMovimmientos)
             .then(()=>{
-                // console.log (datosMovimmientos)
-                // console.log(this.state.productoSeleccionado.Id)
-               //     db.collection('productos').doc(this.state.productoSeleccionado.id).update({
-               //     saldo : this.state.productoSeleccionado.saldo - parseInt(this.state.cantidad)
-               //     })
-               // .catch((error)=>{
-                    // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
-               // })
                 // se ejecuta cuando se inserto con exito
-                alert('Insertado correctamente')  
-                // toast.success('Insertado correctamente', {
-                //     position: "bottom-right",
-                //     autoClose: 1000,
-                //     hideProgressBar: false,
-                //     closeOnClick: true,
-                //     pauseOnHover: true,
-                //     draggable: true,
-                //     progress: undefined,
-                //     });
+                alert('Editado correctamente')
                 this.limpiarCampos()  
-                // this.closeModal()
+                this.obtenerClientes()  
             })
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
-                // alert(error)
-                console.log(error)
+                alert(error)
             })
-        }else {
-            alert('Los campos con * son obligatorios')  
-        }
-        
-        // console.log (datosMovimmientos)
+            // console.log(datosMovimmientos)       
+
+        } else{
+                                      // PARA GUARDAR
+            if(this.state.clienteNombre!='' && this.state.clienteRuc!= '' && this.state.clienteCodigo!=0){    
+                db.collection('clientes').add({
+                    ...datosMovimmientos, 
+                    creado : moment().unix(),
+                })
+                .then(()=>{
+                    // console.log (datosMovimmientos)
+                    // console.log(this.state.productoSeleccionado.Id)
+                //     db.collection('productos').doc(this.state.productoSeleccionado.id).update({
+                //     saldo : this.state.productoSeleccionado.saldo - parseInt(this.state.cantidad)
+                //     })
+                // .catch((error)=>{
+                        // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
+                // })
+                    // se ejecuta cuando se inserto con exito
+                    alert('Insertado correctamente')  
+                    // toast.success('Insertado correctamente', {
+                    //     position: "bottom-right",
+                    //     autoClose: 1000,
+                    //     hideProgressBar: false,
+                    //     closeOnClick: true,
+                    //     pauseOnHover: true,
+                    //     draggable: true,
+                    //     progress: undefined,
+                    //     });
+                    this.limpiarCampos()  
+                    // this.closeModal()
+                })
+                .catch((error)=>{
+                    // se ejecuta cuando sucede un error 
+                    // alert(error)
+                    console.log(error)
+                })
+            }else {
+                alert('Los campos con * son obligatorios')  
+            }
+            // console.log (datosMovimmientos)
+        }    
     }
 
     render() {
@@ -216,19 +234,19 @@ renderListaMovimientos = () => {
                     
                         <Col md={4} sm = {12} xs = {12}>
                             <Form.Group>
-                                <Form.Label>NOMBRE</Form.Label>
+                                <Form.Label>NOMBRE *</Form.Label>
                                 <Form.Control type="text" size="sm"  name="clienteNombre" value = {this.state.clienteNombre} onChange={this.capturarTecla} />
                             </Form.Group>                        
                         </Col> 
                         <Col md={2} sm = {12} xs = {12}>
                             <Form.Group>
-                                <Form.Label>CODIGO</Form.Label>
+                                <Form.Label>CODIGO *</Form.Label>
                                 <Form.Control type="text" size="sm"  name="clienteCodigo" value = {this.state.clienteCodigo} onChange={this.capturarTecla} />
                             </Form.Group>                        
                         </Col>
                         <Col md={2} sm = {12} xs = {12}>
                             <Form.Group>
-                                <Form.Label>RUC</Form.Label>
+                                <Form.Label>RUC *</Form.Label>
                                 <Form.Control type="text" size="sm"  name="clienteRuc" value = {this.state.clienteRuc} onChange={this.capturarTecla} />
                             </Form.Group>                        
                         </Col>
