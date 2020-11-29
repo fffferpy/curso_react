@@ -179,14 +179,14 @@ class ProductoForm extends Component {
             codigo:this.state.codigo,
             
         }
-        if(this.state.productoEditarId) {
+        if(this.state.productoEditarId && this.state.productoNombre!='') {
                         
             db.collection('productos').doc(`${this.state.productoEditarId}`).update(datosMovimmientos)
             .then(()=>{
                 // se ejecuta cuando se inserto con exito
-                alert('Editado correctamente')
                 this.limpiarCampos()  
                 this.obtenerProducto()  
+                alert('Editado correctamente')
             })
             .catch((error)=>{
                 // se ejecuta cuando sucede un error 
@@ -195,28 +195,33 @@ class ProductoForm extends Component {
             // console.log(datosMovimmientos)       
 
         } else{
-            //   console.log({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()})                
-            db.collection('productos').add({...datosMovimmientos, saldo : 0, creado: moment().unix()})
-            .then(()=>{
-                // se ejecuta cuando se inserto con exito
-                // alert('Insertado correctamente')    
-                toast.success('Insertado correctamente', {
-                    position: "bottom-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    });
-               this.limpiarCampos() 
-               this.obtenerProducto()   
+            if (this.state.productoNombre!='') {
+                //   console.log({...datosMovimmientos, creado: firebase.firestore.FieldValue.serverTimestamp()})                
+                db.collection('productos').add({...datosMovimmientos, saldo : 0, creado: moment().unix()})
+                .then(()=>{
+                    this.limpiarCampos() 
+                    this.obtenerProducto()   
+                    // se ejecuta cuando se inserto con exito
+                    // alert('Insertado correctamente')    
+                    toast.success('Insertado correctamente', {
+                        position: "bottom-right",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
 
-            })
-            .catch((error)=>{
-                // se ejecuta cuando sucede un error 
-                alert(error)
-            })
+
+                })
+                .catch((error)=>{
+                    // se ejecuta cuando sucede un error 
+                    alert(error)
+                })
+            }else {
+                alert('Los campos con * son obligatorios')  
+            }
         }
         
         // console.log (datosMovimmientos)
@@ -397,7 +402,7 @@ class ProductoForm extends Component {
                     
                         <Col md={4}>
                                     <Form.Group>
-                                        <Form.Label>Producto</Form.Label>
+                                        <Form.Label>Producto *</Form.Label>
                                         <Form.Control type="text" size="sm"  name="productoNombre" value = {this.state.productoNombre}onChange={this.capturarTecla} />
                                     
                                     </Form.Group>

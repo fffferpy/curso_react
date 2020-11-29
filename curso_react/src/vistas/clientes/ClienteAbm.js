@@ -75,10 +75,9 @@ renderListaMovimientos = () => {
                                 <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} />
                             </OverlayTrigger>
                             {' '}  
-                            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Borrar</Tooltip>} > 
-                                <MdDeleteForever color="#3b5998" size="24"  />
-                                {/* onClick ={()=>this.confirmarAccion(documento.id)} */}
-                            </OverlayTrigger>
+                            {/* <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip" >Borrar</Tooltip>} > 
+                                <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} />
+                            </OverlayTrigger> */}
                         </div>
                        
                 </td>
@@ -195,17 +194,20 @@ renderListaMovimientos = () => {
                         // aqui hay que borrar en caso de que falle actualizacion de saldo en stock
                 // })
                     // se ejecuta cuando se inserto con exito
-                    alert('Insertado correctamente')  
-                    // toast.success('Insertado correctamente', {
-                    //     position: "bottom-right",
-                    //     autoClose: 1000,
-                    //     hideProgressBar: false,
-                    //     closeOnClick: true,
-                    //     pauseOnHover: true,
-                    //     draggable: true,
-                    //     progress: undefined,
-                    //     });
+                    // alert('Insertado correctamente') 
                     this.limpiarCampos()  
+                    this.obtenerClientes()   
+                    toast.success('Insertado correctamente', {
+                        position: "bottom-right",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
+
+
                     // this.closeModal()
                 })
                 .catch((error)=>{
