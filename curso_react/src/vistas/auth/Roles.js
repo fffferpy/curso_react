@@ -64,7 +64,7 @@ class Roles extends Component {
             this.setState({
                 listaRoles : listaRolesTemporal
             })
-            // console.log(this.state.listaProductos)
+            console.log(listaRolesTemporal)
         })
         .catch((error)=>{
             alert(error)
@@ -76,11 +76,12 @@ class Roles extends Component {
     renderListaRoles = () => {
         return this.state.listaRoles
         .map((documento) => {
+            // console.log(documento)
             return (
                 // key es un identificador unico
                     <tr key={documento.id}> 
                     <td>{documento.nombreRol}</td>
-                    <td>{moment(documento.fecha).format('DD/MM/YYYY')}</td>
+                    <td>{moment.unix(documento.creado).format('DD/MM/YYYY')}</td>
                     {/* <td> <MdCreate size="19" onClick ={()=>this.cargarForm(documento.id)} /> <MdDeleteForever color="#3b5998" size="24" onClick ={()=>this.confirmarAccion(documento.id)} /></td> */}
                 </tr>
             )
