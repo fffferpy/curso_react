@@ -409,7 +409,7 @@ obtenerCodigoProducto = (productoId) =>{
                         <Col md={8}>
                             <Button style={{ backgroundColor:'#3b5998', borderColor:'#3b5998', color:'#fff'}}  onClick={() => {this.guardar()}}>Guardar</Button>{' '} 
                             <Button style={{ backgroundColor:'#dedede', borderColor:'#dedede', color:'#000'}}  onClick={this.limpiarCampos}>Limpiar Campos</Button>{' '}
-                            {/* <Button className="btn btn-primary" size="sm" onClick={this.openModal} >CARGAR COMPRAS</Button> */}
+                            <Button variant = "info" onClick={() => {this.props.history.goBack()}}>Volver</Button>
                             <PopupProductos 
                             propsShowModal={this.state.showModal} 
                             funcionCloseModal={this.closeModal} 

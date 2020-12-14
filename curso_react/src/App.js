@@ -13,7 +13,7 @@ import UsuarioList from './vistas/auth/UsuariosList';
 import Roles from './vistas/auth/Roles';  
 import UsuarioRoles from './vistas/auth/UsuarioRoles';  
 import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import {auth, db} from './config/firebase'; 
+import {auth, db} from './config/admorganizacion'; 
 import ProductoConsulta from './vistas/producto/ProductoConsulta';
 import UploadFile from './vistas/producto/UploadFile';
 import ClienteAbm from './vistas/clientes/ClienteAbm';

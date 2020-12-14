@@ -35,7 +35,7 @@ class PopupProductos extends Component {
         return (
                 <Modal  show={this.props.propsShowModal} onHide={this.props.funcionCloseModal}  >
                         <Modal.Header style={{ backgroundColor:"#dbdbdb", color:"#000"}} closeButton>
-                            <Modal.Title>COMPRAS</Modal.Title>
+                            <Modal.Title>PRODUCTOS</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form>

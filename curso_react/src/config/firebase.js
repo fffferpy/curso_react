@@ -24,9 +24,10 @@ const firebaseConfigProd = {
     appId: "1:229617274498:web:a62f34e114ceb5913c2e9b"
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfigDev);
+  firebase.initializeApp(firebaseConfigDev, "secondary");
+  // firebase.initializeApp(firebaseConfigDev);
   // firebase.initializeApp(firebaseConfigProd);
-  export default firebase;
+  // export default firebase;
   export const db = firebase.firestore();
-  export const auth = firebase.auth();
+  // export const auth = firebase.auth();
   export const storage = firebase.storage();

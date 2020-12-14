@@ -1,7 +1,7 @@
 import React from  'react'
 import {Row, Col, Form, Button, Card} from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify';
-import {auth, db} from '../../config/firebase'
+import {auth, db} from '../../config/admorganizacion'
 
 
 
