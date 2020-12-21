@@ -14,20 +14,9 @@ var firebaseConfigDev = {
   measurementId: "G-T548EN5T0S"
 };
 
-const firebaseConfigProd = {
-    apiKey: "AIzaSyAtiAB3iF32dPgrtuougRlibESM_LIgGDs",
-    authDomain: "loli-store.firebaseapp.com",
-    databaseURL: "https://loli-store.firebaseio.com",
-    projectId: "loli-store",
-    storageBucket: "loli-store.appspot.com",
-    messagingSenderId: "229617274498",
-    appId: "1:229617274498:web:a62f34e114ceb5913c2e9b"
-  };
+
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfigDev, "secondary");
-  // firebase.initializeApp(firebaseConfigDev);
-  // firebase.initializeApp(firebaseConfigProd);
-  // export default firebase;
-  export const db = firebase.firestore();
+  const proyectoSecundario = firebase.initializeApp(firebaseConfigDev, "secondary");
+  export const db = proyectoSecundario.firestore();
   // export const auth = firebase.auth();
-  export const storage = firebase.storage();
+  export const storage = proyectoSecundario.storage();
