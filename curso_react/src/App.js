@@ -48,6 +48,7 @@ componentDidMount(){
             auth.signOut()
             alert('Usuario no habilitado')
           }else{
+            console.log('Logeado:', this.usuarioLogeado)          
             this.setState({
               usuarioLogeado: true, 
               email : emailUsuario, 
