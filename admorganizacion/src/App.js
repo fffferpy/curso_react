@@ -25,10 +25,18 @@ validarDatos=()=>{
               console.log('ID del usuario actual: ', userId)
               db.collection('usuarios').doc(userId).set({
                   email:this.state.email, 
-                  estado : 0,
+                  estado : 1,
                   ruc: this.state.ruc,
                   empresa:this.state.empresa,
-                  roles: [],
+                  roles: [
+                    'Stock',
+                    'Ventas',
+                    'Reportes',
+                    'Usuarios',
+                    'Productos',
+                    'Movimientos',
+                    'Roles',
+                    'Compras'],
                 })
               alert('Usuario registrado correctamente')
             //   auth.signOut()
