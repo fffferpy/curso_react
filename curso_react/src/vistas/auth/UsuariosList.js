@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Badge } from 'react-bootstrap';
-import {db} from '../../config/firebase';
+// import {db} from '../../config/firebase';
+import {db} from '../../config/admorganizacion';
 import {Link} from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert';
 import { MdCached, MdCreate } from "react-icons/md";

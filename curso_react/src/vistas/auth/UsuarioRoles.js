@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {db} from '../../config/firebase';
+import {db} from '../../config/admorganizacion';
 import { Row, Col, Form, Button, Table , Badge } from 'react-bootstrap';
 
 
