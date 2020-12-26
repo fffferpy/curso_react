@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Button, Table , Badge } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import {db} from '../../config/firebase';
+import {db} from '../../config/admorganizacion';
 import moment from 'moment';
 import {confirmAlert} from 'react-confirm-alert'; 
 import { ToastContainer, toast } from 'react-toastify';

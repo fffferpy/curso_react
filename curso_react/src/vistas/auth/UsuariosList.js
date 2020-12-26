@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Table, Badge } from 'react-bootstrap';
 // import {db} from '../../config/firebase';
-import {db} from '../../config/admorganizacion';
+import {auth, db} from '../../config/admorganizacion';
 import {Link} from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert';
 import { MdCached, MdCreate } from "react-icons/md";
@@ -9,13 +9,15 @@ import { MdCached, MdCreate } from "react-icons/md";
 
 class UsuariosList extends Component {
     state={
-        listaUsuarios : [ ]
+        listaUsuarios : [ ],
+        empresaLogeado : ''
     }
 
     volver=()=>{
         this.props.history.goBack()
     }
     componentDidMount(){
+        this.authListener()
         this.obtenerDatos()
     }
     confirmarAccion = (productoId) => {
@@ -33,26 +35,60 @@ class UsuariosList extends Component {
             }
           ]
         });
-      };
+      }
+
+      authListener = () => {
+        auth.onAuthStateChanged((user) => {
+          if(user) {
+            let emailUsuario = user.email
+            console.log('Email usuario: ', user.email)
+            console.log('Nombre usuario: ', user.displayName)
+            console.log('Id usuario: ', user.uid)
+            db.collection('usuarios').doc(user.uid).get()
+            .then((user)=>{
+                console.log(user.data().estado)
+                if(user.data().estado == 0){    
+                    auth.signOut()
+                    alert('Usuario no habilitado')
+                }else{
+                    this.setState({
+                        empresaLogeado: user.data().empresa,
+                     })
+                     console.log('FUCKING LOGEADO:',this.state.empresaLogeado)
+                    //  console.log(this.state)
+                }
+            })
+             // User is signed in.
+      
+          } else {
+            console.log('Login incorrecto/logout: ', user)
+              // User is signed out.
+              this.setState({usuarioLogeado: false})
+          }
+      
+        })
+      }
+
     obtenerDatos=()=>{
         let listaTemporal = []
         db.collection('usuarios').get()
         .then((snap)=>{
             snap.forEach((documento)=>{
                 // console.log(documento.data())
-                listaTemporal.push({
-                    id : documento.id,
-                    email : documento.data().email,
-                    estado : documento.data().estado
-                 
-                })
+                    console.log('EMPRESA COLLECTION:', documento.data().empresa)
+                    console.log('EMPRESA USUARIO LOGEADO:', this.state.empresaLogeado)
+                // if (this.state.empresaLogeado==documento.data().empresa){
+                    listaTemporal.push({
+                        id : documento.id,
+                        email : documento.data().email,
+                        estado : documento.data().estado
+                    })
+                // }    
             })
-
             this.setState({
                 listaUsuarios : listaTemporal
             })
             // console.log(this.state)
-            
          })
         .catch((error)=>{
             alert(error)
